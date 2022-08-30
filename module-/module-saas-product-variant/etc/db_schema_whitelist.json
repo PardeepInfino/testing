@@ -1,0 +1,7 @@
+{
+    "catalog_product_variants_submitted_hash": {
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
