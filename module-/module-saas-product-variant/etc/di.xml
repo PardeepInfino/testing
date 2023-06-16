@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!--  Product Variant Feed  -->
+    <virtualType name="Magento\SaaSCatalog\Model\ProductVariantsFeedRegistry" type="Magento\SaaSCommon\Model\FeedRegistry">
+        <arguments>
+            <argument name="excludeFields" xsi:type="array">
+                <item name="modifiedAt" xsi:type="string">modifiedAt</item>
+            </argument>
+            <argument name="uniqueFields" xsi:type="array">
+                <item name="id" xsi:type="string">id</item>
+            </argument>
+            <argument name="registryTable" xsi:type="string">catalog_product_variants_submitted_hash</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\SaaSCatalog\Cron\ProductVariantSubmitFeed" type="Magento\SaaSCommon\Cron\SubmitFeed">
+        <arguments>
+            <argument name="feedName" xsi:type="string">variants</argument>
+            <argument name="feedSyncFlag" xsi:type="string">product-variants-feed-version</argument>
+            <argument name="feedRegistry" xsi:type="object">Magento\SaaSCatalog\Model\ProductVariantsFeedRegistry</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\SaaSCatalog\Model\VariantsResyncManager" type="Magento\SaaSCommon\Model\ResyncManager">
+        <arguments>
+            <argument name="feedIndexer" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexer</argument>
+            <argument name="submitFeed" xsi:type="object">Magento\SaaSCatalog\Cron\ProductVariantSubmitFeed</argument>
+            <argument name="feedInterface" xsi:type="object">Magento\ProductVariantDataExporter\Model\ProductVariantFeed</argument>
+            <argument name="flagName" xsi:type="string">variants-feed-version</argument>
+            <argument name="indexerName" xsi:type="string">catalog_data_exporter_product_variants</argument>
+            <argument name="registryTableName" xsi:type="string">catalog_product_variants_submitted_hash</argument>
+        </arguments>
+    </virtualType>
+    <!--  Resync registration  -->
+    <type name="Magento\SaaSCommon\Model\ResyncManagerPool">
+        <arguments>
+            <argument name="classMap" xsi:type="array">
+                <item name="variants" xsi:type="string">Magento\SaaSCatalog\Model\VariantsResyncManager</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\SaaSCommon\Console\Command\Resync">
+        <arguments>
+            <argument name="feedNames" xsi:type="array">
+                <item name="variants" xsi:type="string">Product Variant</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

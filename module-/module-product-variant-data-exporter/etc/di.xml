@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexMetadata" type="Magento\DataExporter\Model\Indexer\FeedIndexMetadata">
+        <arguments>
+            <argument name="feedName" xsi:type="string">variants</argument>
+            <argument name="feedIdentity" xsi:type="string">id</argument>
+            <argument name="sourceTableName" xsi:type="string">catalog_product_entity</argument>
+            <argument name="sourceTableField" xsi:type="string">entity_id</argument>
+            <argument name="feedTableName" xsi:type="string">catalog_data_exporter_product_variants</argument>
+            <argument name="feedTableField" xsi:type="string">id</argument>
+            <argument name="feedTableMutableColumns" xsi:type="array">
+                <item name="feed_data" xsi:type="string">feed_data</item>
+                <item name="is_deleted" xsi:type="string">is_deleted</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantDataSerializer" type="Magento\DataExporter\Model\Indexer\DataSerializer">
+        <arguments>
+            <argument name="mapping" xsi:type="array">
+                <item name="id" xsi:type="string">id</item>
+                <item name="parent_id" xsi:type="string">parentId</item>
+                <item name="product_id" xsi:type="string">productId</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- :begin: The following configuration substitutes delete logic for product variants-->
+    <virtualType name="Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantMarkRemovedEntities" type="Magento\DataExporter\Model\Indexer\MarkRemovedEntities">
+        <arguments>
+            <argument name="markRemovedEntitiesQuery" xsi:type="object">Magento\ProductVariantDataExporter\Model\Query\MarkRemovedEntitiesQuery</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexProcessorCreateUpdateDelete" type="Magento\DataExporter\Model\Indexer\FeedIndexProcessorCreateUpdateDelete">
+        <arguments>
+            <argument name="markRemovedEntities" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantMarkRemovedEntities</argument>
+        </arguments>
+    </virtualType>
+    <!-- :end: The following configuration substitutes delete logic for product variants-->
+    <virtualType name="Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexer"  type="Magento\DataExporter\Model\Indexer\FeedIndexer">
+        <arguments>
+            <argument name="feedIndexMetadata" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexMetadata</argument>
+            <argument name="serializer" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantDataSerializer</argument>
+            <argument name="processor" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexProcessorCreateUpdateDelete</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\ProductVariantDataExporter\Model\ProductVariantFeed" type="Magento\DataExporter\Model\Feed">
+        <arguments>
+            <argument name="feedIndexMetadata" xsi:type="object">Magento\ProductVariantDataExporter\Model\Indexer\ProductVariantFeedIndexMetadata</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\DataExporter\Model\FeedPool">
+        <arguments>
+            <argument name="classMap" xsi:type="array">
+                <item name="variants" xsi:type="string">Magento\ProductVariantDataExporter\Model\ProductVariantFeed</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ProductVariantDataExporter\Model\Provider\ProductVariants">
+        <arguments>
+            <argument name="variantsProviders" xsi:type="array">
+                <item name="configurable" xsi:type="object">Magento\ProductVariantDataExporter\Model\Provider\ConfigurableVariants</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ProductVariantDataExporter\Model\Provider\ProductVariants\OptionValueFactory">
+        <arguments>
+            <argument name="variantTypes" xsi:type="array">
+                <item name="configurable" xsi:type="string">Magento\ProductVariantDataExporter\Model\Provider\ProductVariants\ConfigurableOptionValue</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ProductVariantDataExporter\Model\Provider\ProductVariants\IdFactory">
+        <arguments>
+            <argument name="variantTypes" xsi:type="array">
+                <item name="configurable" xsi:type="string">Magento\ProductVariantDataExporter\Model\Provider\ProductVariants\ConfigurableId</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product">
+        <plugin name="reindex_configurable_variants_after_save" type="Magento\ProductVariantDataExporter\Plugin\ReindexVariantsAfterSave"/>
+    </type>
+</config>
