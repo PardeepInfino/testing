@@ -1,0 +1,14 @@
+<div class="data-grid-cell-content">
+    <!-- ko if: (getUrl($row()) && getImageUrl($row())) -->
+    <div class="product-name">
+        <a data-bind="attr: {href: getUrl($row())}">
+            <img data-bind="attr: {src: getImageUrl($row()), alt: getlabel($row()), title: getlabel($row())}" class="aw-qo__listing-product-image">
+        </a>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: (!getUrl($row()) || !getImageUrl($row())) -->
+    <div class="product-name">
+        <img data-bind="attr: {src: getImageUrl($row()), alt: getlabel($row()), title: getlabel($row())}" class="aw-qo__listing-product-image">
+    </div>
+    <!-- /ko -->
+</div>

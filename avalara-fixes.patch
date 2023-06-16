@@ -1,0 +1,187 @@
+diff --git a/avalara/avatax-magento/Model/Queue/Processing/AbstractProcessing.php b/avalara/avatax-magento/Model/Queue/Processing/AbstractProcessing.php
+index cec857da4..d6bd617b9 100755
+--- a/avalara/avatax-magento/Model/Queue/Processing/AbstractProcessing.php
++++ b/avalara/avatax-magento/Model/Queue/Processing/AbstractProcessing.php
+@@ -21,6 +21,7 @@ use Magento\Sales\Api\InvoiceRepositoryInterface;
+ use Magento\Sales\Api\OrderManagementInterface;
+ use Magento\Sales\Api\OrderRepositoryInterface;
+ use ClassyLlama\AvaTax\Model\InvoiceFactory;
++use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
+ use ClassyLlama\AvaTax\Model\CreditMemoFactory;
+ 
+ /**
+@@ -111,6 +112,10 @@ abstract class AbstractProcessing implements ProcessingStrategyInterface
+      */
+     private $avataxCreditMemoFactory;
+ 
++    /** @var OrderStatusHistoryRepositoryInterface */
++    private $orderStatusRepository;
++
++
+     /**
+      * AbstractProcessing constructor.
+      *
+@@ -133,7 +138,8 @@ abstract class AbstractProcessing implements ProcessingStrategyInterface
+         OrderRepositoryInterface $orderRepository,
+         OrderManagementInterface $orderManagement,
+         InvoiceFactory $avataxInvoiceFactory,
+-        CreditMemoFactory $avataxCreditMemoFactory
++        CreditMemoFactory $avataxCreditMemoFactory,
++        OrderStatusHistoryRepositoryInterface $orderStatusRepository
+     ) {
+         $this->avaTaxLogger = $avaTaxLogger;
+         $this->invoiceRepository = $invoiceRepository;
+@@ -144,6 +150,7 @@ abstract class AbstractProcessing implements ProcessingStrategyInterface
+         $this->orderManagement = $orderManagement;
+         $this->avataxInvoiceFactory = $avataxInvoiceFactory;
+         $this->avataxCreditMemoFactory = $avataxCreditMemoFactory;
++        $this->orderStatusRepository = $orderStatusRepository;
+     }
+ 
+     /**
+@@ -522,25 +529,44 @@ abstract class AbstractProcessing implements ProcessingStrategyInterface
+         $this->addOrderComment($entity->getOrderId(), $message);
+     }
+ 
++    // /**
++    //  * @param int $orderId
++    //  * @param string $message
++    //  */
++    // protected function addOrderComment(int $orderId, string $message)
++    // {
++    //     $order = $this->orderRepository->get($orderId);
++
++    //     // create comment
++    //     $orderStatusHistory = $this->orderStatusHistoryFactory->create();
++    //     $orderStatusHistory->setParentId($orderId);
++    //     $orderStatusHistory->setComment($message);
++    //     $orderStatusHistory->setIsCustomerNotified(false);
++    //     $orderStatusHistory->setIsVisibleOnFront(false);
++    //     $orderStatusHistory->setEntityName(Queue::ENTITY_TYPE_CODE_ORDER);
++    //     $orderStatusHistory->setStatus($order->getStatus());
++    //     // add comment to order
++    //     $this->orderManagement->addComment($orderId, $orderStatusHistory);
++        
++    // }
++
+     /**
++     * add comment to the order history
++     *
+      * @param int $orderId
+-     * @param string $message
++     * @return OrderStatusHistoryInterface|null
+      */
+-    protected function addOrderComment(int $orderId, string $message)
++    public function addOrderComment(int $orderId,$message)
+     {
+         $order = $this->orderRepository->get($orderId);
+-
+-        // create comment
+-        $orderStatusHistory = $this->orderStatusHistoryFactory->create();
+-        $orderStatusHistory->setParentId($orderId);
+-        $orderStatusHistory->setComment($message);
+-        $orderStatusHistory->setIsCustomerNotified(false);
+-        $orderStatusHistory->setIsVisibleOnFront(false);
+-        $orderStatusHistory->setEntityName(Queue::ENTITY_TYPE_CODE_ORDER);
+-        $orderStatusHistory->setStatus($order->getStatus());
+-        // add comment to order
+-        $this->orderManagement->addComment($orderId, $orderStatusHistory);
+-        
++        $orderHistory = null;
++        if ($order) {
++            $comment = $order->addStatusHistoryComment(
++                $message
++            );
++            $orderHistory = $this->orderStatusRepository->save($comment);
++            
++        }
++        return $orderHistory;
+     }
+-
+ }
+diff --git a/avalara/avatax-magento/Model/Queue/Processing/BatchProcessing.php b/avalara/avatax-magento/Model/Queue/Processing/BatchProcessing.php
+index 02502c25d..0200ba5e6 100755
+--- a/avalara/avatax-magento/Model/Queue/Processing/BatchProcessing.php
++++ b/avalara/avatax-magento/Model/Queue/Processing/BatchProcessing.php
+@@ -22,6 +22,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
+ use Magento\Sales\Api\Data\OrderStatusHistoryInterfaceFactory;
+ use ClassyLlama\AvaTax\Model\InvoiceFactory;
+ use ClassyLlama\AvaTax\Model\CreditMemoFactory;
++use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
+ 
+ /**
+  * Class BatchProcessing
+@@ -63,6 +64,9 @@ class BatchProcessing extends AbstractProcessing
+      */
+     private $collection;
+ 
++    /** @var OrderStatusHistoryRepositoryInterface */
++    private $orderStatusRepository;
++
+ 
+     /**
+      * BatchProcessing constructor.
+@@ -99,11 +103,12 @@ class BatchProcessing extends AbstractProcessing
+         InvoiceFactory $avataxInvoiceFactory,
+         CreditMemoFactory $avataxCreditMemoFactory,
+         RestTaxInterface $taxService,
++        OrderStatusHistoryRepositoryInterface $orderStatusRepository
+     ) {
+         parent::__construct(
+             $avaTaxLogger, $invoiceRepository, $creditmemoRepository, $scopeConfig,
+             $orderStatusHistoryFactory, $orderRepository, $orderManagement, $avataxInvoiceFactory,
+-            $avataxCreditMemoFactory
++            $avataxCreditMemoFactory, $orderStatusRepository
+         );
+         $this->interactionTax = $interactionTax;
+         $this->batchQueueTransactionInterfaceFactory = $batchQueueTransactionInterfaceFactory;
+diff --git a/avalara/avatax-magento/Model/Queue/Processing/NormalProcessing.php b/avalara/avatax-magento/Model/Queue/Processing/NormalProcessing.php
+index b545c96ed..6b49dc1e2 100755
+--- a/avalara/avatax-magento/Model/Queue/Processing/NormalProcessing.php
++++ b/avalara/avatax-magento/Model/Queue/Processing/NormalProcessing.php
+@@ -34,6 +34,7 @@ use Magento\Sales\Api\Data\OrderStatusHistoryInterfaceFactory;
+ use Magento\Sales\Api\Data\InvoiceExtensionFactory;
+ use Magento\Sales\Api\Data\CreditmemoExtensionFactory;
+ use Magento\Framework\App\Config\ScopeConfigInterface;
++use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
+ 
+ /**
+  * Queue Processing
+@@ -55,6 +56,9 @@ class NormalProcessing extends AbstractProcessing implements ProcessingStrategyI
+      */
+     private $queueCollectionFactory;
+ 
++    /** @var OrderStatusHistoryRepositoryInterface */
++    private $orderStatusRepository;
++
+     public function __construct(
+         AvaTaxLogger $avaTaxLogger,
+         InvoiceRepositoryInterface $invoiceRepository,
+@@ -67,12 +71,13 @@ class NormalProcessing extends AbstractProcessing implements ProcessingStrategyI
+         CollectionFactory $collectionFactory,
+         OrderStatusHistoryInterfaceFactory $orderStatusHistoryFactory,
+         OrderRepositoryInterface $orderRepository,
+-        OrderManagementInterface $orderManagement
++        OrderManagementInterface $orderManagement,
++        OrderStatusHistoryRepositoryInterface $orderStatusRepository
+     ) {
+         parent::__construct(
+             $avaTaxLogger, $invoiceRepository, $creditmemoRepository, $scopeConfig,
+             $orderStatusHistoryFactory, $orderRepository, $orderManagement, $avataxInvoiceFactory,
+-            $avataxCreditMemoFactory
++            $avataxCreditMemoFactory,$orderStatusRepository
+         );
+         $this->interactionGetTax = $interactionGetTax;
+         $this->avaTaxConfig = $avaTaxConfig;
+diff --git a/avalara/avatax-magento/view/adminhtml/web/js/model/region-model.js b/avalara/avatax-magento/view/adminhtml/web/js/model/region-model.js
+index 8cd24dbc4..e32cbec60 100755
+--- a/avalara/avatax-magento/view/adminhtml/web/js/model/region-model.js
++++ b/avalara/avatax-magento/view/adminhtml/web/js/model/region-model.js
+@@ -21,6 +21,7 @@ define(
+                 this.regions = $.ajax({
+                     showLoader: false,
+                     url: url,
++                    data: {form_key: window.FORM_KEY},
+                     type: "POST",
+                     dataType: 'json',
+                     success: function (response) {

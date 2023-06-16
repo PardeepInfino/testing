@@ -1,0 +1,33 @@
+{
+    "name": "amasty/module-seo-toolkit-suite",
+    "description": "SEO Toolkit Premium by Amasty",
+    "require": {
+        "php": ">=7.3.0",
+        "amasty/base": ">=1.14.4",
+        "amasty/module-seo-toolkit-lite": "*",
+        "amasty/meta": "*",
+        "amasty/module-google-rich-snippets": "*",
+        "amasty/module-unique-product-url": "*",
+        "amasty/module-xml-google-sitemap": "*",
+        "amasty/module-cross-linking": "*",
+        "amasty/html-sitemap": "*",
+        "amasty/module-regenerate-url-rewrites": "*",
+        "amasty/module-alt-tag-generator": "*",
+        "amasty/module-open-graph-tags": "*",
+        "amasty/module-image-optimizer-ui": ">=2.0.1"
+    },
+    "homepage": "https://amasty.com/",
+    "type": "magento2-module",
+    "version": "2.1.2",
+    "license": [
+        "Commercial"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\SeoToolkitSuite\\": ""
+        }
+    }
+}

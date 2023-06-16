@@ -1,0 +1,16 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Ui\Block\Wrapper*/
+?>
+<?php
+    /** @var \Aheadworks\RequisitionLists\ViewModel\Customer\RequisitionList\DataProvider $viewModel */
+    $viewModel = $block->getRequisitionListViewModel();
+?>
+<?php if ($viewModel): ?>
+    <div class="header-list-description">
+        <span class="description">
+            <?= $block->escapeHtml($viewModel->getCurrentRequisitionListDescription()); ?>
+        </span>
+    </div>
+<?php endif; ?>

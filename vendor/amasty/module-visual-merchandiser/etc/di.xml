@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package Visual Merchandiser for Magento 2
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Amasty\VisualMerch\Model\Rule\Condition\CombineFactory"
+                 type="Magento\CatalogRule\Model\Rule\Condition\CombineFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Amasty\VisualMerch\Model\Rule\Condition\Combine</argument>
+        </arguments>
+    </virtualType>
+    <type name="Amasty\VisualMerch\Model\Rule">
+        <arguments>
+            <argument name="combineFactory" xsi:type="object">Amasty\VisualMerch\Model\Rule\Condition\CombineFactory</argument>
+            <argument name="data" xsi:type="array">
+                <item name="amastySerializer" xsi:type="object">Amasty\Base\Model\Serializer</item>
+                <item name="conditionsOptimizer" xsi:type="object">Amasty\VisualMerch\Model\Rule\Condition\Optimization\Optimizers\ConditionsCombine</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Category" >
+        <plugin name="Amasty_VisualMerch::addConditionsToCategory" type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Category" />
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product" >
+        <plugin name="Amasty_VisualMerch::processProductSave" type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Product" />
+    </type>
+
+    <type name="Magento\Catalog\Model\Indexer\Category\Product">
+        <plugin name="Amasty_VisualMerch::categoryProductExtendedIndex"
+                type="Amasty\VisualMerch\Plugin\Catalog\Model\Indexer\Category\Product" />
+    </type>
+
+    <type name="\Magento\Catalog\Model\ResourceModel\Product\Indexer\Price\DefaultPrice">
+        <plugin name="Amasty_VisualMerch::onSaleIndexerFixer"
+                type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\DefaultPrice"/>
+    </type>
+    <type name="\Magento\ConfigurableProduct\Model\ResourceModel\Product\Indexer\Price\Configurable">
+        <plugin name="Amasty_VisualMerch::PriceRuleIndexerFixerConfigurable"
+                type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\Configurable"/>
+        <plugin name="Amasty_VisualMerch::PriceRuleIndexerFixerConfigurable.2.2.6"
+                type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\Dimensional\Configurable"/>
+    </type>
+    <type name="\Magento\Catalog\Model\ResourceModel\Product\Indexer\Price\SimpleProductPrice">
+        <plugin name="Amasty_VisualMerch::PriceRuleIndexerFixer.2.2.6"
+                type="Amasty\VisualMerch\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\Dimensional\Simple"/>
+    </type>
+    <!--Compatibility with Amasty Xlanding-->
+    <type name="Amasty\Xlanding\Model\Indexer\Catalog\Category\Product">
+        <plugin name="Amasty_VisualMerch::fixXlandingCompatibility"
+                type="Amasty\VisualMerch\Plugin\Xlanding\Model\Indexer\Catalog\Category\Product"/>
+    </type>
+    <!-- Compatibility with Amasty Xlanding end -->
+
+    <virtualType name="Amasty\VisualMerch\Model\Rule\Condition\Optimization\Optimizers\ConditionsCombine"
+                 type="Amasty\VisualMerch\Model\Rule\Condition\Optimization\Optimizers\Combine"
+    >
+        <arguments>
+            <argument name="optimizers" xsi:type="array">
+                <item name="fold_same_conditions" xsi:type="object">
+                    Amasty\VisualMerch\Model\Rule\Condition\Optimization\Optimizers\FoldSameOrConditions
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\Shopby\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\Dimensional\Configurable\AddIndexSpecialPrice">
+        <plugin name="Amasty_VisualMerch::enable-indexation-shopby"
+                type="Amasty\VisualMerch\Plugin\Shopby\Plugin\Catalog\Model\ResourceModel\Product\Indexer\Price\Dimensional\Configurable\AddIndexSpecialPrice\EnableIndexation"/>
+    </type>
+</config>

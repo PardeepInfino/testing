@@ -1,0 +1,52 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+    $product = $block->getProduct();
+    $required = '';
+    if ($block->hasRequiredOptions()) {
+        $required = ' data-hasrequired="' . __('* Required Fields') . '"';
+    }
+
+    $optionsHtml = $block->getChildHtml('product_options');
+    $configurableOptionsHtml = $block->getChildHtml('product_options_configurable');
+    $groupedOptionsHtml = $block->getChildHtml('product_options_grouped');
+    $bundleOptionsHtml = $block->getChildHtml('product_options_bundle');
+    $downloadableOptionsHtml = $block->getChildHtml('product_options_downloadable');
+
+    $isSmallImage = trim($optionsHtml)
+        || $configurableOptionsHtml
+        || $groupedOptionsHtml
+        || $bundleOptionsHtml
+        || $downloadableOptionsHtml;
+?>
+<div class="aw-rl-popup__main">
+    <div class="aw-rl-popup__columns product-item product-item-info">
+        <div class="aw-rl-popup__column  aw-rl-popup__column--media<?php if ($isSmallImage): ?> small<?php endif; ?>">
+            <?php echo $block->getChildHtml('product_image') ?>
+        </div>
+        <div class="aw-rl-popup__column">
+            <div class="aw-rl-popup__form">
+                <form id="aw-rl-configure-item-form" action="<?php /* @noEscape */ echo $block->escapeXssInUrl($block->getAddToCartUrl($product)) ?>"
+                    <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>
+                      data-mage-init='{"Magento_Catalog/product/view/validation": {"radioCheckboxClosest": ".nested"}}'>
+                    <input type="hidden" name="product" value="<?php /* @noEscape */ echo $product->getId() ?>" />
+                    <input type="hidden" name="selected_configurable_option" value="" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                    <?php echo $block->getBlockHtml('formkey') ?>
+                    <div class="aw-rl-popup__options-wrapper product-options-wrapper" id="product-options-wrapper"<?php /* @noEscape */ echo $required; ?>>
+                        <div class="fieldset">
+                            <?php /* @noEscape */ echo $optionsHtml
+                                . $configurableOptionsHtml
+                                . $groupedOptionsHtml
+                                . $bundleOptionsHtml
+                                . $downloadableOptionsHtml; ?>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

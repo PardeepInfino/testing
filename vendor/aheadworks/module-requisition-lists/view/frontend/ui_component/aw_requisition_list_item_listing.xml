@@ -1,0 +1,151 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_requisition_list_item_listing.aw_requisition_list_item_listing_data_source</item>
+            <item name="deps" xsi:type="string">aw_requisition_list_item_listing.aw_requisition_list_item_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">aw_requisition_list_item_columns</item>
+    </argument>
+    <dataSource name="aw_requisition_list_item_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\RequisitionLists\Ui\DataProvider\RequisitionList\Item\ListingDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_requisition_list_item_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">item_id</argument>
+            <argument name="requestFieldName" xsi:type="string">item_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="filter_url_params" xsi:type="array">
+                        <item name="list_id" xsi:type="string">*</item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">item_id</item>
+                        <item name="cacheRequests" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction"
+                    component="Aheadworks_RequisitionLists/js/grid/massactions-tree"
+                    template="Aheadworks_RequisitionLists/ui/grid/massactions-tree"
+                    class="\Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction">
+            <action name="remove">
+                <settings>
+                    <url path="aw_rl/rlist/deleteItem"/>
+                    <type>delete</type>
+                    <label translate="true">Remove Selected</label>
+                </settings>
+            </action>
+            <action name="move">
+                <settings>
+                    <type>move_to</type>
+                    <label translate="true">Move Selected</label>
+                    <actions class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction\Option\MoveTo"/>
+                </settings>
+            </action>
+            <action name="copy">
+                <settings>
+                    <type>copy_to</type>
+                    <label translate="true">Copy Selected</label>
+                    <actions class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction\Option\CopyTo"/>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging" template="Aheadworks_RequisitionLists/ui/grid/paging/empty-paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="totalTmpl" xsi:type="string">Aheadworks_RequisitionLists/ui/grid/paging-total</item>
+                </item>
+            </argument>
+        </paging>
+    </listingToolbar>
+    <columns name="aw_requisition_list_item_columns" template="Aheadworks_RequisitionLists/ui/grid/listing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">aw-rl__listing-products customer_list_item customer</item>
+            </item>
+        </argument>
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_RequisitionLists/js/grid/column/multiselect</item>
+                    <item name="additionalClasses" xsi:type="string">item-id</item>
+                    <item name="indexField" xsi:type="string">item_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="product_name" class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\Column\Name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_RequisitionLists/js/grid/column/name</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_RequisitionLists/ui/grid/column/name</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="product_name" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Product</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+        <column name="product_qty" component="Aheadworks_RequisitionLists\js\grid\column\qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="product_qty" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_RequisitionLists/ui/grid/column/qty</item>
+                    <item name="label" xsi:type="string" translate="true">Qty</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+        <column name="price" class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_RequisitionLists/js/grid/column/price</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_RequisitionLists/ui/grid/column/price</item>
+                    <item name="label" xsi:type="string" translate="true">Current Product Price</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="price" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+    <listingToolbar name="listing_bottom">
+        <paging name="listing_paging" template="Aheadworks_RequisitionLists/ui/grid/paging/paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="totalTmpl" xsi:type="string">Aheadworks_RequisitionLists/ui/grid/empty-paging-total</item>
+                </item>
+            </argument>
+        </paging>
+        <massaction name="listing_massaction"
+                    component="Aheadworks_RequisitionLists/js/grid/massactions"
+                    template="Aheadworks_RequisitionLists/ui/grid/massactions-bottom"
+                    class="\Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction">
+            <action name="addToCart">
+                <settings>
+                    <url path="aw_rl/rlist/addToCart"/>
+                    <type>add_to_cart</type>
+                    <label translate="true">Add To Cart</label>
+                </settings>
+            </action>
+            <action name="update">
+                <settings>
+                    <url path="aw_rl/rlist/updateItemQty"/>
+                    <type>update</type>
+                    <label translate="true">Update Qty</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

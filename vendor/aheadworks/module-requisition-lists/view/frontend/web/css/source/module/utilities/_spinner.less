@@ -1,0 +1,159 @@
+//
+//  Spinner
+//  _____________________________________________
+
+//
+//  Variables
+//  _____________________________________________
+
+@aw-rl-spinner-border-radius: 6px;
+@aw-rl-spinner-spin-count: 8;
+@aw-rl-spinner-first-color: #514943;
+@aw-rl-spinner-second-color: @color-white;
+@aw-rl-spinner-keyframe-name: fade;
+@aw-rl-spinner-animation-step: .09s;
+@aw-rl-spinner-animation-duration: @aw-rl-spinner-animation-step * @aw-rl-spinner-spin-count;
+@aw-rl-spinner-animation-transform: scale(.4);
+@aw-rl-spinner-animation-iteration-count: infinite;
+@aw-rl-spinner-animation-direction: linear;
+@aw-rl-spinner-rotate: 0;
+@aw-rl-spinner-rotate-step: 45;
+@aw-rl-spinner-delay: .9s;
+@aw-rl-spinner__base-size: 4rem;
+
+//
+
+._aw-rl-spinner-keyframes() {
+    @-moz-keyframes @aw-rl-spinner-keyframe-name {
+        0% {
+            background-color: @aw-rl-spinner-first-color;
+        }
+
+        100% {
+            background-color: @aw-rl-spinner-second-color;
+        }
+    }
+
+    @-webkit-keyframes @aw-rl-spinner-keyframe-name {
+        0% {
+            background-color: @aw-rl-spinner-first-color;
+        }
+
+        100% {
+            background-color: @aw-rl-spinner-second-color;
+        }
+    }
+
+    @-ms-keyframes @aw-rl-spinner-keyframe-name {
+        0% {
+            background-color: @aw-rl-spinner-first-color;
+        }
+
+        100% {
+            background-color: @aw-rl-spinner-second-color;
+        }
+    }
+
+    @keyframes @aw-rl-spinner-keyframe-name {
+        0% {
+            background-color: @aw-rl-spinner-first-color;
+        }
+
+        100% {
+            background-color: @aw-rl-spinner-second-color;
+        }
+    }
+}
+
+._aw-rl-spinner-loop(
+    @_aw-rl-spinner-spin-count: @aw-rl-spinner-spin-count,
+    @_aw-rl-spinner-rotate: @aw-rl-spinner-rotate,
+    @_aw-rl-spinner-delay: @aw-rl-spinner-delay
+) when (@_aw-rl-spinner-spin-count > 0) {
+    ._aw-rl-spinner-loop(
+            (@_aw-rl-spinner-spin-count - 1),
+            (@_aw-rl-spinner-rotate - @aw-rl-spinner-rotate-step),
+            (@_aw-rl-spinner-delay - @aw-rl-spinner-animation-step)
+    );
+
+    > span {
+        &:nth-child(@{_aw-rl-spinner-spin-count}) {
+            -webkit-animation-delay: @_aw-rl-spinner-delay;
+            -moz-animation-delay: @_aw-rl-spinner-delay;
+            -ms-animation-delay: @_aw-rl-spinner-delay;
+            animation-delay: @_aw-rl-spinner-delay;
+
+            -webkit-transform: ~'rotate(@{_aw-rl-spinner-rotate}deg)';
+            -moz-transform: ~'rotate(@{_aw-rl-spinner-rotate}deg)';
+            -ms-transform: ~'rotate(@{_aw-rl-spinner-rotate}deg)';
+            transform: ~'rotate(@{_aw-rl-spinner-rotate}deg)';
+        }
+    }
+}
+
+._aw-rl-spinner_transform() {
+    -webkit-transform: @aw-rl-spinner-animation-transform;
+    -moz-transform: @aw-rl-spinner-animation-transform;
+    -ms-transform: @aw-rl-spinner-animation-transform;
+    transform: @aw-rl-spinner-animation-transform;
+
+    -webkit-animation-name: @aw-rl-spinner-keyframe-name;
+    -moz-animation-name: @aw-rl-spinner-keyframe-name;
+    -ms-animation-name: @aw-rl-spinner-keyframe-name;
+    animation-name: @aw-rl-spinner-keyframe-name;
+
+    -webkit-animation-duration: @aw-rl-spinner-animation-duration;
+    -moz-animation-duration: @aw-rl-spinner-animation-duration;
+    -ms-animation-duration: @aw-rl-spinner-animation-duration;
+    animation-duration: @aw-rl-spinner-animation-duration;
+
+    -webkit-animation-iteration-count: @aw-rl-spinner-animation-iteration-count;
+    -moz-animation-iteration-count: @aw-rl-spinner-animation-iteration-count;
+    -ms-animation-iteration-count: @aw-rl-spinner-animation-iteration-count;
+    animation-iteration-count: @aw-rl-spinner-animation-iteration-count;
+
+    -webkit-animation-direction: @aw-rl-spinner-animation-direction;
+    -moz-animation-direction: @aw-rl-spinner-animation-direction;
+    -ms-animation-direction: @aw-rl-spinner-animation-direction;
+    animation-direction: @aw-rl-spinner-animation-direction;
+}
+
+
+
+.admin__data-grid-loading-mask {
+    background: rgba(255, 255, 255, 0.5);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 399;
+    .lib-vendor-prefix-display();
+
+    //  Base spinner
+    .spinner {
+        ._aw-rl-spinner-loop(
+            @aw-rl-spinner-spin-count,
+            @aw-rl-spinner-rotate,
+            @aw-rl-spinner-delay
+        );
+        ._aw-rl-spinner-keyframes();
+        display: inline-block;
+        font-size: @aw-rl-spinner__base-size;
+        height: 1em;
+        margin: auto;
+        position: relative;
+        width: 1em;
+
+        > span {
+            ._aw-rl-spinner_transform();
+            background-color: #fff;
+            border-radius: @aw-rl-spinner-border-radius;
+            clip: rect(0 1em/3.5 .1em 0);
+            height: .1em;
+            margin-top: 1em / 2;
+            position: absolute;
+            width: 1em;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="klevu" translate="label" sortOrder="200">
+            <label>Klevu</label>
+        </tab>
+
+        <section id="klevu_integration" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Integration</label>
+            <tab>klevu</tab>
+            <resource>Klevu_Search::integration</resource>
+            <include path="Klevu_Search::system/integration.xml"/>
+        </section>
+
+        <section id="klevu_search" translate="label" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Search Configuration</label>
+            <tab>klevu</tab>
+            <!-- resource tag name which we have to defined in the acl.xml -->
+            <resource>Klevu_Search::config_search</resource>
+            <include path="Klevu_Search::system/search.xml"/>
+        </section>
+
+        <section id="tax" translate="label" sortOrder="430" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="display" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="typeinsearch" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Product Prices In Klevu Search</label>
+                    <depends>
+                        <field id="type">3</field>
+                    </depends>
+                    <source_model>Klevu\Search\Model\System\Config\Source\Tax\Display\Type</source_model>
+                    <comment><![CDATA[Choose 'Including Tax' to show prices with Tax in Klevu search results. </br>
+                    This change will take place during the next data sync via Cron, CLI Command or manual sync. ]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

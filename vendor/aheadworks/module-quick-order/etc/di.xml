@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Aheadworks\QuickOrder\Api\CustomerManagementInterface" type="Aheadworks\QuickOrder\Model\Service\CustomerService"/>
+
+    <preference for="Aheadworks\QuickOrder\Api\Data\ProductListInterface" type="Aheadworks\QuickOrder\Model\ProductList"/>
+    <preference for="Aheadworks\QuickOrder\Api\Data\ProductListSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" type="Aheadworks\QuickOrder\Model\ProductListRepository"/>
+    <preference for="Aheadworks\QuickOrder\Api\ProductListManagementInterface" type="Aheadworks\QuickOrder\Model\Service\ProductListService"/>
+    <preference for="Aheadworks\QuickOrder\Api\CartManagementInterface" type="Aheadworks\QuickOrder\Model\Service\CartService"/>
+    <preference for="Aheadworks\QuickOrder\Api\GuestCartManagementInterface" type="Aheadworks\QuickOrder\Model\Service\GuestCartService"/>
+
+    <preference for="Aheadworks\QuickOrder\Api\Data\ProductListItemInterface" type="Aheadworks\QuickOrder\Model\ProductList\Item"/>
+    <preference for="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" type="Aheadworks\QuickOrder\Model\ProductList\ItemRepository"/>
+    <preference for="Aheadworks\QuickOrder\Api\Data\ItemDataInterface" type="Aheadworks\QuickOrder\Model\ProductList\Item\ItemData"/>
+
+    <preference for="Aheadworks\QuickOrder\Api\Data\OperationResultInterface" type="Aheadworks\QuickOrder\Model\ProductList\OperationResult"/>
+    <preference for="Aheadworks\QuickOrder\Api\Data\OperationResultMessageInterface" type="Aheadworks\QuickOrder\Model\ProductList\OperationResult\Message"/>
+
+    <preference for="Aheadworks\QuickOrder\Api\Data\GroupedItemOptionValueInterface" type="Aheadworks\QuickOrder\Model\Product\Option\Grouped\ItemOptionValue"/>
+    <preference for="Aheadworks\QuickOrder\Api\Data\CustomOptionValueInterface" type="Aheadworks\QuickOrder\Model\Product\Option\CustomOptions\CustomOptionValue"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aw_quick_order_item_listing_data_source" xsi:type="string">Aheadworks\QuickOrder\Model\ResourceModel\ProductList\Item\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Aheadworks\QuickOrder\Api\Data\ProductListInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\QuickOrder\Model\ResourceModel\ProductList::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\QuickOrder\Api\Data\ProductListInterface::LIST_ID</item>
+                </item>
+                <item name="Aheadworks\QuickOrder\Api\Data\ProductListItemInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\QuickOrder\Model\ResourceModel\ProductList\Item::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\QuickOrder\Api\Data\ProductListItemInterface::ITEM_ID</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Aheadworks\QuickOrder\Api\Data\ProductListInterface" xsi:type="array">
+                    <item name="create" xsi:type="array">
+                        <item name="itemCreator" xsi:type="string">Aheadworks\QuickOrder\Model\ResourceModel\ProductList\Relation\Item\SaveHandler</item>
+                    </item>
+                    <item name="read" xsi:type="array">
+                        <item name="itemReader" xsi:type="string">Aheadworks\QuickOrder\Model\ResourceModel\ProductList\Relation\Item\ReadHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="itemUpdater" xsi:type="string">Aheadworks\QuickOrder\Model\ResourceModel\ProductList\Relation\Item\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\QuickOrder\Model\ProductList\Item\CompositeProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="common" xsi:type="object">Aheadworks\QuickOrder\Model\ProductList\Item\Processor\Common</item>
+                <item name="qty" xsi:type="object">Aheadworks\QuickOrder\Model\ProductList\Item\Processor\Qty</item>
+                <item name="productOption" xsi:type="object">Aheadworks\QuickOrder\Model\ProductList\Item\Processor\ProductOption</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\QuickOrder\Model\Product\DetailProvider\Pool">
+        <arguments>
+            <argument name="typeList" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\DefaultProvider</item>
+                <item name="configurable" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\ConfigurableProvider</item>
+                <item name="downloadable" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\DownloadableProvider</item>
+                <item name="bundle" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\BundleProvider</item>
+                <item name="grouped" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\GroupedProvider</item>
+                <item name="giftcard" xsi:type="string">Aheadworks\QuickOrder\Model\Product\DetailProvider\EnterpriseGiftCardProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\QuickOrder\Model\Product\View\Processor\RendererComposite">
+        <arguments>
+            <argument name="rendererList" xsi:type="array">
+                <item name="image" xsi:type="object">Aheadworks\QuickOrder\Model\Product\View\Processor\Renderer\Image</item>
+                <item name="options" xsi:type="object">Aheadworks\QuickOrder\Model\Product\View\Processor\Renderer\Options</item>
+                <item name="eeGiftCard" xsi:type="object">Aheadworks\QuickOrder\Model\Product\View\Processor\Renderer\EnterpriseGiftCard</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\QuickOrder\Model\Product\Option\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="bundle" xsi:type="string">Aheadworks\QuickOrder\Model\Product\Option\Bundle\Processor</item>
+                <item name="configurable" xsi:type="string">Magento\ConfigurableProduct\Model\ProductOptionProcessor</item>
+                <item name="custom_options" xsi:type="string">Aheadworks\QuickOrder\Model\Product\Option\CustomOptions\ProductOptionProcessor</item>
+                <item name="downloadable" xsi:type="string">Magento\Downloadable\Model\ProductOptionProcessor</item>
+                <item name="grouped" xsi:type="string">Aheadworks\QuickOrder\Model\Product\Option\Grouped\Processor</item>
+                <item name="giftcard" xsi:type="string">Magento\GiftCard\Model\ProductOptionProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\QuickOrder\Model\FileSystem\Import\Csv">
+        <arguments>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="0" xsi:type="string">csv</item>
+                <item name="1" xsi:type="string">txt</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\QuickOrder\Controller\QuickOrder\File\DownloadSample">
+        <arguments>
+            <argument name="sampleProductData" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="0" xsi:type="string">MJ12</item>
+                    <item name="1" xsi:type="string">1</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="0" xsi:type="string">24-MB01</item>
+                    <item name="1" xsi:type="string">4</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="0" xsi:type="string">24-MB05</item>
+                    <item name="1" xsi:type="string">2</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\GiftCard\Model\ProductOptionProcessor">
+        <plugin name="aw-qo-extension-attributes-plugin" type="Aheadworks\QuickOrder\Plugin\Model\EnterpriseGiftCard\ProductOptionProcessorPlugin"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\Options\Type\Select\Checkable">
+        <plugin name="aw-qo-product-option-checkable-plugin" type="Aheadworks\QuickOrder\Plugin\Block\Product\View\Options\Type\Select\CheckablePlugin"/>
+    </type>
+</config>

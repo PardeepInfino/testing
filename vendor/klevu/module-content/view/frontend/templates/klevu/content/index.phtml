@@ -1,0 +1,28 @@
+<?php
+/**
+ * Content listing template
+ *
+ * @var $block \Klevu\Content\Block\Index
+ */
+?>
+<?php echo $block->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+<?php $datasets = $block->getCmsContent(); ?>
+<?php if (count($datasets)>0) : ?>
+<div class="category-products">
+<ol id="products-list" class="products-list">
+        <?php foreach ($datasets as $key => $value) :?>
+            <li class="item">
+                <h2 class="product-name">
+					<a title="<?php echo $block->escapeHtml($value["name"]);?>" target="_blank" 
+					href="<?php /* @escapeNotVerified */ echo $value["url"]; ?>">
+					<?php echo $block->escapeHtml( $value["name"]);?></a></h2>           
+                <?php  if (!empty($value['shortDesc'])) { ?>				
+                    <div class="desc std"><?php /* @escapeNotVerified */ echo $value["shortDesc"]."..."; ?> </div>
+                <?php } ?>
+            </li>
+        <?php endforeach; ?>
+</ol>
+</div>
+<?php else : ?>
+    <div class="message notice"><div><?php /* @escapeNotVerified */ echo __('No Records Found.'); ?></div></div>
+<?php endif ?>

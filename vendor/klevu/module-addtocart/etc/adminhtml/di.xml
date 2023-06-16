@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Klevu\Search\Plugin\Admin\System\Config\Form\Field\HideLabelForSingleStoreModePlugin">
+        <arguments>
+            <argument name="labelsToHide" xsi:type="array">
+                <item name="klevu_search_add_to_cart_enabled_info" xsi:type="string"><![CDATA[klevu_search_add_to_cart_enabled_info]]></item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Klevu\Search\Service\Admin\System\Config\Form\Field\RenderAction\UpdateConfigValueIfFeatureUnavailable">
+        <arguments>
+            <argument name="fieldUpdateConfig" xsi:type="array">
+                <item name="klevu_search_add_to_cart_enabledaddtocartfront" xsi:type="array">
+                    <item name="element_id" xsi:type="string">klevu_search_add_to_cart_enabledaddtocartfront</item>
+                    <item name="feature" xsi:type="const">Klevu\Search\Service\Account\Model\AccountFeatures::PM_FEATUREFLAG_ADD_TO_CART</item>
+                    <item name="value" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Klevu\Search\Service\Admin\System\Config\Form\Field\RenderAction\DisableFieldIfFeatureUnavailable">
+        <arguments>
+            <argument name="fieldToFeatureMap" xsi:type="array">
+                <item name="klevu_search_add_to_cart_enabledaddtocartfront" xsi:type="const">Klevu\Search\Service\Account\Model\AccountFeatures::PM_FEATUREFLAG_ADD_TO_CART</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

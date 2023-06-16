@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <aw_requisition_lists>
+            <general>
+                <enabled>0</enabled>
+                <show_in_order_page>0</show_in_order_page>
+                <show_in_catalog>0</show_in_catalog>
+                <show_in_cart_page>0</show_in_cart_page>
+            </general>
+        </aw_requisition_lists>
+    </default>
+</config>

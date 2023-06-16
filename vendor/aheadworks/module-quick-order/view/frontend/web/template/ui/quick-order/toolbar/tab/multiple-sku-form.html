@@ -1,0 +1,32 @@
+<form id="multiple-sku-form" class="form" data-bind="attr: {'data-role': formDataRole}">
+    <fieldset class="fieldset">
+        <div class="field text required sku-list-input">
+            <label for="multiple-sku-input" class="label">
+                <span><!-- ko i18n: 'Enter Multiple SKUs'--><!-- /ko --></span>
+            </label>
+            <div class="control">
+                <textarea
+                       id="multiple-sku-input"
+                       class="input-text"
+                       cols="15"
+                       rows="3"
+                       data-bind="
+                            attr: {title: $t('Enter Multiple SKUs')},
+                            value: skuListValue"
+                       data-validate="{required:true}">
+                </textarea>
+                <span class="notice"><!-- ko i18n: 'Each SKU must be on a new line'--><!-- /ko --></span>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button id="multiple-add-to-list"
+                    class="action primary"
+                    data-bind="{click: addToList}"
+                    type="submit">
+                <span data-bind="i18n: 'Add to List'"></span>
+            </button>
+        </div>
+    </div>
+</form>

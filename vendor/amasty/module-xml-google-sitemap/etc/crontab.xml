@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package XML Google® Sitemap for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="amasty_xml_sitemap_generate" instance="Amasty\XmlSitemap\Model\Cron\GenerateSitemap" method="execute">
+            <config_path>crontab/default/jobs/amasty_xml_sitemap_generate/schedule/cron_expr</config_path>
+        </job>
+    </group>
+</config>

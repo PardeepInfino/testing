@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Klevu\Search\Block\Search\ConfigurableSortBy">
+		<arguments>
+			<argument name="serializer" xsi:type="object">Klevu\Search\Serializer\Json</argument>
+			<argument name="productListSortOrdersSource" xsi:type="object">Klevu\Search\Model\Source\ProductListSortOrders</argument>
+		</arguments>
+	</type>
+
+	<type name="Klevu\Search\Service\ThemeV2\InteractiveOptionsProvider\FrontendOptionsProvider">
+		<arguments>
+			<argument name="isEnabledCondition" xsi:type="object">Klevu\Search\Service\ThemeV2\IsEnabledCondition</argument>
+		</arguments>
+	</type>
+
+	<virtualType name="Klevu\FrontendJs\Service\InteractiveOptionsGenerator\Frontend">
+		<arguments>
+			<argument name="interactiveOptionsProviders" xsi:type="array">
+				<item name="_klevu_themev2_frontend" xsi:type="object">Klevu\Search\Service\ThemeV2\InteractiveOptionsProvider\FrontendOptionsProvider</item>
+			</argument>
+		</arguments>
+	</virtualType>
+
+	<type name="Magento\Search\ViewModel\ConfigProvider">
+		<plugin name="Klevu_Search::SearchConfigProviderDisableSuggestionsIfKlevuEnabled" type="Klevu\Search\Plugin\Search\ViewModel\ConfigProviderPlugin"/>
+	</type>
+
+	<type name="Magento\Search\Helper\Data">
+		<plugin name="Klevu_Search::SearchHelperGetResultUrlIfKlevuEnabled" type="Klevu\Search\Plugin\Search\Helper\DataPlugin"/>
+	</type>
+</config>

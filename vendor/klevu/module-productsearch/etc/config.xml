@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <klevu_search>
+            <general>
+                <enabled>0</enabled>
+                <hostname>box.klevu.com</hostname>
+                <rest_hostname>rest.klevu.com</rest_hostname>
+                <cloud_search_url>eucs.klevu.com</cloud_search_url>
+                <cloud_search_v2_url>eucsv2.klevu.com</cloud_search_v2_url>
+                <analytics_url>stats.klevu.com</analytics_url>
+                <js_url>js.klevu.com</js_url>
+                <tiers_url>tiers.klevu.com</tiers_url>
+                <api_url>api.ksearchnet.com</api_url>
+            </general>
+            <product_sync>
+                <enabled>1</enabled>
+                <catalogvisibility>0</catalogvisibility>
+                <include_oos>0</include_oos>
+                <frequency>0 */3 * * *</frequency>
+                <last_run>Never</last_run>
+                <sync_options>1</sync_options>
+                <order_sync_enabled>1</order_sync_enabled>
+                <order_sync_frequency>0 2 * * *</order_sync_frequency>
+                <order_sync_frequency_custom/>
+                <order_sync_max_batch_size/>
+				<lockfile>172800</lockfile>
+				<category_sync_enabled>1</category_sync_enabled>
+				<rating_sync_enabled>1</rating_sync_enabled>
+                <batch_size>100</batch_size>
+                <history_length>1</history_length>
+            </product_sync>
+            <order_sync>
+                <max_sync_select_limit />
+            </order_sync>
+            <attributes>
+                <categoryanchor>0</categoryanchor>
+            </attributes>
+            <developer>
+                <collection_method>0</collection_method>
+                <product_sync_records_per_page>100</product_sync_records_per_page>
+                <force_log>1</force_log>
+                <log_level>6</log_level>
+                <preserve_layout_log_enabled>0</preserve_layout_log_enabled>
+                <preserve_layout_log_level>7</preserve_layout_log_level>
+                <!-- See configuration at klevu_logger/preserve_layout_configuration/min_log_level -->
+                <theme_version>v2</theme_version>
+                <quicksearch_selector><![CDATA[input[type=text][name=q],input[type=search][name=q]]]></quicksearch_selector>
+                <orders_percentage>30</orders_percentage>
+                <days_to_calculate_orders>30</days_to_calculate_orders>
+                <orderip>remote_ip</orderip>
+                <lazyload_js_quick_search>0</lazyload_js_quick_search>
+                <lazyload_js_search_landing>0</lazyload_js_search_landing>
+                <content_min_height_srlp/>
+            </developer>
+            <searchlanding>
+                <landenabled>2</landenabled>
+                <klevu_search_relevance>1</klevu_search_relevance>
+                <klevu_search_sort_orders><![CDATA[[]]]></klevu_search_sort_orders>
+                <relevance_label>Relevance</relevance_label>
+            </searchlanding>
+            <image_setting>
+                <image_width>200</image_width>
+                <image_height>200</image_height>
+            </image_setting>
+            <price_per_customer_group>
+                <enabled>0</enabled>
+            </price_per_customer_group>
+            <notification>
+                <object_vs_collection>1</object_vs_collection>
+                <lock_file>1</lock_file>
+                <orders_with_same_ip>1</orders_with_same_ip>
+            </notification>
+            <features_api>
+                <last_sync_date>0</last_sync_date>
+            </features_api>
+        </klevu_search>
+        <klevu_logger>
+            <!-- Deprecated -->
+            <preserve_layout_configuration>
+                <min_log_level>6</min_log_level>
+            </preserve_layout_configuration>
+        </klevu_logger>
+        <tax>
+            <display>
+                <typeinsearch>1</typeinsearch>
+            </display>
+        </tax>
+    </default>
+</config>

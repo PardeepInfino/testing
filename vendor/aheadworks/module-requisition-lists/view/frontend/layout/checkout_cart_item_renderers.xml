@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.cart.item.renderers.default.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.default.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.default.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.simple.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.simple.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.simple.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.bundle.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.bundle.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.bundle.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.downloadable.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.downloadable.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.downloadable.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.grouped.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.grouped.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.grouped.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.configurable.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.configurable.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.configurable.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.virtual.actions">
+            <block class="Aheadworks\RequisitionLists\Block\Cart\Item\Renderer\Actions\AddToList" name="checkout.cart.item.renderers.virtual.actions.view.addto.requisition.list" template="Aheadworks_RequisitionLists::cart/item/addto/requisitionlist.phtml" before="checkout.cart.item.renderers.virtual.actions.edit">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          registration.php
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+
+\Magento\Framework\Component\ComponentRegistrar::register(
+    \Magento\Framework\Component\ComponentRegistrar::MODULE,
+    'Xtento_StockImport',
+    __DIR__
+);

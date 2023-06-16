@@ -1,0 +1,11 @@
+<div if="messageList" role="alert" data-bind="foreach: { data: messageList, as: 'message' }" class="messages">
+    <div data-bind="attr: {
+            class: 'message-' + message.type + ' ' + message.type + ' message',
+            'data-ui-id': 'message-' + message.type
+        }">
+        <div>
+            <span class="message-title" if="message.title" data-bind="text: message.title + ' - '"></span>
+            <span class="message-text" data-bind="text: message.text"></span>
+        </div>
+    </div>
+</div>

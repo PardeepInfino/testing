@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.content">
+            <block before="page_main_actions" class="Xtento\StockImport\Block\Adminhtml\Widget\Menu" name="stockimport.menu"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Xtento\StockImport\Block\Adminhtml\Source\Edit" name="stockimport_source_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Xtento\StockImport\Block\Adminhtml\Source\Edit\Tabs" name="stockimport_source_edit_tabs">
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">general</argument>
+                    <argument name="block" xsi:type="string">Xtento\StockImport\Block\Adminhtml\Source\Edit\Tab\Configuration</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
+
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          view/adminhtml/layout/xtento_stockimport_source_edit.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

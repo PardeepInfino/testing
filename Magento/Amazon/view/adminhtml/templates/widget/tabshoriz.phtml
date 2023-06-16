@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<!-- <?php if ($block->getTitle()): ?>
+    <h3><?= /* @escapeNotVerified */ $block->getTitle() ?></h3>
+<?php endif ?> -->
+<?php if (!empty($tabs)): ?>
+    <div id="<?= /* @escapeNotVerified */ $block->getId() ?>">
+        <ul  class="tabs-horiz">
+            <?php foreach ($tabs as $tab): ?>
+                <?php if (!$block->canShowTab($tab)): continue;  endif; ?>
+                <?php $_tabClass = 'tab-item-link ' . $block->getTabClass($tab) . ' ' . (preg_match('/\s?ajax\s?/', (string) $tab->getClass()) ? 'notloaded' : '') ?>
+                <?php $_tabType = (!preg_match('/\s?ajax\s?/', $_tabClass) && $block->getTabUrl($tab) != '#') ? 'link' : '' ?>
+                <?php $_tabHref = $block->getTabUrl($tab) == '#' ? '#' . $block->getTabId($tab) . '_content' : $block->getTabUrl($tab) ?>
+                <li>
+                    <a href="<?= /* @escapeNotVerified */ $_tabHref ?>" id="<?= /* @escapeNotVerified */ $block->getTabId($tab) ?>" title="<?= /* @escapeNotVerified */ $block->getTabTitle($tab) ?>" class="<?php $_tabClass ?>" data-tab-type="<?php $_tabType ?>">
+            <span>
+                <span class="changed" title="<?= /* @escapeNotVerified */ __('The information in this tab has been changed.') ?>"></span>
+                <span class="error" title="<?= /* @escapeNotVerified */ __('This tab contains invalid data. Please resolve this before saving.') ?>"></span>
+                <span class="loader" title="<?= /* @escapeNotVerified */ __('Loading...') ?>"></span>
+                <?= /* @escapeNotVerified */ $block->getTabLabel($tab) ?>
+            </span>
+                    </a>
+                    <div id="<?= /* @escapeNotVerified */ $block->getTabId($tab) ?>_content" style="display:none"><?= /* @escapeNotVerified */ $block->getTabContent($tab) ?></div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <script>
+        require(["jquery","mage/backend/tabs"], function($){
+            $(function() {
+                $('#<?= /* @escapeNotVerified */ $block->getId() ?>').tabs({
+                    active: '<?= /* @escapeNotVerified */ $block->getActiveTabId() ?>',
+                    destination: '#<?= /* @escapeNotVerified */ $block->getDestElementId() ?>',
+                    shadowTabs: <?= /* @escapeNotVerified */ $block->getAllShadowTabs() ?>
+                });
+            });
+        });
+    </script>
+<?php endif; ?>

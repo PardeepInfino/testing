@@ -1,0 +1,20 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package Visual Merchandiser for Magento 2
+ */ /** @var $block \Amasty\VisualMerch\Block\Adminhtml\Conditions */ ?>
+<div id="am-condition-from-wrapper">
+    <?= $block->getConditionsForm()->toHtml(); ?>
+</div>
+<?= $block->getConditionsButton()->toHtml(); ?>
+<div class="note admin__field-note"><?= __("After you click the 'Apply Conditions' button, the category will display only the products that are matching the conditions.") ?></div>
+<script>
+    require([
+        "Amasty_VisualMerch/js/rules",
+        "prototype"
+    ], function (AmastyRulesForm) {
+        window.category_formrule_conditions_fieldset_ = new AmastyRulesForm('category_formrule_conditions_fieldset_', '<?= /* @escapeNotVerified */ $block->getConditionFormNewChildUrl(
+        ) ?>', '<?= /* @escapeNotVerified */ $block->getConditionFormImportUrl() ?>');
+    });
+</script>

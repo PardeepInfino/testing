@@ -1,0 +1,3 @@
+mutation {
+    setReadOnlyMode(enabled: true)
+}

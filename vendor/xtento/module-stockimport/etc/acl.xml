@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::system">
+                    <resource id="Xtento_XtCore::extensions">
+                        <resource id="Xtento_StockImport::configuration" title="Stock Import Module" sortOrder="30"/>
+                    </resource>
+                </resource>
+                <resource id="Magento_Catalog::catalog">
+                    <resource id="Xtento_StockImport::menu" title="Stock Import Module" sortOrder="1000">
+                        <resource id="Xtento_StockImport::manual" title="Manual Import" sortOrder="5"/>
+                        <resource id="Xtento_StockImport::log" title="Execution Log" sortOrder="10"/>
+                        <resource id="Xtento_StockImport::profile" title="Import Profiles" sortOrder="20"/>
+                        <resource id="Xtento_StockImport::source" title="Import Sources" sortOrder="30"/>
+                        <resource id="Xtento_StockImport::tools" title="Tools" sortOrder="40"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          etc/acl.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

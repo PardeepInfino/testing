@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Managing Cart -->
+    <route url="/V1/awCoCartManagement/addListToCart" method="PUT">
+        <service class="Aheadworks\QuickOrder\Api\CartManagementInterface" method="addListToCart"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoGuestCartManagement/addListToCart" method="PUT">
+        <service class="Aheadworks\QuickOrder\Api\GuestCartManagementInterface" method="addListToCart"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <!-- Managing Customer -->
+    <route url="/V1/awCoCustomerManagement/isActiveForCustomerGroup" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\CustomerManagementInterface" method="isActiveForCustomerGroup"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <!-- Product List Repository -->
+    <route url="/V1/awCoProductListRepository/get/:listId" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListRepository/getByCustomerId/:customerId" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" method="getByCustomerId"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListRepository/save" method="POST">
+        <service class="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListRepository/save/:listId" method="PUT">
+        <service class="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListRepository/search" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\ProductListRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+    <!-- Managing Product List -->
+    <route url="/V1/awCoProductListManagement/addItemsToList" method="POST">
+        <service class="Aheadworks\QuickOrder\Api\ProductListManagementInterface" method="addItemsToList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListManagement/removeAllItemsFromList/:listId" method="DELETE">
+        <service class="Aheadworks\QuickOrder\Api\ProductListManagementInterface" method="removeAllItemsFromList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListManagement/updateItem" method="PUT">
+        <service class="Aheadworks\QuickOrder\Api\ProductListManagementInterface" method="updateItem"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListManagement/removeItem/:itemKey" method="DELETE">
+        <service class="Aheadworks\QuickOrder\Api\ProductListManagementInterface" method="removeItem"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <!-- Product List Item Repository -->
+    <route url="/V1/awCoProductListItemRepository/get/:itemId" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListItemRepository/getByKey/:itemKey" method="GET">
+        <service class="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" method="getByKey"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListItemRepository/save" method="POST">
+        <service class="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListItemRepository/save/:itemId" method="PUT">
+        <service class="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/awCoProductListItemRepository/deleteById/:itemId" method="DELETE">
+        <service class="Aheadworks\QuickOrder\Api\ProductListItemRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Aheadworks_QuickOrder::manage"/>
+        </resources>
+    </route>
+</routes>

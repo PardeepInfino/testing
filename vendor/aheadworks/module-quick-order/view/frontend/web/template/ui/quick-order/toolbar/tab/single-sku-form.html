@@ -1,0 +1,64 @@
+<form id="single-sku-form" class="form" data-bind="attr: {'data-role': formDataRole}">
+    <fieldset class="fieldset" css="one_field_width: !isQtyFieldVisible">
+        <div class="field text required single-search">
+            <label for="single-search-input" class="label">
+                <span><!-- ko i18n: 'Enter Individual SKU or Product Name'--><!-- /ko --></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="single-product"
+                       id="single-search-input"
+                       class="input-text"
+                       afterRender="initAutoComplete"
+                       data-bind='
+                            attr: {title: $t("Enter Individual SKU or Product Name")},
+                            value: singleSearchValue'
+                       data-validate="{'required':true}"/>
+            </div>
+        </div>
+        <div class="field number single-qty" if="isQtyFieldVisible">
+            <label for="single-qty-input" class="label">
+                <span><!-- ko i18n: 'Qty'--><!-- /ko --></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="single-qty"
+                       id="single-qty-input"
+                       class="input-text"
+                       data-bind='
+                            attr: {title: $t("Qty")},
+                            value: singleQtyValue'
+                       data-validate="{'validate-digits': true, 'validate-greater-than-zero':true}"/>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button id="single-add-to-list"
+                    class="action primary"
+                    data-bind="{click: addToList}"
+                    if="isAddToListButtonVisible"
+                    type="submit">
+                <span data-bind="i18n: 'Add to List'"></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script id="aw-qo-search-result-item" type="text/x-magento-template">
+    <li class="ui-menu-item">
+        <a class="menu-item-link"></a>
+        <% if (item.sku) { %>
+            <div class="column image">
+                <img src="<%- item.url %>">
+            </div>
+            <div class="column description">
+                <a class="name"><%- item.name %></a>
+                <span class="sku"><%- item.sku %></span>
+            </div>
+        <% } else { %>
+        <div class="column message">
+            <span class="not-found"><%- item.notFoundMessage %></span>
+        </div>
+        <% } %>
+    </li>
+</script>

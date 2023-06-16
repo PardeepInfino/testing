@@ -1,0 +1,19 @@
+<?php
+/**
+ * Content top tabs template
+ *
+ * @var $block \Klevu\Content\Block\Index
+ */
+?>
+<?php if($block->isCmsSyncEnabledOnFront()): ?>
+<?php $url = $block->getCatalogSearchURL(); ?>
+<?php $url_content = $block->getContentSearchURL(); ?>
+<div class="page-title">     
+	<?php $selected_tab = $block->getModuleName();?>
+        <a href="<?php /* @escapeNotVerified */ echo $url; ?>" <?php if ($selected_tab == "catalogsearch") {
+?> class="contentSelect" <?php
+} ?> ><?php /* @escapeNotVerified */ echo __('Products'); ?></a> | <a href="<?php /* @escapeNotVerified */ echo $url_content; ?>" <?php if ($selected_tab == "content") {
+?> class="contentSelect" <?php
+} ?>><?php /* @escapeNotVerified */ echo __('Other Content'); ?></a>
+</div>
+<?php endif; ?>

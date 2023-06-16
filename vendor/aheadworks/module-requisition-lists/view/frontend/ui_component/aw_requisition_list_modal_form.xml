@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<modal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                aw_requisition_list_modal_form.aw_requisition_list_modal_form_data_source
+            </item>
+        </item>
+        <item name="template" xsi:type="string">templates/modal/default</item>
+    </argument>
+    <settings>
+        <options>
+            <option name="title" xsi:type="string" translate="true">New Requisition List</option>
+            <option name="type" xsi:type="string">popup</option>
+        </options>
+        <deps>
+            <dep>aw_requisition_list_modal_form.aw_requisition_list_modal_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="aw_requisition_list_modal_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="aw_rl/rlist/save"/>
+        </settings>
+        <dataProvider name="aw_requisition_list_modal_form_data_source"
+                      class="Aheadworks\RequisitionLists\Ui\DataProvider\RequisitionList\FormDataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <form name="aw_requisition_list_form" component="Aheadworks_RequisitionLists/js/ui/form/form">
+        <settings>
+            <dataScope>data</dataScope>
+        </settings>
+        <fieldset name="general" template="Aheadworks_RequisitionLists/form/element/fieldset" sortOrder="10">
+            <settings>
+                <label/>
+            </settings>
+            <input name="name" sortOrder="10">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="default" xsi:type="string" translate="true">My List</item>
+                    </item>
+                </argument>
+                <settings>
+                    <label translate="true">List Name</label>
+                    <dataScope>name</dataScope>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-no-html-tags" xsi:type="boolean">true</rule>
+                    </validation>
+                </settings>
+            </input>
+            <textarea name="description" sortOrder="20">
+                <settings>
+                    <label translate="true">Description</label>
+                    <dataScope>description</dataScope>
+                    <validation>
+                        <rule name="validate-no-html-tags" xsi:type="boolean">true</rule>
+                    </validation>
+                </settings>
+            </textarea>
+            <button name="create" sortOrder="30">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="buttonClasses" xsi:type="string">action primary</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">
+                                    ns = ${ $.ns }, index = aw_requisition_list_form
+                                </item>
+                                <item name="actionName" xsi:type="string">save</item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+                <settings>
+                    <title translate="true">Create</title>
+                </settings>
+            </button>
+        </fieldset>
+    </form>
+</modal>

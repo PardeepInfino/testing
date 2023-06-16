@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package Alt Tag Generator for Magento 2 (System)
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Product\Gallery\ReadHandler">
+        <plugin name="Amasty_AltTagGenerator::modify-image-label" type="Amasty\AltTagGenerator\Plugin\Catalog\Model\Product\Gallery\ReadHandler\ModifyImageLabel" />
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <plugin name="Amasty_AltTagGenerator::modify-image-label" type="Amasty\AltTagGenerator\Plugin\Catalog\Model\ResourceModel\Product\Collection\ModifyImageLabel" />
+    </type>
+</config>

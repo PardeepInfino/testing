@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Manually Data Sync</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="minicart" remove="true" />
+        <referenceContainer name="header.panel" remove="true" />
+        <referenceBlock name="top.search" remove="true" />
+        <referenceBlock name="catalog.compare.link" remove="true" />
+        <referenceBlock name="catalog.topnav" remove="true"/>
+        <referenceContainer name="footer-container"  remove="true"/>
+
+        <referenceBlock name="content">
+            <block class="Klevu\Search\Block\Search\Index\Sync"
+                   template="Klevu_Search::klevu/search/ajaxsync.phtml"
+                   name="search_index_syncstore"
+                   cacheable="false" />
+        </referenceBlock>
+
+        <referenceBlock name="klevu_search.html_head.themev2.js_variables" remove="true"/>
+        <referenceBlock name="klevu_frontendjs.js_includes.core" remove="true"/>
+        <referenceBlock name="klevu_frontendjs.js_api_keys" remove="true"/>
+        <referenceBlock name="klevu_frontendjs.js_init" remove="true"/>
+        <referenceBlock name="klevu_frontendjs.js_includes" remove="true"/>
+        <referenceBlock name="klevu_search.search.css_includes" remove="true"/>
+    </body>
+</page>

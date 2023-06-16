@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Aheadworks\RequisitionLists\Api\Data\RequisitionListInterface" type="Aheadworks\RequisitionLists\Model\RequisitionList" />
+    <preference for="Aheadworks\RequisitionLists\Api\Data\RequisitionListItemInterface" type="Aheadworks\RequisitionLists\Model\RequisitionList\Item" />
+    <preference for="Aheadworks\RequisitionLists\Api\RequisitionListRepositoryInterface" type="Aheadworks\RequisitionLists\Model\RequisitionListRepository" />
+    <preference for="Aheadworks\RequisitionLists\Api\RequisitionListItemRepositoryInterface" type="Aheadworks\RequisitionLists\Model\RequisitionListItemRepository" />
+    <preference for="Aheadworks\RequisitionLists\Api\Data\RequisitionListSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\RequisitionLists\Api\Data\RequisitionListItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\RequisitionLists\Api\CartManagementInterface" type="Aheadworks\RequisitionLists\Model\Service\CartManagement" />
+    <preference for="Aheadworks\RequisitionLists\Api\Data\GroupedItemOptionValueInterface" type="Aheadworks\RequisitionLists\Model\Product\Option\Grouped\ItemOptionValue"/>
+    <preference for="Aheadworks\RequisitionLists\Api\CustomerManagementInterface" type="Aheadworks\RequisitionLists\Model\Service\CustomerService"/>
+    <preference for="Aheadworks\RequisitionLists\Api\RequisitionListManagementInterface" type="Aheadworks\RequisitionLists\Model\Service\RequisitionListService"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aw_requisition_list_listing_data_source" xsi:type="string">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Grid\Collection</item>
+                <item name="aw_requisition_list_item_listing_data_source" xsi:type="string">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Aheadworks\RequisitionLists\Api\Data\RequisitionListInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\RequisitionLists\Api\Data\RequisitionListInterface::LIST_ID</item>
+                </item>
+                <item name="Aheadworks\RequisitionLists\Api\Data\RequisitionListItemInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\RequisitionLists\Api\Data\RequisitionListItemInterface::ITEM_ID</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Aheadworks\RequisitionLists\Ui\DataProvider\RequisitionList\ListingDataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Collection</argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\RequisitionLists\Ui\DataProvider\RequisitionList\Item\ListingDataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item\Collection</argument>
+        </arguments>
+    </type>
+    
+    <type name="Aheadworks\RequisitionLists\Model\RequisitionList\Item\Options\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="bundle" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\Option\Bundle\Processor</item>
+                <item name="configurable" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\Option\Configurable\Processor</item>
+                <item name="custom_options" xsi:type="object">Magento\Catalog\Model\ProductOptionProcessor</item>
+                <item name="downloadable" xsi:type="object">Magento\Downloadable\Model\ProductOptionProcessor</item>
+                <item name="grouped" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\Option\Grouped\Processor</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Aheadworks\RequisitionLists\Model\Product\DetailProvider\Pool">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="simple" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\DetailProvider\SimpleProvider</item>
+                <item name="grouped" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\DetailProvider\GroupedProvider</item>
+                <item name="bundle" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\DetailProvider\BundleProvider</item>
+                <item name="configurable" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\DetailProvider\ConfigurableProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\RequisitionLists\Model\Product\View\Processor\RendererComposite">
+        <arguments>
+            <argument name="rendererList" xsi:type="array">
+                <item name="image" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\View\Processor\Renderer\Image</item>
+                <item name="options" xsi:type="object">Aheadworks\RequisitionLists\Model\Product\View\Processor\Renderer\Options</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Aheadworks\RequisitionLists\Api\Data\RequisitionListItemInterface" xsi:type="array">
+                    <item name="create" xsi:type="array">
+                        <item name="requisitionListItemHandler" xsi:type="string">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item\Relation\RequisitionList\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="requisitionListItemHandler" xsi:type="string">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item\Relation\RequisitionList\SaveHandler</item>
+                    </item>
+                    <item name="delete" xsi:type="array">
+                        <item name="requisitionListItemHandler" xsi:type="string">Aheadworks\RequisitionLists\Model\ResourceModel\RequisitionList\Item\Relation\RequisitionList\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\App\Action\AbstractAction">
+        <plugin name="awReqList" type="Aheadworks\RequisitionLists\Plugin\App\Action\ContextPlugin" />
+    </type>
+</config>

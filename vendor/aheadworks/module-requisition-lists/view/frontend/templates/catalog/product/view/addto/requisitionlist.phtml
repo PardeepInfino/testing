@@ -1,0 +1,33 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Ui\Block\Wrapper */
+?>
+<?php
+    /** @var \Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider $viewModel */
+    $viewModel = $block->getListViewModel();
+    $isEnabled = $viewModel->getIsEnabled();
+?>
+<?php if ($isEnabled): ?>
+    <div>
+        <div class="aw-rl__list-wrapper" data-role="aw-rl-listing" data-bind="scope: 'addToProductLink'">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "addToProductLink": {
+                                "component": "Aheadworks_RequisitionLists/js/ui/components/requisition-list/add-to",
+                                "urlToRequisitionList": "<?= /* @noEscape */ $viewModel->getUrlToRequisitionListPage() ?>",
+                                "isLoggined": "<?= /* @noEscape */ $viewModel->isLoggedUserIn() ?>",
+                                "addToRequisitionListUrl": "<?= /* @noEscape */ $viewModel->getAddToListUrl() ?>"
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+    </div>
+<?php endif; ?>

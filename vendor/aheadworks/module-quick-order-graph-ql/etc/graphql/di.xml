@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Aheadworks\QuickOrderGraphQl\Model\Resolver\ProductList\ItemTypeResolver">
+        <arguments>
+            <argument name="supportedTypes" xsi:type="array">
+                <item name="simple" xsi:type="string">AwQuickOrderSimpleProductItem</item>
+                <item name="configurable" xsi:type="string">AwQuickOrderConfigurableProductItem</item>
+                <item name="bundle" xsi:type="string">AwQuickOrderBundleProductItem</item>
+                <item name="virtual" xsi:type="string">AwQuickOrderVirtualProductItem</item>
+                <item name="downloadable" xsi:type="string">AwQuickOrderDownloadableProductItem</item>
+                <item name="giftcard" xsi:type="string">AwQuickOrderGiftcardProductItem</item>
+                <item name="aw_giftcard" xsi:type="string">AwQuickOrderAwGiftcardProductItem</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

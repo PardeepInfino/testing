@@ -1,0 +1,116 @@
+@import 'toolbar/_single-sku-form.less';
+@import 'toolbar/_multiple-sku-form.less';
+@import 'toolbar/_import-sku-form.less';
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    //
+    //  Quick order toolbar
+    //  _____________________________________________
+
+    #aw-qo-toolbar {
+        padding-bottom: 35px;
+
+        .toolbar-nav-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            .nav-item {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .ui-tabs-active {
+                display: none;
+            }
+        }
+
+        .toolbar-content-items {
+            .fieldset {
+                margin: 0;
+
+                .field {
+                    .input-text {
+                        .lib-css(border-color, @aw-qo-qty-field__border-color);
+                    }
+                }
+            }
+
+            .actions-toolbar {
+                .primary .action {
+                    white-space: nowrap;
+                }
+            }
+
+            .tab {
+                display: none;
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #aw-qo-toolbar {
+        .toolbar-nav-items {
+            text-align: center;
+            margin-bottom: 25px;
+
+            .nav-item {
+                margin: 0 10px;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    #aw-qo-toolbar {
+        .lib-vendor-prefix-display();
+        .lib-vendor-box-align(flex-start);
+        .lib-css(justify-content, space-between, 1);
+
+        .toolbar-nav-items {
+            .lib-vendor-prefix-order(2);
+            line-height: 1;
+
+            .nav-item {
+                margin:0 0 0 20px;
+            }
+        }
+
+        .toolbar-content-items {
+            width: 65%;
+            .lib-vendor-prefix-order(1);
+
+            .fieldset {
+                .field {
+                    margin-bottom: 0;
+                }
+            }
+
+            .form {
+                .lib-vendor-prefix-display();
+            }
+
+            .actions-toolbar {
+                margin-top: 27px;
+
+                .primary .action {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

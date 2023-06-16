@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Klevu\FrontendJs\Observer\InvalidateCustomerDataObserver">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Klevu\FrontendJs\Serializer\Json</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Klevu\FrontendJs\Service\InteractiveOptionsGenerator\Frontend"
+                 type="Klevu\FrontendJs\Service\InteractiveOptionsGenerator"/>
+
+    <type name="Klevu\FrontendJs\Block\Html\Head\JsApiKeys">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Klevu\FrontendJs\Serializer\Json</argument>
+            <argument name="interactiveOptionsGeneratorService" xsi:type="object">Klevu\FrontendJs\Service\InteractiveOptionsGenerator\Frontend</argument>
+        </arguments>
+    </type>
+
+    <type name="Klevu\FrontendJs\Block\Html\Head\JsInit">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Klevu\FrontendJs\Serializer\Json</argument>
+            <argument name="interactiveOptionsGeneratorService" xsi:type="object">Klevu\FrontendJs\Service\InteractiveOptionsGenerator\Frontend</argument>
+        </arguments>
+    </type>
+
+    <type name="Klevu\FrontendJs\Block\Html\Head\JsDeferredPowerUp">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Klevu\FrontendJs\Serializer\Json</argument>
+            <argument name="interactiveOptionsGeneratorService" xsi:type="object">Klevu\FrontendJs\Service\InteractiveOptionsGenerator\Frontend</argument>
+        </arguments>
+    </type>
+</config>

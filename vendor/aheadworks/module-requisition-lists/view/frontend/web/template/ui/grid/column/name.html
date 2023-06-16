@@ -1,0 +1,23 @@
+<div class="data-grid-cell-content">
+    <span text="textBeforeUrl"></span>
+    <table>
+        <tr>
+            <td class="aw-rl image-container">
+                <div class="image" data-bind="html: getImage($row())"></div>
+            </td>
+            <td class="aw-rl product-attributes">
+                <!-- ko if: (getUrl($row()) && isAvailableForSite($row())) -->
+                    <div class="product-name"><a data-bind="attr: {href: getUrl($row())}, html: getName($row())"></a></div>
+                <!-- /ko -->
+                <!-- ko if: (!getUrl($row()) || !isAvailableForSite($row())) -->
+                    <div class="product-name" data-bind="html: getName($row())"></div>
+                    <p class="not-available" translate="'Not available'"></p>
+                <!-- /ko -->
+                <div class="product-sku" data-bind="html: '<strong> SKU: </strong>' + getSku($row())"></div>
+                <!-- ko if: isOptionsNeed($row()) -->
+                    <div data-bind="template: {name: getOptionsRendererTemplate($row()), data: getProductAttributes($row())}"> </div>
+                <!-- /ko -->
+            </td>
+        </tr>
+    </table>
+</div>

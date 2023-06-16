@@ -1,0 +1,23 @@
+{
+    "name": "amasty/module-visual-merchandiser",
+    "description": "Visual Merchandiser by Amasty",
+    "require": {
+        "php": ">=7.3.0",
+        "amasty/visual-merch-ui": ">=1.0.9",
+        "amasty/base": ">=1.14.6",
+        "amasty/visual-merch-core": ">=1.1.1"
+    },
+    "type": "magento2-module",
+    "version": "1.5.10",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\VisualMerch\\": ""
+        }
+    }
+}

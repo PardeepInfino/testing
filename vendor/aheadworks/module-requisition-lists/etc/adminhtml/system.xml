@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="aheadworks" translate="label" sortOrder="300">
+            <label>Aheadworks Extensions</label>
+        </tab>
+        <section id="aw_requisition_lists" translate="label" type="text" sortOrder="230" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Requisition Lists</label>
+            <tab>aheadworks</tab>
+            <resource>Aheadworks_RequisitionLists::config_aw_requisition_lists</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Enable Requisition Lists</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_in_order_page" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Add to Requisition Lists from Order page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="show_in_catalog" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Add to Requisition Lists from Catalog Pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="show_in_cart_page" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Add to Requisition Lists from Cart page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

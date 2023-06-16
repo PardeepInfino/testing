@@ -1,0 +1,33 @@
+<form id="import-sku-form"
+      class="form"
+      enctype="multipart/form-data"
+      method="post"
+      data-bind="attr: {'data-role': formDataRole}">
+    <fieldset class="fieldset">
+        <div class="import-notice">
+            <span class="title"
+                  data-bind="i18n: 'Import Multiple SKUs from File'">
+            </span>
+            <div class="description">
+                <!-- ko i18n: 'File must be in .csv format and include "SKU" and "QTY" columns'--><!-- /ko -->
+                <a class="action download-sample"
+                   data-bind="attr: {'href': downloadSampleFileUrl}, i18n: 'Download Sample'"></a>
+            </div>
+        </div>
+        <input type="file"
+               data-validate="{required:true}"
+               name="csv-file"
+               id="file-csv"
+               accept=".csv">
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button id="import-add-to-list"
+                    class="action primary"
+                    data-bind="{click: addToList}"
+                    type="submit">
+                <span data-bind="i18n: 'Add to List'"></span>
+            </button>
+        </div>
+    </div>
+</form>

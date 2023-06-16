@@ -1,0 +1,18 @@
+<div if="hasData()" class="block" data-bind="css: additionalClasses">
+    <table class="data-grid" data-role="grid">
+        <thead>
+            <tr data-bind="foreach: {data: getVisible(),as: '$col'}" render="getHeader()"></tr>
+        </thead>
+        <tbody>
+            <tr class="data-row" css="'_odd-row': $index % 2" repeat="foreach: rows, item: '$row'">
+                <td outerfasteach="data: getVisible(), as: '$col'"
+                    css="getFieldClass($row())"
+                    click="getFieldHandler($row())"
+                    template="getBody()"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ifnot="hasData()" class="message info empty">
+    <span data-bind="i18n: 'You don\'t have any items in list.' "></span>
+</div>

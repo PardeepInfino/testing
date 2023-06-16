@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<div data-role="aw-requisitionlist-create-list-wrapper" data-bind="scope: 'awRequisitionListCreateLink'" class="aw-rl__create-list-wrapper">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+{
+    "[data-role=aw-requisitionlist-create-list-wrapper]": {
+        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+    }
+}
+</script>

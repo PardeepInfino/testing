@@ -1,0 +1,221 @@
+type Query {
+    awQuickOrderConfig (
+        websiteId: Int @doc(description: "Website ID.")
+    ): AwQuickOrderConfig @resolver(class: "Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Config") @doc(description: "The query returns information about Quick Order Config")
+
+    awQuickOrderProductListById (
+        listId: Int!
+    ): AwQuickOrderProductList @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductListByIdResolver") @cache(cacheable: false)
+
+    awQuickOrderProductListForCurrentCustomer
+    : AwQuickOrderProductList @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductListForCurrentCustomer") @doc(description:"Returns product list for current logged in customer in case list exists") @cache(cacheable: false)
+
+    awQuickOrderProductListItemById (
+        itemId: Int!
+    ): AwQuickOrderProductListItemInterface @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\ItemByIdResolver") @cache(cacheable: false)
+
+    awQuickOrderProductListItemByKey (
+        itemKey: String!
+    ): AwQuickOrderProductListItemInterface @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\ItemByKeyResolver") @cache(cacheable: false)
+
+    awQuickOrderIsActiveForCustomerGroup (
+        customerGroupId: Int!
+    ): Boolean @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\IsActiveForCustomerGroupResolver") @cache(cacheable: false)
+}
+
+type Mutation {
+    awQuickOrderRemoveAllItemsFromList (
+        listId: Int!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\RemoveAllItemsFromList")
+
+    awQuickOrderRemoveItemById (
+        itemId: Int!
+    ): Boolean @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\RemoveItemById")
+
+    awQuickOrderRemoveItemByKey (
+        itemKey: String!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\RemoveItemByKey")
+
+    awQuickOrderAddItemsToList (
+        listId: Int!
+        itemsData: [AwQuickOrderItemDataInput]
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\AddItemsToList")
+
+    awQuickOrderUpdateItemQty (
+        itemKey: String!
+        qty: Float!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\UpdateItemQty")
+
+    awQuickOrderUpdateConfigurableProductOption (
+        itemKey: String!
+        optionsData: AwQuickOrderConfigurableProductOptionInput!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\UpdateOption\\ConfigurableProduct")
+
+    awQuickOrderUpdateSimpleProductOption (
+        itemKey: String!
+        optionsData: AwQuickOrderSimpleProductOptionInput!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\UpdateOption\\DefaultProduct")
+
+    awQuickOrderUpdateBundleProductOption (
+        itemKey: String!
+        optionsData: AwQuickOrderBundleProductOptionInput!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\UpdateOption\\BundleProduct")
+
+    awQuickOrderUpdateDownloadableProductOption (
+        itemKey: String!
+        optionsData: AwQuickOrderDownloadableProductOptionInput!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\UpdateOption\\DownloadableProduct")
+
+    awQuickOrderAddListToCart (
+        listId: Int!
+        cartId: String!
+    ): AwQuickOrderOperationResult @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\Mutation\\AddListToCart")
+}
+
+type AwQuickOrderConfig @doc(description: "Quick Order config information") {
+    is_quick_order_enabled: Boolean @doc(description: "Flag to check whether quick order module is enabled")
+    is_add_to_list_button_displayed: Boolean @doc(description: "Flag to check whether add to list button is displayed")
+    is_qty_input_displayed: Boolean @doc(description: "Flag to check whether qty input is displayed")
+}
+
+type AwQuickOrderProductList {
+    list_id: Int @doc(description: "List identifier.")
+    customer_id: Int @doc(description: "Customer ID the list is assigned to. Returns null for guest product lists.")
+    updated_at: String @doc(description: "Timestamp indicating when the list was updated.")
+    items: [AwQuickOrderProductListItemInterface] @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\Items") @doc(description: "Items added to product list.")
+}
+
+interface AwQuickOrderProductListItemInterface @typeResolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\ItemTypeResolver") {
+    item_id: Int @doc(description: "Item identifier.")
+    item_key: String @doc(description: "Unique item key.")
+    list_id: String @doc(description: "List ID item is assigned to.")
+    product_id: Int @doc(description: "Product ID that represents an item.")
+    product_type: String
+    product_sku: String
+    product_url: String @doc(description: "Product page URL")
+    preparation_error: String @doc(description: "Error in case product is not salable")
+    is_available: Boolean @doc(description: "Flag to check whether item is available")
+    is_available_for_quick_order: Boolean @doc(description: "Flag to check whether item is available for quick order")
+    is_salable: Boolean @doc(description: "Flag to check whether item is salable")
+    is_disabled: Boolean @doc(description: "Flag to check whether item is disabled")
+    is_editable: Boolean @doc(description: "Flag to check whether item is editable")
+    image: AwQuickOrderProductListItemImage @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\Item\\Image")
+    price: String @resolver(class: "\\Aheadworks\\QuickOrderGraphQl\\Model\\Resolver\\ProductList\\Item\\Price")
+    product_qty: Float @doc(description: "Product Quantity.")
+}
+
+type AwQuickOrderSimpleProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Simple Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+}
+
+type AwQuickOrderVirtualProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Virtual Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+}
+
+type AwQuickOrderProductCustomOption {
+    option_id: Int
+    option_type: String
+    option_value: String
+    label: String
+}
+
+type GiftcardOption {
+    label: String
+    value: String
+}
+
+type AwQuickOrderConfigurableProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Configurable Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+    configurable_options: [AwQuickOrderConfigurableProductOption]
+}
+
+type AwQuickOrderConfigurableProductOption {
+    option_id: Int
+    option_value: Int
+    label: String
+    value: String
+}
+
+type AwQuickOrderBundleProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Bundle Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+    bundle_options: [AwQuickOrderBundleProductOption]
+}
+
+type AwQuickOrderBundleProductOption {
+    option_id: Int
+    label: String
+    value: [AwQuickOrderBundleProductOptionValue]
+}
+
+type AwQuickOrderBundleProductOptionValue {
+    title: String
+    qty: Float
+    price: Float
+}
+
+type AwQuickOrderDownloadableProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Bundle Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+    downloadable_options: [AwQuickOrderDownloadableProductOption]
+}
+
+type AwQuickOrderGiftcardProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Aheadworks Giftcard Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+    giftcard_options: [GiftcardOption]
+}
+
+type AwQuickOrderAwGiftcardProductItem implements AwQuickOrderProductListItemInterface @doc(description: "Giftcard Product Item.") {
+    custom_options: [AwQuickOrderProductCustomOption]
+    aw_giftcard_options: [GiftcardOption]
+}
+
+type AwQuickOrderDownloadableProductOption {
+    label: String
+    value: String
+}
+
+type AwQuickOrderProductListItemImage {
+    image_url: String @doc(description: "Link to image.")
+    name_url: String @doc(description: "Product page URL.")
+    image_label: String @doc(description: "Image label, can be used as alt text.")
+}
+
+type AwQuickOrderOperationResult {
+    success_messages: [AwQuickOrderResultMessage],
+    error_messages: [AwQuickOrderResultMessage],
+    messages: [AwQuickOrderResultMessage]
+}
+
+type AwQuickOrderResultMessage {
+    type: String,
+    title: String,
+    text: String
+}
+
+input AwQuickOrderItemDataInput {
+    product_sku: String! @doc(description: "Product SKU")
+    product_qty: Float! @doc(description: "Product Qty")
+}
+
+input AwQuickOrderSimpleProductOptionInput {
+    custom_options: [CustomizableOptionInput]
+}
+
+input AwQuickOrderConfigurableProductOptionInput {
+    custom_options: [CustomizableOptionInput]
+    super_attribute: [AwQuickOrderSuperAttributeInput]
+}
+
+input AwQuickOrderSuperAttributeInput {
+    option_id: Int!
+    option_value: Int!
+}
+
+input AwQuickOrderDownloadableProductOptionInput {
+    custom_options: [CustomizableOptionInput]
+    links: [DownloadableProductLinksInput]
+}
+
+input AwQuickOrderBundleProductOptionInput {
+    custom_options: [CustomizableOptionInput]
+    bundle_options: [BundleOptionInput!]!
+}

@@ -1,0 +1,26 @@
+{
+    "name": "tmwk/client-prestashop-api",
+    "description": "Client Prestashop Api",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mario Figueroa",
+            "email": "mfigueroa@tmwk.cl"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://tmwk@bitbucket.org/tmwk/client-prestashop-api.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "TMWK\\ClientPrestashopApi\\": ""
+        }
+    }
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Xtento_StockImport::js/profile.js"/>
+    </head>
+    <body>
+        <referenceContainer name="page.content">
+            <block before="page_main_actions" class="Xtento\StockImport\Block\Adminhtml\Widget\Menu" name="stockimport.menu"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Xtento\StockImport\Block\Adminhtml\Profile\Edit" name="stockimport_profile_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Xtento\StockImport\Block\Adminhtml\Profile\Edit\Tabs" name="stockimport_profile_edit_tabs">
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">general</argument>
+                    <argument name="block" xsi:type="string">Xtento\StockImport\Block\Adminhtml\Profile\Edit\Tab\General</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">settings</argument>
+                    <argument name="block" xsi:type="string">Xtento\StockImport\Block\Adminhtml\Profile\Edit\Tab\Settings</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">mapping</argument>
+                    <argument name="block" xsi:type="string">Xtento\StockImport\Block\Adminhtml\Profile\Edit\Tab\Mapping</argument>
+                </action>
+                <block class="Magento\Backend\Block\Widget\Tab" name="stockimport.source">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Import Sources</argument>
+                        <argument name="url" xsi:type="url" path="*/*/source">
+                            <param name="ajax_enabled">1</param>
+                            <param name="_current">1</param>
+                        </argument>
+                        <argument name="class" xsi:type="string">ajax</argument>
+                    </arguments>
+                </block>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">source</argument>
+                    <argument name="block" xsi:type="string">stockimport.source</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">automatic</argument>
+                    <argument name="block" xsi:type="string">Xtento\StockImport\Block\Adminhtml\Profile\Edit\Tab\Automatic</argument>
+                </action>
+                <block class="Magento\Backend\Block\Widget\Tab" name="stockimport.log">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Profile Execution Log</argument>
+                        <argument name="url" xsi:type="url" path="*/*/log">
+                            <param name="ajax_enabled">1</param>
+                            <param name="_current">1</param>
+                        </argument>
+                        <argument name="class" xsi:type="string">ajax</argument>
+                    </arguments>
+                </block>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">execution_log</argument>
+                    <argument name="block" xsi:type="string">stockimport.log</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
+
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          view/adminhtml/layout/xtento_stockimport_profile_edit.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

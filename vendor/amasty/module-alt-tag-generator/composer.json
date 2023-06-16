@@ -1,0 +1,22 @@
+{
+    "name": "amasty/module-alt-tag-generator",
+    "description": "Alt Tag Generator by Amasty",
+    "require": {
+        "php": ">=7.3",
+        "amasty/base": ">=1.14.5"
+    },
+    "homepage": "https://amasty.com/",
+    "type": "magento2-module",
+    "version": "1.0.2",
+    "license": [
+        "Commercial"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\AltTagGenerator\\": ""
+        }
+    }
+}

@@ -1,0 +1,147 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <action method="setActive">
+                <argument name="path" xsi:type="const">
+                    Aheadworks\RequisitionLists\Model\Url::REQUISITION_LIST_ROUTE
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="page.main.title">
+            <block class="Aheadworks\RequisitionLists\Block\Customer\RequisitionList\Listing\Header"
+                   name="aw_rl.customer.requisition.list.header.action" as="aw_rl_header_actions_block"
+                   template="Aheadworks_RequisitionLists::requisition-list/header_actions.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="awRequisitionListParent" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="children" xsi:type="array">
+                                    <item name="awRequisitionListEditLink" xsi:type="array">
+                                        <item name="component" xsi:type="string">Aheadworks_RequisitionLists/js/ui/components/requisition-list/edit-list-link</item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">awRequisitionListProvider</item>
+                                        </item>
+                                    </item>
+                                    <item name="awRequisitionList" xsi:type="array">
+                                        <item name="component" xsi:type="string">Magento_Ui/js/modal/modal-component</item>
+                                        <item name="modalClass" xsi:type="string">aw_requisitionlist__modal-edit-list</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="options" xsi:type="array">
+                                                <item name="title" xsi:type="string" translate="true">Edit Requisition List</item>
+                                                <item name="modalClass" xsi:type="string">aw_requisitionlist__modal-edit-list-wrapper</item>
+                                            </item>
+                                        </item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">awRequisitionListProvider</item>
+                                        </item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="awRequisitionListForm" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_RequisitionLists/js/ui/form/form</item>
+                                                <item name="deps" xsi:type="array">
+                                                    <item name="0" xsi:type="string">awRequisitionListProvider</item>
+                                                </item>
+                                                <item name="dataScope" xsi:type="string">data</item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="fieldset" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Magento_Ui/js/form/components/fieldset</item>
+                                                        <item name="label" xsi:type="string" translate="true"> </item>
+                                                        <item name="template" xsi:type="string">Aheadworks_RequisitionLists/form/element/fieldset</item>
+                                                        <item name="children" xsi:type="array">
+                                                            <item name="name" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                                <item name="dataScope" xsi:type="string">name</item>
+                                                                <item name="provider" xsi:type="string">awRequisitionListProvider</item>
+                                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                                <item name="label" xsi:type="string" translate="true">New Requisition List Name</item>
+                                                                <item name="default" xsi:type="string" translate="true">My List</item>
+                                                                <item name="validation" xsi:type="array">
+                                                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                                                    <item name="validate-no-html-tags" xsi:type="boolean">true</item>
+                                                                </item>
+                                                                <item name="sortOrder" xsi:type="number">10</item>
+                                                            </item>
+                                                            <item name="list_id" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                                <item name="dataScope" xsi:type="string">list_id</item>
+                                                                <item name="provider" xsi:type="string">awRequisitionListProvider</item>
+                                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                                <item name="sortOrder" xsi:type="number">10</item>
+                                                                <item name="visible" xsi:type="boolean">false</item>
+                                                            </item>
+                                                            <item name="description" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/textarea</item>
+                                                                <item name="dataScope" xsi:type="string">description</item>
+                                                                <item name="provider" xsi:type="string">awRequisitionListProvider</item>
+                                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                                <item name="label" xsi:type="string" translate="true">New Description</item>
+                                                                <item name="validation" xsi:type="array">
+                                                                    <item name="validate-no-html-tags" xsi:type="boolean">true</item>
+                                                                </item>
+                                                                <item name="previewSettings" xsi:type="array">
+                                                                    <item name="maxCountOfWords" xsi:type="number">5</item>
+                                                                </item>
+                                                                <item name="sortOrder" xsi:type="number">20</item>
+                                                            </item>
+                                                            <item name="save" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Ui/js/form/components/button</item>
+                                                                <item name="provider" xsi:type="string">awRequisitionListProvider</item>
+                                                                <item name="title" xsi:type="string" translate="true">Save</item>
+                                                                <item name="sortOrder" xsi:type="number">30</item>
+                                                                <item name="buttonClasses" xsi:type="string">action primary</item>
+                                                                <item name="actions" xsi:type="array">
+                                                                    <item name="0" xsi:type="array">
+                                                                        <item name="targetName" xsi:type="string">awRequisitionListParent.awRequisitionList.awRequisitionListForm</item>
+                                                                        <item name="actionName" xsi:type="string">save</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="awRequisitionListProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                                <item name="clientConfig" xsi:type="array">
+                                    <item name="urls" xsi:type="array">
+                                        <item name="save" xsi:type="url" path="aw_rl/rlist/save"/>
+                                    </item>
+                                    <item name="param" xsi:type="array">
+                                        <item name="list_id" xsi:type="string">*</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="aw_requisition_list_config" xsi:type="array">
+                                <item name="component" xsi:type="string">uiElement</item>
+                            </item>
+                        </item>
+                    </argument>
+                    <argument name="requisition_list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Customer\RequisitionList\DataProvider</argument>
+                </arguments>
+            </block>
+            <block name="aw_rl.customer.requisition.list.header"
+                   template="Aheadworks_RequisitionLists::requisition-list/header.phtml">
+                <arguments>
+                    <argument name="requisition_list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Customer\RequisitionList\DataProvider</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <uiComponent name="aw_requisition_list_modal_form"/>
+            <block class="Magento\Ui\Block\Wrapper" name="aw_requisition_list_item_listing.menu" template="Aheadworks_RequisitionLists::requisition-list/item_listing.phtml" cacheable="false">
+                <arguments>
+                    <argument name="uiComponent" xsi:type="string">aw_requisition_list_item_listing</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="page.bottom">
+            <block name="aw_rl.popup-wrapper" template="Aheadworks_RequisitionLists::requisition-list/popup-wrapper.phtml" />
+        </referenceContainer>
+    </body>
+</page>

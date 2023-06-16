@@ -1,0 +1,19 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/* @var $block \Aheadworks\QuickOrder\Block\Customer\TopLink */
+?>
+
+<?php if ($block->isNeedToDisplayLink()): ?>
+    <li
+        <?php if ($block->getData('additionalCss')): ?>
+            class="<?= $block->escapeHtmlAttr($block->getData('additionalCss')) ?>"
+        <?php endif; ?>
+    >
+        <a <?= /* @noEscape */ $block->getLinkAttributes() ?>>
+            <?= $block->escapeHtml($block->getLabel()) ?>
+        </a>
+    </li>
+<?php endif; ?>
+
+

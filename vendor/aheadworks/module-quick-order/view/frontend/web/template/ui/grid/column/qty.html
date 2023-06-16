@@ -1,0 +1,13 @@
+<input type="text"
+       name="qty"
+       data-bind="
+       value: getProductQty($row()),
+       event:{
+           change: onQtyChange.bind($data, $row())
+       },
+       attr: {
+           id: 'qty' + getItemId($row()),
+           'disabled': isQtyFieldDisabled($row())
+       }" />
+<label class="field-error" if="getQtySalableMessage($row())" data-bind="i18n: getQtySalableMessage($row())"></label>
+<label class="field-error" data-bind="attr: {id: 'field-error' + getItemId($row())}" ></label>

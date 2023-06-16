@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package Cross Linking for Magento 2
+ */-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="amasty_cross_link" resource="default" engine="innodb" comment="Cross Link Table">
+        <column xsi:type="int" name="link_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Link Id"/>
+        <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Status"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="80" comment="Title"/>
+        <column xsi:type="text" name="keywords" nullable="false" comment="Keywords"/>
+        <column xsi:type="varchar" name="link_target" nullable="false" length="10" comment="Link Target"/>
+        <column xsi:type="smallint" name="reference_type" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Reference Type"/>
+        <column xsi:type="varchar" name="reference_resource" nullable="false" length="100" comment="Reference Resource"/>
+        <column xsi:type="smallint" name="replacement_limit" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Replacement Limit"/>
+        <column xsi:type="smallint" name="priority" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Priority"/>
+        <column xsi:type="smallint" name="is_nofollow" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Nofollow"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="link_id"/>
+        </constraint>
+    </table>
+
+    <table name="amasty_cross_link_store" resource="default" engine="innodb" comment="Cross Link Store Table">
+        <column xsi:type="int" name="link_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Link Id"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store Id"/>
+
+        <constraint xsi:type="foreign" referenceId="AMASTY_CROSS_LINK_STORE_LINK_ID_AMASTY_CROSS_LINK_LINK_ID" table="amasty_cross_link_store" column="link_id" referenceTable="amasty_cross_link" referenceColumn="link_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AMASTY_CROSS_LINK_STORE_STORE_ID_STORE_STORE_ID" table="amasty_cross_link_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+
+        <constraint xsi:type="unique" referenceId="AMASTY_CROSS_LINK_STORE_LINK_ID_STORE_ID">
+            <column name="link_id"/>
+            <column name="store_id"/>
+        </constraint>
+    </table>
+</schema>

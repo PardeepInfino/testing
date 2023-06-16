@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package XML Google® Sitemap for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\XmlSitemap\Api\SitemapInterface" type="Amasty\XmlSitemap\Model\Sitemap" />
+    <preference for="Amasty\XmlSitemap\Api\SitemapRepositoryInterface" type="Amasty\XmlSitemap\Model\Repository\SitemapRepository" />
+    <preference for="Amasty\XmlSitemap\Api\SitemapEntity\SitemapEntityDataInterface" type="Amasty\XmlSitemap\Model\Sitemap\SitemapEntityData"/>
+
+    <!-- Declaration of additional actions -->
+    <virtualType name="Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\SaveAdditionalActionsPool" type="Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\AdditionalActionsPool">
+        <arguments>
+            <argument name="actions" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="action" xsi:type="object">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\Save\SaveSitemapEntityData</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\LoadAdditionalActionsPool" type="Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\AdditionalActionsPool">
+        <arguments>
+            <argument name="actions" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="action" xsi:type="object">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\Load\LoadSitemapEntityData</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Append additional actions to ResourceModel and Collection -->
+    <type name="Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Collection">
+        <arguments>
+            <argument name="loadActionsPool" xsi:type="object">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\LoadAdditionalActionsPool</argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\XmlSitemap\Model\ResourceModel\Sitemap">
+        <arguments>
+            <argument name="loadActionsPool" xsi:type="object">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\LoadAdditionalActionsPool</argument>
+            <argument name="saveActionsPool" xsi:type="object">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Actions\SaveAdditionalActionsPool</argument>
+        </arguments>
+    </type>
+
+    <!-- Adminhtml UI declaration -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="amasty_xml_sitemap_listing_data_source" xsi:type="string">Amasty\XmlSitemap\Model\ResourceModel\Sitemap\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Declaration sources & xml tags for sitemap -->
+    <type name="Amasty\XmlSitemap\Model\Sitemap\SourceProvider">
+        <arguments>
+            <argument name="sources" xsi:type="array">
+                <item name="product" xsi:type="string">Amasty\XmlSitemap\Model\Source\Product</item>
+                <item name="category" xsi:type="string">Amasty\XmlSitemap\Model\Source\Category</item>
+                <item name="cms" xsi:type="string">Amasty\XmlSitemap\Model\Source\Page</item>
+                <item name="extra" xsi:type="string">Amasty\XmlSitemap\Model\Source\Extra</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\XmlSitemap\Model\Sitemap\XmlMetaProvider">
+        <arguments>
+            <argument name="meta" xsi:type="array">
+                <item name="product" xsi:type="array">
+                    <item name="last_modified" xsi:type="string">lastmod</item>
+                    <item name="image" xsi:type="array">
+                        <item name="wrapper" xsi:type="string">image:image</item>
+                        <item name="caption" xsi:type="string">image:caption</item>
+                        <item name="loc" xsi:type="string">image:loc</item>
+                        <item name="title" xsi:type="string">image:title</item>
+                    </item>
+                </item>
+
+                <item name="category" xsi:type="array">
+                    <item name="last_modified" xsi:type="string">lastmod</item>
+                    <item name="image" xsi:type="array">
+                        <item name="wrapper" xsi:type="string">image:image</item>
+                        <item name="caption" xsi:type="string">image:caption</item>
+                        <item name="loc" xsi:type="string">image:loc</item>
+                        <item name="title" xsi:type="string">image:title</item>
+                    </item>
+                </item>
+
+                <item name="cms" xsi:type="array">
+                    <item name="last_modified" xsi:type="string">lastmod</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="Amasty_XmlSitemap:GenerateXmlSiteMap" xsi:type="object">Amasty\XmlSitemap\Console\Command\GenerateXmlSiteMap</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\XmlSitemap\Model\Sitemap\HreflangProvider">
+        <arguments>
+            <argument name="urlProvider"
+                      xsi:type="object">Amasty\XmlSitemap\Model\Sitemap\Hreflang\UrlProvider\RewriteUrlProvider</argument>
+        </arguments>
+    </type>
+    <virtualType name="Amasty\XmlSitemap\Model\Sitemap\CmsHreflangProvider"
+                 type="Amasty\XmlSitemap\Model\Sitemap\HreflangProvider">
+        <arguments>
+            <argument name="urlProvider"
+                      xsi:type="object">Amasty\XmlSitemap\Model\Sitemap\Hreflang\UrlProvider\CmsUrlProvider</argument>
+        </arguments>
+    </virtualType>
+    <type name="Amasty\XmlSitemap\Model\Source\Page">
+        <arguments>
+            <argument name="hreflangProvider"
+                      xsi:type="object">Amasty\XmlSitemap\Model\Sitemap\CmsHreflangProvider</argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\XmlSitemap\Model\OptionSource\Language">
+        <arguments>
+            <argument name="languageTranslation" xsi:type="array">
+                <item name="af" xsi:type="string">Afrikaans</item>
+                <item name="sq" xsi:type="string">Albanian</item>
+                <item name="am" xsi:type="string">Amharic</item>
+                <item name="ar" xsi:type="string">Arabic</item>
+                <item name="hy" xsi:type="string">Armenian</item>
+                <item name="as" xsi:type="string">Assamese</item>
+                <item name="az" xsi:type="string">Azeri</item>
+                <item name="az_Latn" xsi:type="string">Azeri Latin</item>
+                <item name="az_Cyrl" xsi:type="string">Azeri Cyrillic</item>
+                <item name="eu" xsi:type="string">Basque</item>
+                <item name="be" xsi:type="string">Belarusian</item>
+                <item name="bn" xsi:type="string">Bengali</item>
+                <item name="bn_Latn" xsi:type="string">Bengali Latin</item>
+                <item name="bs" xsi:type="string">Bosnian</item>
+                <item name="bg" xsi:type="string">Bulgarian</item>
+                <item name="my" xsi:type="string">Burmese</item>
+                <item name="ca" xsi:type="string">Catalan</item>
+                <item name="chr" xsi:type="string">Cherokee</item>
+                <item name="zh" xsi:type="string">Chinese</item>
+                <item name="hr" xsi:type="string">Croatian</item>
+                <item name="cs" xsi:type="string">Czech</item>
+                <item name="da" xsi:type="string">Danish</item>
+                <item name="dv" xsi:type="string">Divehi</item>
+                <item name="nl" xsi:type="string">Dutch</item>
+                <item name="en" xsi:type="string">English</item>
+                <item name="et" xsi:type="string">Estonian</item>
+                <item name="fo" xsi:type="string">Faroese</item>
+                <item name="fa" xsi:type="string">Farsi</item>
+                <item name="fil" xsi:type="string">Filipino</item>
+                <item name="fi" xsi:type="string">Finnish</item>
+                <item name="fr" xsi:type="string">French</item>
+                <item name="fy" xsi:type="string">Frisian</item>
+                <item name="gd" xsi:type="string">Gaelic</item>
+                <item name="gl" xsi:type="string">Galician</item>
+                <item name="ka" xsi:type="string">Georgian</item>
+                <item name="de" xsi:type="string">German</item>
+                <item name="el" xsi:type="string">Greek</item>
+                <item name="gn" xsi:type="string">Guarani</item>
+                <item name="gu" xsi:type="string">Gujarati</item>
+                <item name="ha" xsi:type="string">Hausa</item>
+                <item name="haw" xsi:type="string">Hawaiian</item>
+                <item name="he" xsi:type="string">Hebrew</item>
+                <item name="hi" xsi:type="string">Hindi</item>
+                <item name="hu" xsi:type="string">Hungarian</item>
+                <item name="is" xsi:type="string">Icelandic</item>
+                <item name="ig" xsi:type="string">Igbo</item>
+                <item name="id" xsi:type="string">Indonesian</item>
+                <item name="iu" xsi:type="string">Inuktitut</item>
+                <item name="it" xsi:type="string">Italian</item>
+                <item name="ja" xsi:type="string">Japanese</item>
+                <item name="kn" xsi:type="string">Kannada</item>
+                <item name="kr" xsi:type="string">Kanuri</item>
+                <item name="ks" xsi:type="string">Kashmiri</item>
+                <item name="kk" xsi:type="string">Kazakh</item>
+                <item name="km" xsi:type="string">Khmer</item>
+                <item name="kok" xsi:type="string">Konkani</item>
+                <item name="ko" xsi:type="string">Korean</item>
+                <item name="ky" xsi:type="string">Kyrgyz</item>
+                <item name="lo" xsi:type="string">Lao</item>
+                <item name="la" xsi:type="string">Latin</item>
+                <item name="lv" xsi:type="string">Latvian</item>
+                <item name="lt" xsi:type="string">Lithuanian</item>
+                <item name="mk" xsi:type="string">Macedonian</item>
+                <item name="ms" xsi:type="string">Malay</item>
+                <item name="ml" xsi:type="string">Malayalam</item>
+                <item name="mt" xsi:type="string">Maltese</item>
+                <item name="mni" xsi:type="string">Manipuri</item>
+                <item name="mi" xsi:type="string">Maori</item>
+                <item name="mr" xsi:type="string">Marathi</item>
+                <item name="mn" xsi:type="string">Mongolian</item>
+                <item name="ne" xsi:type="string">Nepali</item>
+                <item name="no" xsi:type="string">Norwegian</item>
+                <item name="nb" xsi:type="string">Norwegian Bokmal</item>
+                <item name="nn" xsi:type="string">Norwegian Nynorsk</item>
+                <item name="or" xsi:type="string">Oriya</item>
+                <item name="om" xsi:type="string">Oromo</item>
+                <item name="pap" xsi:type="string">Papiamentu</item>
+                <item name="ps" xsi:type="string">Pashto</item>
+                <item name="pl" xsi:type="string">Polish</item>
+                <item name="pt" xsi:type="string">Portuguese</item>
+                <item name="pa" xsi:type="string">Punjabi</item>
+                <item name="qu" xsi:type="string">Quechua</item>
+                <item name="rm" xsi:type="string">Rhaeto-Romanic</item>
+                <item name="ro" xsi:type="string">Romanian</item>
+                <item name="ru" xsi:type="string">Russian</item>
+                <item name="smi" xsi:type="string">Sami</item>
+                <item name="smn" xsi:type="string">Sami Inari</item>
+                <item name="smj" xsi:type="string">Sami Lule</item>
+                <item name="se" xsi:type="string">Sami Northern</item>
+                <item name="sms" xsi:type="string">Sami Skolt</item>
+                <item name="sma" xsi:type="string">Sami Southern</item>
+                <item name="sa" xsi:type="string">Sanskrit</item>
+                <item name="sr" xsi:type="string">Serbian</item>
+                <item name="sr_Latn" xsi:type="string">Serbian Latin</item>
+                <item name="sr_Cyrl" xsi:type="string">Serbian Cyrillic</item>
+                <item name="sd" xsi:type="string">Sindhi</item>
+                <item name="si" xsi:type="string">Sinhalese</item>
+                <item name="sk" xsi:type="string">Slovak</item>
+                <item name="sl" xsi:type="string">Slovenian</item>
+                <item name="so" xsi:type="string">Somali</item>
+                <item name="wen" xsi:type="string">Sorbian</item>
+                <item name="es" xsi:type="string">Spanish</item>
+                <item name="sw" xsi:type="string">Swahili</item>
+                <item name="sv" xsi:type="string">Swedish</item>
+                <item name="syr" xsi:type="string">Syriac</item>
+                <item name="tg" xsi:type="string">Tajik</item>
+                <item name="tmh" xsi:type="string">Tamazight</item>
+                <item name="ta" xsi:type="string">Tamil</item>
+                <item name="tt" xsi:type="string">Tatar</item>
+                <item name="te" xsi:type="string">Telugu</item>
+                <item name="th" xsi:type="string">Thai</item>
+                <item name="bo" xsi:type="string">Tibetan</item>
+                <item name="ti" xsi:type="string">Tigrigna</item>
+                <item name="ts" xsi:type="string">Tsonga</item>
+                <item name="tn" xsi:type="string">Tswana</item>
+                <item name="tr" xsi:type="string">Turkish</item>
+                <item name="tk" xsi:type="string">Turkmen</item>
+                <item name="ug" xsi:type="string">Uighur</item>
+                <item name="uk" xsi:type="string">Ukrainian</item>
+                <item name="ur" xsi:type="string">Urdu</item>
+                <item name="uz" xsi:type="string">Uzbek</item>
+                <item name="uz_Latn" xsi:type="string">Uzbek Latin</item>
+                <item name="uz_Cyrl" xsi:type="string">Uzbek Cyrillic</item>
+                <item name="ve" xsi:type="string">Venda</item>
+                <item name="vi" xsi:type="string">Vietnamese</item>
+                <item name="cy" xsi:type="string">Welsh</item>
+                <item name="xh" xsi:type="string">Xhosa</item>
+                <item name="yi" xsi:type="string">Yiddish</item>
+                <item name="yo" xsi:type="string">Yoruba</item>
+                <item name="zu" xsi:type="string">Zulu</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

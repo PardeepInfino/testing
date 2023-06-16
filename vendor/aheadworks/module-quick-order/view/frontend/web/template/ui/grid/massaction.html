@@ -1,0 +1,8 @@
+<ul if="isActionMenuVisible" class="action-menu" each="data: actions, as: 'action'" css="_active: opened">
+    <button class="action"
+            click="$parent.applyAction.bind($parent, type)"
+            data-bind="css: action.additionalClasses">
+        <span class="action-menu-item" translate="label"></span>
+        <render args="name: $parent.submenuTemplate, data: $parent" if="$data.actions"></render>
+    </button>
+</ul>

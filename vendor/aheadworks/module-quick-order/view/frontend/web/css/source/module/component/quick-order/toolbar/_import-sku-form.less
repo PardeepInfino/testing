@@ -1,0 +1,72 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  #import-sku-form {
+    .import-notice {
+      .title {
+        margin-bottom: 5px;
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .description {
+        font-size: 13px;
+        .lib-css(color, @aw-qo-import-notice-description__color);
+        margin-bottom: 15px;
+      }
+    }
+
+    input[type=file] {
+      outline: none;
+
+      &::-webkit-file-upload-button {
+        padding: 7px 10px;
+        .lib-css(background, @color-white-smoke);
+        .lib-css(border, 1px solid @aw-qo-input-file__border-color);
+        .lib-css(border-radius, 3px);
+        .lib-css(color, @aw-qo-input-file__color);
+        font-weight: 600;
+        font-size: 12px;
+        outline: none;
+      }
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  #import-sku-form {
+    input[type=file] {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  #import-sku-form {
+    .fieldset {
+      padding-right: 20px;
+    }
+  }
+
+  #aw-qo-toolbar {
+    .toolbar-content-items {
+      #import-sku-form {
+        .actions-toolbar {
+          margin: auto 0 0 0;
+        }
+      }
+    }
+  }
+}

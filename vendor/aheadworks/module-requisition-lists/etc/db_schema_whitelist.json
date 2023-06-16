@@ -1,0 +1,36 @@
+{
+    "aw_requisition_list": {
+        "column": {
+            "list_id": true,
+            "name": true,
+            "description": true,
+            "customer_id": true,
+            "shared": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AW_REQUISITION_LIST_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
+    },
+    "aw_requisition_list_item": {
+        "column": {
+            "item_id": true,
+            "list_id": true,
+            "product_id": true,
+            "product_name": true,
+            "product_sku": true,
+            "product_qty": true,
+            "product_type": true,
+            "product_option": true
+        },
+        "index": {
+            "AW_REQUISITION_LIST_ITEM_LIST_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AW_REQUISITION_LIST_ITEM_LIST_ID_AW_REQUISITION_LIST_LIST_ID": true,
+            "AW_REQUISITION_LIST_ITEM_PRD_ID_CAT_PRD_ENTT_ENTT_ID": true
+        }
+    }
+}

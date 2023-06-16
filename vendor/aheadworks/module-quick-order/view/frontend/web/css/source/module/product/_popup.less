@@ -1,0 +1,62 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .aw-qo-popup__main {
+        .aw-qo-popup {
+            &__columns {
+                width: 100%;
+            }
+
+            &__column {
+                padding: 0 20px;
+            }
+        }
+
+        .product-options-wrapper {
+            .input-text.qty {
+                width: 54px;
+                text-align: center;
+            }
+            .field.qty .label {
+                font-weight: 600;
+                margin: 8px 0;
+                display: block;
+            }
+
+            .giftcard-amount, .giftcard.form {
+                .input-text {
+                    min-width: 35rem;
+                }
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .aw-qo-popup {
+        &__columns {
+            .lib-vendor-prefix-display();
+        }
+    }
+
+    .qo-configurator-popup {
+        .modal-inner-wrap {
+            max-width: 600px;
+        }
+    }
+}

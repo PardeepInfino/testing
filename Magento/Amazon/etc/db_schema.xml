@@ -1,0 +1,659 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="channel_amazon_account" resource="default" engine="innodb" comment="channel_amazon_account">
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Merchant Id"/>
+        <column name="setup_step" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Setup Step" disabled="true"/>
+        <column name="is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="2" comment="Is Active"/>
+        <column name="authentication_status" xsi:type="varchar" nullable="false" length="255" default="pending_authentication" comment="Authentication Status"/>
+        <column name="seller_id" xsi:type="varchar" nullable="true" length="255" comment="Seller Id"/>
+        <column name="country_code" xsi:type="varchar" nullable="false" length="50" comment="Service Id"/>
+        <column name="name" xsi:type="varchar" nullable="false" length="255" comment="Account Name"/>
+        <column name="email" xsi:type="text" nullable="false" comment="Email Address"/>
+        <column name="base_url" xsi:type="varchar" nullable="false" length="255" comment="Base URL"/>
+        <column name="consumer_key" xsi:type="varchar" nullable="true" length="255" comment="Consumer Key"/>
+        <column name="consumer_secret" xsi:type="varchar" nullable="true" length="255" comment="Consumer Secret"/>
+        <column name="access_token" xsi:type="varchar" nullable="true" length="255" comment="Access Token"/>
+        <column name="access_secret" xsi:type="varchar" nullable="true" length="255" comment="Access Secret"/>
+        <column name="report_run" xsi:type="boolean" nullable="false" comment="All listing report run"/>
+        <column name="created_on" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created On"/>
+        <column name="uuid" xsi:type="varchar" nullable="false" length="36" comment="Uuid"/>
+        <column name="last_updated" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Updated"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="merchant_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ACCOUNT_COUNTRY_CODE_SELLER_ID">
+            <column name="country_code"/>
+            <column name="seller_id"/>
+        </constraint>
+        <index referenceId="CHANNEL_AMAZON_ACCOUNT_UUID" indexType="btree">
+            <column name="uuid"/>
+        </index>
+    </table>
+    <table name="channel_amazon_account_listing" resource="default" engine="innodb" comment="channel_amazon_account_listing">
+        <column name="id" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant ID"/>
+        <column name="auto_list" xsi:type="boolean" nullable="false" default="true" comment="Automatically List Eligible Items"/>
+        <column name="thirdparty_is_active" xsi:type="boolean" nullable="false" comment="Third Party Import Is Active"/>
+        <column name="thirdparty_sku_field" xsi:type="varchar" nullable="true" length="200" comment="Third Party SKU Attribute Mapping Field"/>
+        <column name="thirdparty_asin_field" xsi:type="varchar" nullable="true" length="200" comment="Third Party ASIN Attribute Mapping Field"/>
+        <column name="handling_time" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="2" comment="Amazon Default Handling Time"/>
+        <column name="list_condition" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="11" comment="Default Amazon Product Condition"/>
+        <column name="seller_notes" xsi:type="text" nullable="true" comment="Default Seller Notes"/>
+        <column name="list_condition_field" xsi:type="text" nullable="true" comment="Default Amazon Product Condition Catalog Attribute"/>
+        <column name="list_condition_new" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition New"/>
+        <column name="list_condition_refurbished" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Refurbished"/>
+        <column name="seller_notes_refurbished" xsi:type="text" nullable="true" comment="Default Seller Notes Refurbished"/>
+        <column name="list_condition_likenew" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Like New"/>
+        <column name="seller_notes_likenew" xsi:type="text" nullable="true" comment="Default Seller Notes Like New"/>
+        <column name="list_condition_verygood" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Very Good"/>
+        <column name="seller_notes_verygood" xsi:type="text" nullable="true" comment="Default Seller Notes Very Good"/>
+        <column name="list_condition_good" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Good"/>
+        <column name="seller_notes_good" xsi:type="text" nullable="true" comment="Default Seller Notes Good"/>
+        <column name="list_condition_acceptable" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Acceptable"/>
+        <column name="seller_notes_acceptable" xsi:type="text" nullable="true" comment="Default Seller Notes Acceptable"/>
+        <column name="list_condition_collectible_likenew" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Collectible Like New"/>
+        <column name="seller_notes_collectible_likenew" xsi:type="text" nullable="true" comment="Default Seller Notes Collectible Like New"/>
+        <column name="list_condition_collectible_verygood" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Collectible Very Good"/>
+        <column name="seller_notes_collectible_verygood" xsi:type="text" nullable="true" comment="Default Seller Notes Collectible Very Good"/>
+        <column name="list_condition_collectible_good" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Collectible Good"/>
+        <column name="seller_notes_collectible_good" xsi:type="text" nullable="true" comment="Default Seller Notes Collectible Good"/>
+        <column name="list_condition_collectible_acceptable" xsi:type="text" nullable="true" comment="Attribute Value Representing Condition Collectible Acceptable"/>
+        <column name="seller_notes_collectible_acceptable" xsi:type="text" nullable="true" comment="Default Seller Notes Collectible Acceptable"/>
+        <column name="business_is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Business Pricing Enabled"/>
+        <column name="tier_is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Business Tiered Pricing Enabled"/>
+        <column name="qty_price_one" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="true" comment="Quantity Price Discount One"/>
+        <column name="lower_bound_one" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Lower Bound Qty One"/>
+        <column name="qty_price_two" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="true" comment="Quantity Price Discount Two"/>
+        <column name="lower_bound_two" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Lower Bound Qty Two"/>
+        <column name="qty_price_three" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="true" comment="Quantity Price Discount Three"/>
+        <column name="lower_bound_three" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Lower Bound Qty Three"/>
+        <column name="qty_price_four" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="true" comment="Quantity Price Discount Four"/>
+        <column name="lower_bound_four" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Lower Bound Qty Four"/>
+        <column name="qty_price_five" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="true" comment="Quantity Price Discount Five"/>
+        <column name="lower_bound_five" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Lower Bound Qty Five"/>
+        <column name="asin_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing ASIN"/>
+        <column name="ean_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing EAN"/>
+        <column name="gcid_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing GCID"/>
+        <column name="isbn_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing ISBN"/>
+        <column name="upc_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing UPC"/>
+        <column name="general_mapping_field" xsi:type="text" nullable="true" comment="Attribute Value Representing General Search"/>
+        <column name="fulfilled_by" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Amazon Fulfilled By Setting"/>
+        <column name="fulfilled_by_field" xsi:type="text" nullable="true" comment="Attribute Containing Amazon Fulfilled By"/>
+        <column name="fulfilled_by_seller" xsi:type="text" nullable="true" comment="Value Representing Fulfilled By Seller"/>
+        <column name="fulfilled_by_amazon" xsi:type="text" nullable="true" comment="Value Representing Fulfilled By Amazon"/>
+        <column name="custom_qty" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" default="100" comment="Custom Amazon Listing Qty"/>
+        <column name="min_qty" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Minimum Amazon Listing Qty"/>
+        <column name="max_qty" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" default="10000" comment="Maximum Amazon Listing Qty"/>
+        <column name="price_field" xsi:type="text" nullable="true" comment="Price Source For Amazon"/>
+        <column name="strike_price_field" xsi:type="text" nullable="true" comment="Strike Through Price Attribute"/>
+        <column name="map_price_field" xsi:type="text" nullable="true" comment="Minimum Advertised Price Attribute"/>
+        <column name="vat_is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="VAT Is Active Status"/>
+        <column name="vat_percentage" xsi:type="decimal" scale="3" precision="12" unsigned="false" nullable="false" default="0" comment="VAT Percentage Added To Price"/>
+        <column name="cc_is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Currency Conversion Enabled"/>
+        <column name="cc_rate" xsi:type="varchar" nullable="true" length="50" comment="Conversion Rate Source"/>
+        <column name="manage_ptc" xsi:type="boolean" nullable="false" comment="Manage Product Tax Code"/>
+        <column name="default_ptc" xsi:type="text" nullable="true" comment="Default Product Tax Code"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_3E1E4BA92156C46E6EDFA775058BBCC1" table="channel_amazon_account_listing" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ACCOUNT_LISTING_MERCHANT_ID">
+            <column name="merchant_id"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_account_order" resource="default" engine="innodb" comment="channel_amazon_account_order">
+        <column name="id" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant ID"/>
+        <column name="per_shipment" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="true" comment="Per Shipment Rate"/>
+        <column name="order_is_active" xsi:type="boolean" nullable="false" comment="Order Import Flag"/>
+        <column name="default_store" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" comment="Store Association For Order Import"/>
+        <column name="customer_is_active" xsi:type="boolean" nullable="false" comment="Create Customer Is Active"/>
+        <column name="is_external_order_id" xsi:type="boolean" nullable="false" comment="Use External Order ID"/>
+        <column name="reserve" xsi:type="boolean" nullable="false" comment="Reserve Inventory Flag"/>
+        <column name="custom_status_is_active" xsi:type="boolean" nullable="false" comment="Order Status"/>
+        <column name="custom_status" xsi:type="varchar" nullable="true" length="80" comment="Custom Processing Order State"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_06F717BEB8071F1E2CCC0CB16536C6E7" table="channel_amazon_account_order" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ACCOUNT_ORDER_MERCHANT_ID">
+            <column name="merchant_id"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_listing" resource="default" engine="innodb" comment="channel_amazon_listing">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="listing_id" xsi:type="varchar" nullable="true" length="50" comment="Listing Id"/>
+        <column name="catalog_product_id" xsi:type="varchar" nullable="true" length="50" comment="Catalog Product Id"/>
+        <column name="product_id_type" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" comment="Amazon Product Id Type (ASIN, UPC, etc)"/>
+        <column name="product_id" xsi:type="varchar" nullable="true" length="50" comment="Amazon Product Id"/>
+        <column name="product_type" xsi:type="varchar" nullable="true" length="50" comment="Amazon Reported Product Type"/>
+        <column name="category_id" xsi:type="varchar" nullable="true" length="50" comment="Category Id"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="20" comment="ASIN"/>
+        <column name="catalog_sku" xsi:type="varchar" nullable="true" length="100" comment="Catalog SKU"/>
+        <column name="seller_sku" xsi:type="varchar" nullable="true" length="40" comment="Amazon Seller SKU"/>
+        <column name="name" xsi:type="text" nullable="true" comment="Amazon Name"/>
+        <column name="qty" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="false" default="0" comment="Amazon Listing Qty"/>
+        <column name="list_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Listing Price"/>
+        <column name="shipping_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Shiping Price"/>
+        <column name="landed_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Landed Price"/>
+        <column name="msrp_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon MSRP Price"/>
+        <column name="map_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon MAP Price"/>
+        <column name="variants" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Variants Exist"/>
+        <column name="condition" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Listing Condition"/>
+        <column name="is_listed" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Live On Amazon"/>
+        <column name="is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Active On Amazon"/>
+        <column name="eligible" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Is Eligible For Listing"/>
+        <column name="list_status" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="98" comment="Listing Status"/>
+        <column name="fulfilled_by" xsi:type="varchar" nullable="true" length="50" comment="Fulfilled By Flag"/>
+        <column name="created_on" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created On"/>
+        <column name="updated_on" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated On"/>
+        <column name="pricing_update" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Pricing Update Flag (used for index process)"/>
+        <column name="quantity_update" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Quantity Update Flag (used for index process)"/>
+        <column name="fulfilled_by_update" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Fulfilled By Update Flag"/>
+        <column name="is_ship" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Shiping Charges Calculated Flag"/>
+        <column name="condition_override" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Listing Condition Override Value"/>
+        <column name="condition_notes_override" xsi:type="text" nullable="true" comment="Listing Condition Notes Override Value"/>
+        <column name="list_price_override" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="true" comment="Amazon Listing Price Override"/>
+        <column name="handling_override" xsi:type="smallint" padding="6" unsigned="false" nullable="true" identity="false" comment="Handling Time Override"/>
+        <column name="product_tax_code" xsi:type="text" nullable="true" comment="Product Tax Code"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_A0B70EBF47FBA1BC5EAED4328391F0F2" table="channel_amazon_listing" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_LISTING_MERCHANT_ID_SELLER_SKU">
+            <column name="merchant_id"/>
+            <column name="seller_sku"/>
+        </constraint>
+        <index referenceId="LISTING_ID_LISTING_ID" indexType="btree">
+            <column name="listing_id"/>
+        </index>
+        <index referenceId="CATALOG_PRODUCT_ID_CATALOG_PRODUCT_ID" indexType="btree">
+            <column name="catalog_product_id"/>
+        </index>
+        <index referenceId="ASIN_ASIN" indexType="btree">
+            <column name="asin"/>
+        </index>
+        <index referenceId="CONDITION_CONDITION" indexType="btree">
+            <column name="condition"/>
+        </index>
+        <index referenceId="LIST_STATUS_LIST_STATUS" indexType="btree">
+            <column name="list_status"/>
+        </index>
+        <index referenceId="IS_SHIP_IS_SHIP" indexType="btree">
+            <column name="is_ship"/>
+        </index>
+    </table>
+    <table name="channel_amazon_defect" resource="default" engine="innodb" comment="channel_amazon_defect">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="seller_sku" xsi:type="varchar" nullable="true" length="250" comment="Seller SKU"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="30" comment="ASIN"/>
+        <column name="field_name" xsi:type="varchar" nullable="true" length="50" comment="Amazon Defect Name"/>
+        <column name="alert_type" xsi:type="varchar" nullable="true" length="50" comment="Amazon Alert Type"/>
+        <column name="notes" xsi:type="text" nullable="true" comment="Notes"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_B41E9741C6775D29815FA60F8F023E47" table="channel_amazon_defect" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_DEFECT_MERCHANT_ID_SELLER_SKU_ALERT_TYPE">
+            <column name="merchant_id"/>
+            <column name="seller_sku"/>
+            <column name="alert_type"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_listing_log" resource="default" engine="innodb" comment="channel_amazon_listing_log">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="seller_sku" xsi:type="varchar" nullable="true" length="40" comment="Amazon Seller SKU"/>
+        <column name="action" xsi:type="text" nullable="true" comment="Api Action"/>
+        <column name="status" xsi:type="varchar" nullable="true" length="128" comment="Api Status"/>
+        <column name="notes" xsi:type="text" nullable="true" comment="Notes"/>
+        <column name="created_on" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created On"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_5FB621EAF9AE9C25313CE7178E8AF951" table="channel_amazon_listing_log" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <index referenceId="ID_ID" indexType="btree">
+            <column name="id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_attribute" resource="default" engine="innodb" comment="channel_amazon_attribute">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="amazon_attribute" xsi:type="varchar" nullable="true" length="100" comment="Amazon Attribute Name"/>
+        <column name="catalog_attribute" xsi:type="varchar" nullable="true" length="100" comment="Catalog Attribute Name"/>
+        <column name="country_code" xsi:type="varchar" nullable="true" length="50" comment="Country Code"/>
+        <column name="overwrite" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Overwrite Existing Attribute Value"/>
+        <column name="type" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Text vs Select Type"/>
+        <column name="store_ids" xsi:type="text" nullable="true" comment="Store Ids"/>
+        <column name="attribute_set_ids" xsi:type="text" nullable="true" comment="Attribute Set Ids"/>
+        <column name="in_search" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Use In Search"/>
+        <column name="comparable" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Comparable"/>
+        <column name="in_navigation" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Used in Layered Navigation"/>
+        <column name="in_search_navigation" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Used in Search Rsults Layered Navigation"/>
+        <column name="position" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Position (execution priority)"/>
+        <column name="in_promo" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Use For Promo"/>
+        <column name="is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Active"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ATTRIBUTE_AMAZON_ATTRIBUTE_COUNTRY_CODE">
+            <column name="amazon_attribute"/>
+            <column name="country_code"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_attribute_value" resource="default" engine="innodb" comment="channel_amazon_attribute_value">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="false" nullable="false" identity="true" comment="Id"/>
+        <column name="parent_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Parent Id"/>
+        <column name="amazon_attribute" xsi:type="varchar" nullable="true" length="250" comment="Amazon attribute name"/>
+        <column name="country_code" xsi:type="varchar" nullable="true" length="50" comment="Country Code"/>
+        <column name="sku" xsi:type="varchar" nullable="true" length="250" comment="SKU"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="50" comment="Asin"/>
+        <column name="value" xsi:type="text" nullable="true" comment="Attribute Value"/>
+        <column name="status" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" comment="Import Status"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CHANNEL_AMAZON_ATTR_VAL_PARENT_ID_CHANNEL_AMAZON_ATTR_ID" table="channel_amazon_attribute_value" column="parent_id" referenceTable="channel_amazon_attribute" referenceColumn="id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ATTRIBUTE_VALUE_PARENT_ID_SKU">
+            <column name="parent_id"/>
+            <column name="sku"/>
+        </constraint>
+        <index referenceId="CHANNEL_AMAZON_ATTRIBUTE_VALUE_ASIN" indexType="btree">
+            <column name="asin"/>
+        </index>
+    </table>
+    <table name="channel_amazon_pricing_bestbuybox" resource="default" engine="innodb" comment="channel_amazon_pricing_bestbuybox">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="30" comment="ASIN"/>
+        <column name="is_seller" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" comment="Is Seller"/>
+        <column name="country_code" xsi:type="varchar" nullable="false" length="50" comment="Country Code"/>
+        <column name="condition_code" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Amazon Condition Code"/>
+        <column name="condition" xsi:type="varchar" nullable="true" length="30" comment="Amazon Condition"/>
+        <column name="subcondition" xsi:type="varchar" nullable="true" length="30" comment="Amazon Sub Condition"/>
+        <column name="currency_code" xsi:type="varchar" nullable="true" length="10" comment="Currency Code Used"/>
+        <column name="landed_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Landed Price"/>
+        <column name="list_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Listing Price"/>
+        <column name="shipping_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Shipping Price"/>
+        <column name="last_updated" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Updated"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_D55E94617D706160A9AE9CC3B5B88270">
+            <column name="asin"/>
+            <column name="country_code"/>
+            <column name="condition_code"/>
+        </constraint>
+        <index referenceId="ASIN_ASIN" indexType="btree">
+            <column name="asin"/>
+        </index>
+        <index referenceId="COUNTRY_CODE_COUNTRY_CODE" indexType="btree">
+            <column name="country_code"/>
+        </index>
+    </table>
+    <table name="channel_amazon_pricing_lowest" resource="default" engine="innodb" comment="channel_amazon_pricing_lowest">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="30" comment="ASIN"/>
+        <column name="country_code" xsi:type="varchar" nullable="false" length="50" comment="Country Code"/>
+        <column name="condition_code" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Amazon Condition Code"/>
+        <column name="condition" xsi:type="varchar" nullable="true" length="30" comment="Amazon Condition"/>
+        <column name="subcondition" xsi:type="varchar" nullable="true" length="30" comment="Amazon Sub Condition"/>
+        <column name="fulfillment_channel" xsi:type="varchar" nullable="true" length="30" comment="Fulfillment Channel"/>
+        <column name="feedback_rating" xsi:type="varchar" nullable="true" length="30" comment="Feedback Rating"/>
+        <column name="feedback_count" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Feedback Count"/>
+        <column name="currency_code" xsi:type="varchar" nullable="true" length="10" comment="Default Currency Code"/>
+        <column name="landed_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Landed Price"/>
+        <column name="list_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Listing Price"/>
+        <column name="shipping_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Shipping Price"/>
+        <column name="last_updated" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Updated"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="ASIN_ASIN" indexType="btree">
+            <column name="asin"/>
+        </index>
+        <index referenceId="COUNTRY_CODE_COUNTRY_CODE" indexType="btree">
+            <column name="country_code"/>
+        </index>
+    </table>
+    <table name="channel_amazon_listing_rule" resource="default" engine="innodb" comment="channel_amazon_listing_rule">
+        <column name="id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="true" comment="Listing Rule Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="conditions_serialized" xsi:type="text" nullable="true" comment="Conditions Serialized"/>
+        <column name="website_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" comment="Website Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_C4A408A5EB94BCECAFDFC9A151C483C3" table="channel_amazon_listing_rule" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_LISTING_RULE_MERCHANT_ID">
+            <column name="merchant_id"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_pricing_rule" resource="default" engine="innodb" comment="channel_amazon_pricing_rule">
+        <column name="id" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="name" xsi:type="varchar" nullable="true" length="255" comment="Rule Name"/>
+        <column name="description" xsi:type="text" nullable="true" comment="Rule Description"/>
+        <column name="from_date" xsi:type="timestamp" on_update="false" nullable="true" comment="From"/>
+        <column name="to_date" xsi:type="timestamp" on_update="false" nullable="true" comment="To"/>
+        <column name="is_active" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Active"/>
+        <column name="conditions_serialized" xsi:type="mediumtext" nullable="true" comment="Conditions Serialized"/>
+        <column name="stop_rules_processing" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Stop Rules Processing"/>
+        <column name="sort_order" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Sort Order"/>
+        <column name="price_movement" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Price Movement (Increase, Decrease, Match)"/>
+        <column name="simple_action" xsi:type="varchar" nullable="true" length="32" comment="By Fixed or Percentage"/>
+        <column name="discount_amount" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Applied Discount Amount"/>
+        <column name="auto" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Manual - Auto"/>
+        <column name="auto_source" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Amazon Price Source"/>
+        <column name="auto_minimum_feedback" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Minimum Feedback Rating"/>
+        <column name="auto_feedback_count" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Minimum Feedback Count"/>
+        <column name="auto_condition" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="If Condition Variance"/>
+        <column name="new_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="New Condition Variance"/>
+        <column name="refurbished_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Refuribshed Condition Variance"/>
+        <column name="usedlikenew_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Used Like New Condition Variance"/>
+        <column name="usedverygood_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Used Very Good Condition Variance"/>
+        <column name="usedgood_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Used Good Condition Variance"/>
+        <column name="usedacceptable_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Used Acceptable Condition Variance"/>
+        <column name="collectiblelikenew_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Collectible Like New Condition Variance"/>
+        <column name="collectibleverygood_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Collectible Very Good Condition Variance"/>
+        <column name="collectiblegood_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Collectible Good Condition Variance"/>
+        <column name="collectibleacceptable_variance" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="100" comment="Collectible Acceptable Condition Variance"/>
+        <column name="floor" xsi:type="varchar" nullable="true" length="32" comment="Attribute For Floor Limit"/>
+        <column name="floor_price_movement" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Floor Movement (Increase, Decrease, Match)"/>
+        <column name="floor_simple_action" xsi:type="varchar" nullable="true" length="32" comment="Fixed vs Percentage Discount"/>
+        <column name="floor_discount_amount" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Floor Discount Amount"/>
+        <column name="ceiling" xsi:type="varchar" nullable="true" length="32" comment="Attribute For Ceiling Limit"/>
+        <column name="ceiling_price_movement" xsi:type="smallint" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Ceiling Movement (Increase, Decrease, Match)"/>
+        <column name="ceiling_simple_action" xsi:type="varchar" nullable="true" length="32" comment="Fixed vs Percentage Discount"/>
+        <column name="ceiling_discount_amount" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Ceiling Discount Amount"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_B542FE04795DDD8CFDA0D994FFCCECE1" table="channel_amazon_pricing_rule" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <index referenceId="ID_ID" indexType="btree">
+            <column name="id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_listing_multiple" resource="default" engine="innodb" comment="channel_amazon_listing_multiple">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="parent_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Parent ID"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="30" comment="ASIN"/>
+        <column name="title" xsi:type="text" nullable="true" comment="Title"/>
+        <column name="product_type" xsi:type="varchar" nullable="true" length="100" comment="Amazon Product Type"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_DE9ED719F047CC49BC7C7E149FD15C6D" table="channel_amazon_listing_multiple" column="parent_id" referenceTable="channel_amazon_listing" referenceColumn="id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_LISTING_MULTIPLE_PARENT_ID_ASIN">
+            <column name="parent_id"/>
+            <column name="asin"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_listing_variant" resource="default" engine="innodb" comment="channel_amazon_listing_variant">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="parent_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Parent ID"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="30" comment="ASIN"/>
+        <column name="variant_name" xsi:type="text" nullable="true" comment="Amazon Variant Name"/>
+        <column name="variant_value" xsi:type="text" nullable="true" comment="Amazon Variant Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_27DB41C97CE2608B6FFBA4392BF4A408" table="channel_amazon_listing_variant" column="parent_id" referenceTable="channel_amazon_listing" referenceColumn="id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_LISTING_VARIANT_PARENT_ID_ASIN">
+            <column name="parent_id"/>
+            <column name="asin"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_action" resource="default" engine="innodb" comment="channel_amazon_action">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Action Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="identifier" xsi:type="varchar" nullable="false" length="255" comment="Unique Identifier"/>
+        <column name="command" xsi:type="varchar" nullable="false" length="50" comment="Command"/>
+        <column name="command_body" xsi:type="text" nullable="true" comment="Command Body"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_04EA41E34A2254E4626FC19F9AA7310F" table="channel_amazon_action" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ACTION_MERCHANT_ID_IDENTIFIER_COMMAND">
+            <column name="merchant_id"/>
+            <column name="identifier"/>
+            <column name="command"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_order" resource="default" engine="innodb" comment="channel_amazon_order">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="order_id" xsi:type="varchar" nullable="false" length="50" comment="Amazon Order Id"/>
+        <column name="sales_order_id" xsi:type="varchar" nullable="false" length="50" comment="Magento Order Id"/>
+        <column name="sales_order_number" xsi:type="varchar" nullable="false" length="50" comment="Magento Order Number"/>
+        <column name="status" xsi:type="varchar" nullable="false" length="50" default="Pending" comment="Order Status"/>
+        <column name="buyer_email" xsi:type="varchar" nullable="true" length="250" comment="Buyer Email"/>
+        <column name="ship_service_level" xsi:type="varchar" nullable="true" length="250" comment="Ship Service Level"/>
+        <column name="sales_channel" xsi:type="varchar" nullable="true" length="50" comment="Sales Channel"/>
+        <column name="shipped_by_amazon" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Shipped By Amazon"/>
+        <column name="is_business" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Business Address Flag"/>
+        <column name="items_shipped" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Items Shipped Count"/>
+        <column name="items_unshipped" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Items Unshipped Count"/>
+        <column name="buyer_name" xsi:type="varchar" nullable="true" length="50" comment="Buyer Name"/>
+        <column name="currency" xsi:type="varchar" nullable="true" length="10" comment="Order Currency"/>
+        <column name="total" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Order Grand Total"/>
+        <column name="is_premium" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Premium Flag"/>
+        <column name="is_prime" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Prime Flag"/>
+        <column name="purchase_order_number" xsi:type="text" nullable="true" comment="Purchase Order Number"/>
+        <column name="is_replacement" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Replacement Order"/>
+        <column name="fulfillment_channel" xsi:type="varchar" nullable="true" length="10" comment="Fulfillment Channel"/>
+        <column name="payment_method" xsi:type="varchar" nullable="true" length="25" comment="Payment Method"/>
+        <column name="service_level" xsi:type="varchar" nullable="true" length="60" comment="Service Level"/>
+        <column name="ship_name" xsi:type="varchar" nullable="true" length="200" comment="Ship Name"/>
+        <column name="ship_address_one" xsi:type="text" nullable="true" comment="Ship Address Line One"/>
+        <column name="ship_address_two" xsi:type="text" nullable="true" comment="Ship Address Line Two"/>
+        <column name="ship_address_three" xsi:type="text" nullable="true" comment="Ship Address Line Three"/>
+        <column name="ship_city" xsi:type="varchar" nullable="true" length="200" comment="Ship City"/>
+        <column name="ship_region" xsi:type="varchar" nullable="true" length="60" comment="Ship Region"/>
+        <column name="ship_postal_code" xsi:type="varchar" nullable="true" length="20" comment="Ship Postal Code"/>
+        <column name="ship_country" xsi:type="varchar" nullable="true" length="20" comment="Ship Country"/>
+        <column name="ship_phone" xsi:type="varchar" nullable="true" length="60" comment="Ship Phone"/>
+        <column name="purchase_date" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Purchase Date"/>
+        <column name="latest_ship_date" xsi:type="timestamp" on_update="false" nullable="true" comment="Latest Ship Date"/>
+        <column name="reserved" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Reserved Quantity"/>
+        <column name="notes" xsi:type="text" nullable="true" comment="Notes"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ORDER_ORDER_ID">
+            <column name="order_id"/>
+        </constraint>
+        <index referenceId="CHANNEL_AMAZON_ORDER_ID_PURCHASE_DATE" indexType="btree">
+            <column name="id"/>
+            <column name="purchase_date"/>
+        </index>
+        <index referenceId="CHANNEL_AMAZON_ORDER_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+    <table name="channel_amazon_order_item" resource="default" engine="innodb" comment="channel_amazon_order_item">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="order_id" xsi:type="varchar" nullable="false" length="50" comment="Order Id"/>
+        <column name="order_item_id" xsi:type="varchar" nullable="false" length="50" comment="Order Item Id"/>
+        <column name="qty_ordered" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Quantity Ordered"/>
+        <column name="qty_shipped" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Quantity Shipped"/>
+        <column name="title" xsi:type="text" nullable="false" comment="Order Item Title"/>
+        <column name="sku" xsi:type="text" nullable="false" comment="Sku"/>
+        <column name="asin" xsi:type="varchar" nullable="false" length="50" comment="ASIN"/>
+        <column name="condition" xsi:type="varchar" nullable="false" length="50" comment="Product Condition"/>
+        <column name="subcondition" xsi:type="varchar" nullable="false" length="50" comment="Product Subcondition"/>
+        <column name="item_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Item Sale Price"/>
+        <column name="item_tax" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Item Sale Tax"/>
+        <column name="shipping_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Item Shipping Price"/>
+        <column name="promotional_discount" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Promotional Discount"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ORDER_ITEM_ORDER_ITEM_ID">
+            <column name="order_item_id"/>
+        </constraint>
+        <index referenceId="CHANNEL_AMAZON_ORDER_ITEM_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_order_reserve" resource="default" engine="innodb" comment="channel_amazon_order_reserve">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="order_id" xsi:type="varchar" nullable="false" length="50" comment="Order Id"/>
+        <column name="order_item_id" xsi:type="varchar" nullable="false" length="50" comment="Order Item Id"/>
+        <column name="qty" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Quantity Reserved"/>
+        <column name="title" xsi:type="text" nullable="false" comment="Product Title"/>
+        <column name="sku" xsi:type="text" nullable="false" comment="Sku"/>
+        <column name="status" xsi:type="varchar" nullable="false" length="30" comment="Reserve Status"/>
+        <column name="reserved_on" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Reserved On"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_2C4CE68E021C1D6A3BA8CF61FDBEEB04" table="channel_amazon_order_reserve" column="order_id" referenceTable="channel_amazon_order" referenceColumn="order_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_ORDER_RESERVE_ORDER_ITEM_ID">
+            <column name="order_item_id"/>
+        </constraint>
+        <index referenceId="ORDER_ID_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_order_tracking" resource="default" engine="innodb" comment="channel_amazon_order_tracking">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="order_id" xsi:type="varchar" nullable="false" length="50" comment="Order Id"/>
+        <column name="order_item_id" xsi:type="varchar" nullable="false" length="50" comment="Order Item Id"/>
+        <column name="carrier_type" xsi:type="varchar" nullable="false" length="200" comment="Shipping Carrier Type"/>
+        <column name="carrier_name" xsi:type="varchar" nullable="false" length="200" comment="Shipping Carrier Name"/>
+        <column name="shipping_method" xsi:type="varchar" nullable="false" length="200" comment="Shipping Method"/>
+        <column name="tracking_number" xsi:type="varchar" nullable="false" length="200" comment="Tracking Number"/>
+        <column name="quantity" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" comment="Quantity Shipped"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_49E28BC9CA5C96446CF5188443F58E8D" table="channel_amazon_order_tracking" column="order_id" referenceTable="channel_amazon_order" referenceColumn="order_id" onDelete="CASCADE"/>
+        <index referenceId="ORDER_ID_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_error_log" resource="default" engine="innodb" comment="channel_amazon_error_log">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="error_code" xsi:type="text" nullable="true" comment="Comm Error Code"/>
+        <column name="message" xsi:type="text" nullable="true" comment="Error Message"/>
+        <column name="created_on" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created On"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_194C1E141C1091D9F449E9280891D7A7" table="channel_amazon_error_log" column="merchant_id" referenceTable="channel_amazon_account" referenceColumn="merchant_id" onDelete="CASCADE"/>
+    </table>
+    <table name="channel_amazon_quantity_index" resource="default" engine="innodb" comment="channel_amazon_quantity_index">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="false" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="seller_id" xsi:type="varchar" nullable="true" length="40" comment="Seller Id"/>
+        <column name="parent_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Parent Id"/>
+        <column name="quantity" xsi:type="decimal" scale="0" precision="10" unsigned="false" nullable="false" default="0" comment="Listing Quantity"/>
+        <column name="seller_sku" xsi:type="varchar" nullable="true" length="40" comment="Seller SKU"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_QUANTITY_INDEX_SELLER_ID_SELLER_SKU">
+            <column name="seller_id"/>
+            <column name="seller_sku"/>
+        </constraint>
+    </table>
+    <table name="channel_amazon_pricing_index" resource="default" engine="innodb" comment="channel_amazon_pricing_index">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant Id"/>
+        <column name="parent_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Parent Id"/>
+        <column name="product_id" xsi:type="int" padding="11" unsigned="false" nullable="false" identity="false" comment="Product Id"/>
+        <column name="asin" xsi:type="varchar" nullable="true" length="250" comment="ASIN"/>
+        <column name="condition" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="11" comment="Amazon Condition"/>
+        <column name="catalog_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Magento Catalog Price"/>
+        <column name="listing_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Listing Price"/>
+        <column name="shipping_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Shipping Price"/>
+        <column name="landed_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Landed Price"/>
+        <column name="floor_price" xsi:type="decimal" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Amazon Floor Price (per rule)"/>
+        <column name="stop_rules" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Stop Further Rules Processing"/>
+        <column name="is_seller" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Seller"/>
+        <column name="apply_vat" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Apply VAT Tax Flag"/>
+        <column name="shipping_calculated" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Shiping Calculated Flag"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_PRICING_INDEX_PARENT_ID_MERCHANT_ID">
+            <column name="parent_id"/>
+            <column name="merchant_id"/>
+        </constraint>
+        <index referenceId="ID_ID" indexType="btree">
+            <column name="id"/>
+        </index>
+        <index referenceId="ASIN_ASIN" indexType="btree">
+            <column name="asin"/>
+        </index>
+        <index referenceId="CONDITION_CONDITION" indexType="btree">
+            <column name="condition"/>
+        </index>
+        <index referenceId="SHIPPING_CALCULATED_SHIPPING_CALCULATED" indexType="btree">
+            <column name="shipping_calculated"/>
+        </index>
+        <index referenceId="STOP_RULES_STOP_RULES" indexType="btree">
+            <column name="stop_rules"/>
+        </index>
+        <index referenceId="PRODUCT_ID_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+    <table name="channel_amazon_log_processing" resource="default" engine="innodb" comment="channel_amazon_log_processing">
+        <column name="log_id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="false" comment="Id"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <index referenceId="CHANNEL_AMAZON_LOG_PROCESSING_LOG_ID" indexType="btree">
+            <column name="log_id"/>
+        </index>
+        <index referenceId="CHANNEL_AMAZON_LOG_PROCESSING_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+    </table>
+    <table name="channel_amazon_sync_status" resource="default" engine="innodb" comment="channel_amazon_sync_status">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant ID"/>
+        <column name="previous_token" xsi:type="varchar" nullable="true" comment="Last Token used for the API request"/>
+        <column name="next_token" xsi:type="varchar" nullable="true" comment="Last Token received from API"/>
+        <column name="records_fetched" xsi:type="int" unsigned="true" nullable="false" comment="Count of total records fetched during the sync"/>
+        <column name="status" xsi:type="varchar" nullable="false" comment="Status describing result of the sync"/>
+        <column name="notes" xsi:type="text" nullable="true" comment="Text field with additional notes related to the sync"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Time when the record has been created"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="merchant_id_id_status" indexType="btree">
+            <column name="merchant_id"/>
+            <column name="id"/>
+            <column name="status"/>
+        </index>
+    </table>
+    <table name="channel_amazon_logs" resource="default" engine="innodb" comment="channel_amazon_sync_status">
+        <column name="id" xsi:type="bigint" padding="20" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column name="external_id" xsi:type="varchar" nullable="false" comment="External identifier"/>
+        <column name="merchant_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Merchant ID"/>
+        <column name="identifier" xsi:type="varchar"  length="40" nullable="true" comment="Identifier of the record"/>
+        <column name="type" xsi:type="varchar"  length="50" nullable="true" comment="Type of the record"/>
+        <column name="action" xsi:type="varchar"  length="40" nullable="true" comment="Action"/>
+        <column name="log" xsi:type="text" nullable="true" comment="Log data"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Time when the record has been created"/>
+        <constraint xsi:type="unique" referenceId="CHANNEL_AMAZON_LOGS_MERCHANT_ID_IDENTIFIER_TYPE_ACTION">
+            <column name="merchant_id"/>
+            <column name="identifier"/>
+            <column name="type"/>
+            <column name="action"/>
+        </constraint>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="CHANNEL_AMAZON_LOGS_MERCHANT_ID_TYPE_ACTION" indexType="btree">
+            <column name="merchant_id"/>
+            <column name="type"/>
+            <column name="action"/>
+        </index>
+    </table>
+</schema>

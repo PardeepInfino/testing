@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Xtento_StockImport::configuration" title="Stock Import Module" module="Xtento_StockImport" sortOrder="160" parent="Xtento_XtCore::extensions" action="adminhtml/system_config/edit/section/stockimport" resource="Xtento_StockImport::configuration"/>
+        <add id="Xtento_StockImport::menu" title="Stock Import" module="Xtento_StockImport" sortOrder="101" parent="Magento_Catalog::catalog" resource="Xtento_StockImport::menu"/>
+        <add id="Xtento_StockImport::manual" title="Manual Import" module="Xtento_StockImport" sortOrder="10" parent="Xtento_StockImport::menu" action="xtento_stockimport/manual/index" resource="Xtento_StockImport::manual"/>
+        <add id="Xtento_StockImport::log" title="Execution Log" module="Xtento_StockImport" sortOrder="20" parent="Xtento_StockImport::menu" action="xtento_stockimport/log/index" resource="Xtento_StockImport::log"/>
+        <add id="Xtento_StockImport::profile" title="Import Profiles" module="Xtento_StockImport" sortOrder="30" parent="Xtento_StockImport::menu" action="xtento_stockimport/profile/index" resource="Xtento_StockImport::profile"/>
+        <add id="Xtento_StockImport::source" title="Import Sources" module="Xtento_StockImport" sortOrder="40" parent="Xtento_StockImport::menu" action="xtento_stockimport/source/index" resource="Xtento_StockImport::source"/>
+    </menu>
+</config>
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          etc/adminhtml/menu.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

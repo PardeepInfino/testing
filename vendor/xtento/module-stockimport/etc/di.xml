@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Xtento\StockImport\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Xtento\StockImport\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">xtentoLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Xtento\StockImport\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="xtentoStockImportImportCommand" xsi:type="object">Xtento\StockImport\Console\Command\ImportCommand</item>
+                <item name="xtentoStockImportConfigExportCommand" xsi:type="object">Xtento\StockImport\Console\Command\ConfigExportCommand</item>
+                <item name="xtentoStockImportConfigImportCommand" xsi:type="object">Xtento\StockImport\Console\Command\ConfigImportCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Xtento\StockImport\Console\Command\ConfigExportCommand">
+        <arguments>
+            <argument name="toolsHelper" xsi:type="object">\Xtento\StockImport\Helper\Tools\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Xtento\StockImport\Console\Command\ConfigImportCommand">
+        <arguments>
+            <argument name="toolsHelper" xsi:type="object">\Xtento\StockImport\Helper\Tools\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Asset\Minification">
+        <plugin name="excludeFilesFromMinification" type="Xtento\StockImport\Plugin\ExcludeFilesFromMinification"/>
+    </type>
+</config>
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2022-06-22T21:44:37+00:00
+ * File:          etc/di.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

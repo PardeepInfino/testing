@@ -1,0 +1,148 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .aw-rl__list-wrapper {
+        margin-top: 20px;
+        position: relative;
+        display: inline-block;
+
+        &.category {
+            margin-left: 6px;
+            display: inline-flex;
+
+            .toggle {
+                .lib-button-icon(
+                    @_icon-font-content: @icon-down,
+                    @_icon-font-position: after,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-size: 12px,
+                    @_icon-font-line-height: 20px,
+                    @_icon-font-color: @aw-rl-add-to__color,
+                    @_icon-font-color-hover: @primary__color
+                );
+
+                span {
+                    display: none;
+                }
+
+                &::after {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        &.active {
+            .items {
+                display: block;
+            }
+        }
+
+        .toggle {
+            .lib-button-icon(
+                @_icon-font-content: @icon-down,
+                @_icon-font-position: after,
+                @_icon-font-text-hide: false,
+                @_icon-font-size: 16px,
+                @_icon-font-line-height: 20px,
+                @_icon-font-color: @aw-rl-add-to__color,
+                @_icon-font-color-hover: @primary__color
+            );
+            .lib-button-icon(
+                @_icon-font-content: @icon-star,
+                @_icon-font-position: before,
+                @_icon-font-text-hide: false,
+                @_icon-font-size: 16px,
+                @_icon-font-line-height: 20px,
+                @_icon-font-color: @aw-rl-add-to__color,
+                @_icon-font-color-hover: @primary__color
+            );
+            .lib-css(color, @aw-rl-add-to__color);
+            padding-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 600;
+
+            &:hover {
+                .lib-css(color, @primary__color);
+            }
+
+            &::after {
+                margin-left: 10px;
+            }
+
+            &.active {
+                .lib-css(background, @dropdown-list__background);
+
+                &::after {
+                    .lib-rotate(180deg);
+                }
+            }
+        }
+
+        .items {
+            display: none;
+            min-width: 210px;
+            width: 100%;
+            margin: -1px 0 0 0;
+            padding: 0;
+            list-style: none;
+            .lib-css(background, @dropdown-list__background);
+            .lib-css(border, @dropdown-list__border);
+            .lib-css(box-shadow, @dropdown-list__shadow);
+            .lib-css(box-sizing, border-box, 1);
+            z-index: 101;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            max-height: 200px;
+            overflow-y: auto;
+
+            .item {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .addto-requisition-list {
+                text-decoration: none;
+                display: block;
+                line-height: 1.4;
+                padding: 8px;
+                .lib-css(color, @primary__color);
+
+                &:hover {
+                    .lib-css(background, @dropdown-list-item__hover);
+                }
+            }
+
+            .addto-create-requisition-list {
+                &:before {
+                    content: '+';
+                    font-weight: bold;
+                }
+            }
+
+            .addto-create-requisition-list {
+                border-top: 1px solid #bdb8b8;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

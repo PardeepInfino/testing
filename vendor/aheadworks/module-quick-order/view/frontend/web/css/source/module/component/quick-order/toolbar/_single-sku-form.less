@@ -1,0 +1,158 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    //
+    //  Single sku form
+    //  _____________________________________________
+
+    #single-sku-form {
+        .fieldset.one_field_width {
+            min-width: 40rem;
+
+            .single-search {
+                width: 95%;
+            }
+        }
+
+        .field {
+          display: inline-block;
+          margin-bottom: 15px;
+          vertical-align: top;
+        }
+
+        .single-search {
+            .ui-autocomplete-input {
+                &.loading {
+                    background: transparent url('../images/loader-2.gif') no-repeat 110% 50%;
+                    background-size: 10rem;
+                }
+            }
+        }
+    }
+
+    .aw_quick_order-index-index {
+        .ui-helper-hidden-accessible {
+            display: none;
+        }
+
+        .ui-autocomplete.ui-widget-content {
+            background: white;
+            border: 1px solid gray;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 35rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            .ui-menu-item {
+                padding: 5px;
+                cursor: pointer;
+                margin-bottom: 0;
+
+                &.item-focus {
+                    background: #ccc;
+                }
+
+                .column {
+                    display: inline-block;
+                }
+
+                .description {
+                    vertical-align: top;
+
+                    .name, .sku {
+                        display: block;
+                    }
+
+                    .name {
+                        color: inherit;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  #single-sku-form {
+    .field {
+      margin-right: 5%;
+
+
+      &.single-qty {
+        width: 15%;
+        margin-right: 0;
+      }
+
+      &.single-search {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+  #single-sku-form {
+    .field {
+      margin-right: 0;
+
+      &.single-qty {
+        width: 100%;
+      }
+
+      &.single-search {
+        width: 100%;
+        .input-text {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  #single-sku-form {
+    .field {
+      margin-right: 5%;
+      margin-bottom: 0;
+    }
+
+    .single-search {
+      width: 80%;
+    }
+
+    .single-qty {
+      width: 10%;
+
+      .input-text {
+        text-align: center;
+      }
+
+      .control {
+        position: relative;
+      }
+
+      div.mage-error {
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        min-width: 200px;
+        display: block;
+      }
+    }
+  }
+}

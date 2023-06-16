@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- Requisition List Management -->
+    <route url="/V1/awReqList/addItemToList" method="POST">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListManagementInterface" method="addItem" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/moveItemToList" method="POST">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListManagementInterface" method="moveItem" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/updateList" method="PUT">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListRepositoryInterface" method="save" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/getList" method="GET">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListRepositoryInterface" method="getList" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/getList/:listId" method="GET">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListRepositoryInterface" method="get" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/removeList/:listId" method="DELETE">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListRepositoryInterface" method="deleteById" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+
+    <!-- Requisition List Item Management -->
+    <route url="/V1/awReqList/updateItem" method="PUT">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListItemRepositoryInterface" method="save" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/awReqList/removeItem/:listItemId" method="DELETE">
+        <service class="Aheadworks\RequisitionLists\Api\RequisitionListItemRepositoryInterface" method="deleteById" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+
+    <!-- Cart Management -->
+    <route url="/V1/awReqList/addItemsToCart" method="POST">
+        <service class="Aheadworks\RequisitionLists\Api\CartManagementInterface" method="addItemsToCart" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+
+</routes>

@@ -1,0 +1,33 @@
+<a href="#"
+   class="toggle change"
+   data-mage-init='{"dropdown": {}}'
+   data-toggle="dropdown"
+   data-trigger-keypress-button="true"
+   aria-haspopup="true"
+   aria-expanded="false">
+    <span translate="linkLabel"></span>
+</a>
+<ul class="items"
+    data-target="dropdown"
+    afterRender="onElementRender">
+    <!-- ko foreach: { data: getLists(), as: '$list' } -->
+        <li class="item">
+            <a href="#"
+               class="addto-requisition-list"
+               data-bind="attr: {'data-list-id': $list.list_id}"
+               click="$parent.applyAction.bind($parent, $list)"
+               role="button"
+               data-action-keypress="true">
+                <span data-bind="html: $list.name"></span>
+            </a>
+        </li>
+    <!-- /ko -->
+    <li class="item">
+        <a href="#"
+           class="addto-requisition-list addto-create-requisition-list"
+           data-bind="attr: {'href': getUrlToRequisitionPage()}"
+           click="openModal">
+            <span translate="'Create New Requisition List'"></span>
+        </a>
+    </li>
+</ul>

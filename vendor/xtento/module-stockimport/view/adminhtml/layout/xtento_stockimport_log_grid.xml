@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <update handle="xtento_stockimport_log_grid_block"/>
+    <container name="root" label="Root">
+        <block class="Xtento\StockImport\Block\Adminhtml\Log" name="adminhtml.stockimport.log.grid.container"/>
+    </container>
+</layout>
+
+<!--
+/**
+ * Product:       Xtento_StockImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2019-02-05T17:10:52+00:00
+ * File:          view/adminhtml/layout/xtento_stockimport_log_grid.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

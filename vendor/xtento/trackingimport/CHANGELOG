@@ -1,0 +1,405 @@
+Xtento_TrackingImport
+
+-------------
+  CHANGELOG
+-------------
+
+===== 2.0.0 =====
+ * Initial stable M2 release
+
+===== 2.0.1 =====
+ * Fixed "Change order status" action for orders that still can be invoiced/completed but don't use the "Change status after partial update" action
+
+===== 2.0.2 =====
+ * Fixed a bug where cronjobs of other import profiles where removed when saving a profile
+
+===== 2.0.3 =====
+ * Fixed bug (Registry key "current_shipment" already exists) that could happen when creating multiple shipments at the same time
+ * Fixed shipment email re-sending when another tracking number is added to an existing shipment
+
+===== 2.0.4 =====
+ * Fixed shipment creation logic that sometimes lead to the shipment being created, but the order itself not reflecting "Qty Shipped"
+ * Established compatibility with other email transports such as Ebizmarts/Mandrill for debug message mailing.
+
+===== 2.0.5 =====
+ * Compatibility with Magento 2.1.0 established
+ * Fixed SFTP source type, Net_SFTP library using namespaced class names now
+ * Cronjobs for profiles which have been deleted are automatically deleted as well
+
+===== 2.0.6 =====
+ * SFTP source type is now working for Magento 2.0 and Magento 2.1
+
+===== 2.0.7 =====
+ * Updated composer.json to require XTENTO "XtCore" base module
+
+===== 2.0.8 =====
+ + Added event "xtento_trackingimport_files_load_after" which is called after files have been loaded from sources, so third party developers can retrieve/modify files
+ * Fixed bug when invoicing virtual products
+
+===== 2.0.9 =====
+ + Set grid column type for various columns in "Execution Log" to "longtext" so long result messages are not truncated on the grid
+ + Established compatibility with PHP 7: A class named "Object" (handling filters) has been renamed to "ObjectCondition" as "Object" is a reserved word with PHP 7
+ * Fixed a bug for the "Additional Configuration" popup where &amp; was converted to & automatically upon saving the configuration
+
+===== 2.1.0 =====
+ + Added bin/magento "xtento:trackingimport:import" CLI command
+ * Fixed "Tools > Import" functionality: Sometimes sources assigned to an imported profile were not automatically assigned to the imported profile again.
+
+===== 2.1.1 =====
+ * Fixed issues for manual imports where sometimes (especially in Internet Explorer, but also Chrome/Firefox) the profile drop down didn't work and no manual import was possible.
+
+===== 2.1.2 =====
+ * Fixed issue with profile configuration/profiles failing to load with error "... expects parameter 1 to be string, array"
+
+===== 2.1.3 =====
+ * Fixed error "Fatal error:  Class 'Xtento\TrackingImport\Model\Export\Condition\ObjectCondition' not found"
+
+===== 2.1.4 =====
+ * Fixed issue for credit memo generation, tax amount refunded was wrong, adjusted to Magento core logic
+
+===== 2.1.5 =====
+ * Fixed bug for profiles imported using "Tools > Import" functionality: Cronjob import never started until the profile was saved for the first time; now cronjobs are updated directly after the import via "Tools"
+ * Fixed "Webservice.php.sample" sample source file that was broken
+
+===== 2.1.6 =====
+ + Added "xtento:trackingimport:config:export" and "xtento:trackingimport:config:import" commands that add "Tracking Import > Tools" functionality for the Magento command line via php bin/magento.
+
+===== 2.1.7 =====
+ + Added ability to refund credit memos online - if only one invoice exists for an order, the credit memo will be created against this invoice so an online refund is possible.
+
+===== 2.1.8 =====
+ * Updated Xtento_XtCore to version 2.0.7 ("Added warning in module configuration at System > Configuration if module output is disabled via "Disable Module Output" at System > Configuration > Advanced > Advanced")
+
+===== 2.1.9 =====
+ * Fixed logic which decides if credit memo should be refunded offline or online.
+
+===== 2.2.0 =====
+ * Fixed issue for invoice/shipment creation with multiple line items with same SKU split across multiple lines; correct QTYs are now shipped
+
+===== 2.2.1 =====
+ * Updated Xtento_XtCore to version 2.0.8
+
+===== 2.2.2 =====
+ + For shipments created using the module, the order comment imported will be shown in the email sent to the customer
+
+===== 2.2.3 =====
+ * Log entries with 0 records updated that have warnings/errors are now logged and not deleted like before
+ * Fixed issue about area code for CLI exports using the CLI export command
+ * Forcing environment emulation for correct email theme/templates to be used per store view the order was placed in [Disable Single Store Mode if you have issues with email templates sent]
+
+===== 2.2.4 =====
+ + Added support for negate="true" attribute for "Additional Configuration" <use>, <map> and <skip> options. Match if preg_match does NOT match.
+ * Fixed "Additional Configuration" options for XML import profiles. Sometimes an error about an undefined config was shown.
+
+===== 2.2.5 =====
+ + Compatibility with Magento 2.2 established
+
+===== 2.2.6 =====
+ * Fixed error during setup:di:compile for Magento 2.0/2.1
+
+===== 2.2.7 =====
+ * Fixed bug in grid serializer: Source is not unchecked when editing profile if "Edit Source" link is clicked
+
+===== 2.2.8 =====
+ * Added a warning if no mapping/actions have been defined for import profile
+
+===== 2.2.9 =====
+ * Fixed "Order Update" email sending; correct email is sent now including the comment
+
+===== 2.3.0 =====
+ * Fix: If only a comment is imported into order status history, and "send order update email" is enabled, "Customer Notified" is set to "Yes" in order status history
+
+===== 2.3.1 =====
+ * Updated Xtento_XtCore to version 2.1
+
+===== 2.3.2 =====
+ * Fixed issue "Unable to unserialize" when updating to Magento 2.2+
+
+===== 2.3.3 =====
+ * Fixed bug for loopable XML fields that are not item-level related
+
+===== 2.3.4 =====
+ * Fixed email sending for email error notification on Magento 2.2+ (Error: "Call to undefined method Magento\Email\Model\Transport\Interceptor::send()")
+
+===== 2.3.5 =====
+ * Established compatibility with Magento 2.2.2: Fixed "We cannot create an empty shipment" error
+ * Improved credit memo import: Refunds should be made against correct invoice now, if there are multiple invoices
+
+===== 2.3.6 =====
+ * Fixed issue for credit memo import: Parent/simple items should be refunded correct now.
+
+===== 2.3.7 =====
+ * Fixed error email notification: From email is now retrieved from system configuration ("ident_general/email")
+
+===== 2.3.8 =====
+ * Fixed bug when importing profiles from Magento 1 or Magento 2.0/2.1 via the "Tools" functionality of the module
+
+===== 2.3.9 =====
+ * Fixed "xtento_trackingimport_mapping_get_fields" event, fields can be customized via the event now.
+
+===== 2.4.0 =====
+ * Fixed issue for "Tools" import functionality that could lead to an error when importing profiles
+ * Updated Xtento_XtCore to version 2.2.0
+
+===== 2.4.1 =====
+ + Added additional safe-guard against unwanted cronjob imports in case the module is disabled
+ + Removed "is module properly installed" check, not required for Magento 2
+
+===== 2.4.2 =====
+ * Deleting a profile also deletes the profiles cronjobs now, to avoid "zombie" cronjobs that don't do anything.
+
+===== 2.4.3 =====
+ * [Improved Magento 2.2 Compatibility] Added a RecurringData setup script that checks if an upgrade to M2.2 was performed, if yes, data structure in the profile tables will be changed from serialized to JSON automatically
+
+===== 2.4.4 =====
+ * Updated Xtento_XtCore to version 2.3.0
+ * Confirmed compatibility with Magento CE 2.2.5 / EE 2.2.5
+
+===== 2.4.5 =====
+ * Fixed code compilation issue in Status class
+
+===== 2.4.6 =====
+ * Fixed issue in grids: After filtering/searching, mass actions didn't work anymore
+
+===== 2.4.7 =====
+ * Fixed a bug for "Tools > Settings Import": Importing settings exported from Magento >=2.2 into Magento <=2.1 failed
+ * Fixed error when trying to view a broken import profile: "Invalid argument supplied for foreach() in ... AbstractMapping.php"
+
+===== 2.4.8 =====
+ * Fixed sorting/filtering/searching within log/history grids when editing a profile
+
+===== 2.4.9 =====
+ + Enabled by default: Add tracking# to shipment# specified as order_identifier, i.e. when loading orders via shipment# in profile, add the tracking# to the correct shipment.
+
+===== 2.5.0 =====
+ * Fixed an issue when trying to use "Tools > Settings Import": "Class Xtento\OrderExport\Test\SerializedToJsonDataConverter does not exist"
+
+===== 2.5.1 =====
+* Fixed issue "Invalid method Magento\Eav\Model\Entity\Attribute::isAllowedForRuleCondition". However, if you encounter this issue, you will most likely need to apply this fix as well: https://magento.stackexchange.com/a/231602/10
+
+===== 2.5.2 =====
+ * Performance Improvement: Order loading optimized under certain conditions (Percona DB (and others) uses index properly now)
+
+===== 2.5.3 =====
+ + Established compatibility with Magento 2.3
+ * [2.3] Fixed source not saveable due to encryption error
+
+===== 2.5.4 =====
+ * Removed calls to deprecated function "create_function" and replaced code with compliant equivalent
+
+===== 2.5.5 =====
+ * Final fix for built-in editor (Ace.js) having issues with tabs/spaces/theme. Be sure to deploy static content after updating.
+
+===== 2.5.6 =====
+ + Added support for Magento 2.3 Multi-Source Inventory feature: Specify warehouse/source_code to ship from
+
+===== 2.5.7 =====
+ + Added ability to identify items to import using their order_item_id ("Product Identifier: Order Item ID")
+
+===== 2.5.8 =====
+ + Added "graceful die": If export crashes for some reason, error message should be logged in execution log
+
+===== 2.5.9 =====
+ * Updated graceful die and removed sigint/sigterm as these are not really that much required and could cause issues
+
+===== 2.6.0 =====
+ + For shipment imports: MSI source is now automatically retrieved from source selection logic in MSI module, if possible. If there are multiple possible sources, you must still specify the source code in the file mapping.
+
+===== 2.6.1 =====
+ * Improvements with regards to error logging and custom classes file archiving
+
+===== 2.6.2 =====
+ * Fixed an issue for credit memo creation. Unpaid invoices are not checked against anymore.
+
+===== 2.6.3 =====
+ * Fixed import sources; connection information such as port couldn't be saved under certain circumstances due to DB layout issues
+ * Updated Xtento_XtCore to version 2.5.0
+
+===== 2.6.4 =====
+ * Improvement for MSI compatibility with regards to source selection
+
+===== 2.6.5 =====
+ * Improved graceful die: Previous log messages (from current execution) are retained
+ * Fixed: "0 records" entries in execution log are not saved anymore
+
+===== 2.6.6 =====
+ * Fixed issue for CLI imports where template/email translation may not have worked sometimes
+
+===== 2.6.7 =====
+ * Improved check if Magento MSI (Multi-Source inventory) is installed/enabled. Could lead to errors otherwise.
+
+===== 2.6.8 =====
+ * Fixed MSI related error "Source item not found by source code: default ..."
+
+===== 2.6.9 =====
+ * Improved import/parsing of large XML files, avoids crashes of libxml
+
+===== 2.7.0 =====
+ + Added ability to force (re-)send invoice/shipment emails for existing invoices/shipments. Useful if shipments have been created by a 3rd party system and you just want to trigger the shipment emails using our extension.
+ + Added ability to capture not-yet-captured invoices for orders
+ * Fixed an issue where SFTP connections failed (Error: "Could not connect to SFTP server [...]"). If SFTP connections still fail now, it's probably caused by an incompatible SFTP server or a firewall. This issue was most likely caused by Magento 2.3.x.
+
+===== 2.7.1 =====
+ * Fixed an issue for credit memo imports when importing credit memos against existing invoices using "order item id" as the item identifier
+
+===== 2.7.2 =====
+ * Module code updated to comply with Magento Coding Standard as of August 2019
+ * Removed silenced errors ("@function") entirely. Improved logging in such cases so those errors are logged/reported.
+ * Logging improvements
+
+===== 2.7.3 =====
+ + Added ability to import and process XLS/XLSX/ODS/Excel-XML files. Import order/tracking information from Excel files directly!
+
+===== 2.7.4 =====
+ + Added separate cron group for our cronjobs. Use group xtento_trackingimport to set up a separate cron job for our tasks.
+ * Important update if using bin/magento CLI exports: The definite fix - now running in cron area
+ * Improved how error/result messages are shown in the execution log
+ * Updated Xtento_XtCore to version 2.7.0
+
+===== 2.7.5 =====
+ * Established compatibility with Magento 2.2.10 / 2.3.3
+ * Established compatibility with PHP 7.3
+ * Fixed an issue with cron groups not being used. Re-save profiles to move to separate cron group.
+ * Updated Xtento_XtCore to version 2.8.0
+
+===== 2.7.6 =====
+ * Improved compatibility with FTP servers behind firewalls & better FTP directory listing error messages are now displayed
+
+===== 2.7.7 =====
+ * Fixed an error when using the CLI commands xtento:trackingimport:config:export and xtento:trackingimport:config:import
+
+===== 2.7.8 =====
+ + Added further FTP compatibility feature: "Ignore IP returned by server in passive mode" - If enabled in the FTP source, the (local) IP address returned by the FTP server will be ignored (useful for servers behind NAT) and instead the servers public IP address will be used. Can help with "Operation now in progress" errors or other directory listing/transfer issues.
+
+===== 2.7.9 =====
+ + Added ability to force invoice/shipment increment_id for newly imported invoices/shipments. So you can set the invoice increment_id (the "invoice #") from a value from your file. If the invoice/shipment increment_id exists already, the order won't be shipped/invoiced as the increment_id must be unique.
+
+===== 2.8.0 =====
+ * Fixed a potential security issue: Reflected XSS via GET parameters in backend/manual import area. If "Add secret keys to URLs" is enabled in the backend (which should hopefully always be the case!) this should have been nearly impossible to exploit though.
+
+===== 2.8.1 =====
+ * Fixed an issue with ASCII/FLF/fixed-length-files: Multiple items were not recognized but instead only one item was recognized
+
+===== 2.8.2 =====
+ * Important bugfix for spreadsheet file processor where 0 values weren't parsed correctly and defaulted to a default value instead
+
+===== 2.8.3 =====
+ * Updated Xtento_XtCore to version 2.9.0
+
+===== 2.8.4 =====
+ * Fixed an issue when importing tracking numbers for an existing shipment (identified by shipment increment ID) when the order wasn't fully shipped yet
+
+===== 2.8.5 =====
+ * Fixed an issue for tracking emails ("New Shipment") sent by the extension: For partial shipments, under certain circumstances the tracking numbers of previous partial shipments (of the same order, so no data leak) were contained in the email, which was confusing for customers.
+
+===== 2.8.6 =====
+ * Fixed issue "Property tracksCollection does not exist"
+
+===== 2.8.7 =====
+ + Added ability to create "offline" credit memos (i.e. no "online" refund via the payment gateway)
+
+===== 2.8.8 =====
+ * Fixed an issue for fixed-length-format files (ASCII etc.) where operations such as "calculate" or "replace" specified in "Additional Configuration" popup didn't work.
+
+===== 2.8.9 =====
+ * Fixed a bug for FTP imports where empty directories caused a warning message that shouldn't be shown
+
+===== 2.9.0 =====
+ + Added ability to import shipment/invoice created_at field to set invoice/shipment date when creating invoices/shipments
+
+===== 2.9.1 =====
+ + SFTP/FTP sources: Added ability to skip empty files and stop them from processing/archiving/deletion
+
+===== 2.9.2 =====
+ * Established compatibility with Magento 2.4.0 and 2.3.5-p2
+ * Established compatibility with PHP 7.4, dropped support for PHP 5.x
+ * Updated Xtento_XtCore to version 2.10.0
+ + Added uninstall script so bin/magento module:uninstall removes database tables
+ * Fixed "Return value of Magento\Cron\Console\Command\CronCommand::execute() should always be of the type int since Symfony 4.4, NULL returned."
+ * Fixed an issue for CSV/XML processor not detecting "0" values and parsing them as NULL instead
+ * [M2.4] Fixed "Product Attribute Identifier" in profile settings not working
+ * [M2.4 / PHP 7.4] Fixed "Deprecated Functionality: implode(): Passing glue string after array is deprecated."
+
+===== 2.9.3 =====
+ + Added ability to send invoice/shipment/credit memo emails asynchronously using the built-in async email sending functionality of Magento. Attention, only works if your Magento cronjob works and if async email sending is enabled in the Magento system configuration. To enable the option in your import profile, add the "Send invoice/shipment/credit memo emails asynchronously" action in the "Actions" tab.
+
+===== 2.9.4 =====
+ * Fixed an issue where extension related images/JS cannot be loaded in the Magento backend
+ * Updated Xtento_XtCore to version 2.11.0 ("Added Content Security Policy (CSP) support. XTENTO resources are whitelisted.")
+
+===== 2.9.5 =====
+ + Improved error handler for crashes: A notification email is now sent if "debug emails" are enabled and an error has been logged
+
+===== 2.9.6 =====
+ * Fixed an issue when changing the order status: If the status one tries to set is assigned to multiple order states, the state of the current order will be selected if possible (instead of another state eventually)
+
+===== 2.9.7 =====
+ * Fixed an issue with "shutdown/crash" notices being logged about an unrelated Symfony error
+
+===== 2.9.8 =====
+ * Fixed an issue that lead to "invoice emails" not being sent even though "Send invoice email" was enabled
+
+===== 2.9.9 =====
+ * Improved XML import processor to better show information about broken/invalid XML files being imported. Shown in debug mode only.
+ * Disabled graceful die (to log fatal errors) as it also caused 3rd party errors to trigger false-positive warning emails
+
+===== 2.10.0 =====
+ * Fixed an issue where MSI source was getting lost if adding tracking# to an existing shipment
+
+===== 2.10.1 =====
+ + Added ability to list import profiles on CLI using "list" parameter
+
+===== 2.10.2 =====
+ + Added ability to identify orders by ext_order_id field
+
+===== 2.10.3 =====
+ * Fixed an important issue with regards to dynamic cronjob creation that could lead to cronjobs of other import/export profiles being removed when saving an unrelated profile
+ * Updated Xtento_XtCore to version 2.12.0 ("Removed phpinfo from debug information section due to possibly sensitive information being disclosed")
+
+===== 2.10.4 =====
+ * Removed certain keywords in SFTP class that caused Git to think private keys were contained in this class
+
+===== 2.10.5 =====
+ * Confirmed compatibility with Magento 2.3.7-p1 / 2.4.2-p2 / 2.4.3
+
+===== 2.10.6 =====
+ * Established compatibility with Magento 2.3.7-p3 / 2.4.3-p2 / 2.4.4
+ * Established compatibility with PHP 8.1
+ * Updated Xtento_XtCore to version 2.13.0 ("PHP 8.1 compatibility")
+
+===== 2.10.7 =====
+ * Fixed an issue with SFTP sources for Magento 2.4.4
+ * Updated Xtento_XtCore to version 2.14.0 ("Further PHP 8.1 fixes")
+
+===== 2.10.8 =====
+ * Converted database install scripts to db_schema.xml - please check this upgrade carefully and take a DB backup before upgrading
+ * Updated Xtento_XtCore to version 2.16.0
+ * Dropped support for Magento 2.2.x. Earliest supported version is 2.3.x now.
+
+===== 2.10.9 =====
+ * Further PHP 8.1 fixes
+
+===== 2.11.0 =====
+ * Further PHP 8.1 fixes
+ * Established compatibility with Magento 2.4.5, 2.4.4-p1, 2.4.3-p3, 2.3.7-p4
+ * Updated Xtento_XtCore to version 2.17.0 ("Fixed error "Area code not set" during installation/upgrade")
+
+===== 2.11.1 =====
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.11.2 ==========
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.11.3 =====
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.11.4 =====
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.11.5 =====
+ * Established compatibility with Magento 2.4.6 / 2.4.5-p2 / 2.4.4-p3
+ * Established compatibility with PHP 8.2
+ * Updated Xtento_XtCore to version 2.18.0 ("Magento 2.4.6 and PHP 8.2 compatibility")
+
+===== 2.11.6 =====
+ * Fixed Tools > Import functionality

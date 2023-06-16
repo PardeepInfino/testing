@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="aw_requisition_list_modal_form"/>
+        </referenceContainer>
+        <referenceBlock name="category.product.addto">
+            <block class="Magento\Ui\Block\Wrapper" name="category.product.addto.requisition.list" template="Aheadworks_RequisitionLists::catalog/category/product/addto/requisitionlist.phtml">
+                <arguments>
+                    <argument name="list_view_model" xsi:type="object">Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

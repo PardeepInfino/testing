@@ -1,0 +1,10 @@
+<div attr="id: toolbarId" class="tabs" css="$data.additionalClasses">
+    <ul class="toolbar-nav-items" each="elems">
+        <li class="nav-item" if="tabId"><a attr="href: '#' + tabId" text="label"></a></li>
+    </ul>
+    <div class="toolbar-content-items">
+        <each args="data: elems, as: 'element'">
+            <render if="hasTemplate()"></render>
+        </each>
+    </div>
+</div>

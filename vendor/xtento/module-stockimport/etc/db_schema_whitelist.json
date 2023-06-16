@@ -1,0 +1,70 @@
+{
+    "xtento_stockimport_source": {
+        "column": {
+            "source_id": true,
+            "name": true,
+            "type": true,
+            "hostname": true,
+            "port": true,
+            "username": true,
+            "password": true,
+            "timeout": true,
+            "path": true,
+            "filename_pattern": true,
+            "archive_path": true,
+            "delete_imported_files": true,
+            "ftp_type": true,
+            "ftp_pasv": true,
+            "custom_class": true,
+            "custom_function": true,
+            "last_result": true,
+            "last_result_message": true,
+            "last_modification": true,
+            "ftp_ignorepasvaddress": true,
+            "skip_empty_files": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "xtento_stockimport_log": {
+        "column": {
+            "log_id": true,
+            "created_at": true,
+            "profile_id": true,
+            "files": true,
+            "source_ids": true,
+            "import_type": true,
+            "import_event": true,
+            "records_imported": true,
+            "result": true,
+            "result_message": true
+        },
+        "index": {
+            "XTENTO_STOCKIMPORT_LOG_PROFILE_ID_CREATED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "xtento_stockimport_profile": {
+        "column": {
+            "profile_id": true,
+            "entity": true,
+            "processor": true,
+            "enabled": true,
+            "name": true,
+            "source_ids": true,
+            "last_execution": true,
+            "last_modification": true,
+            "conditions_serialized": true,
+            "cronjob_enabled": true,
+            "cronjob_frequency": true,
+            "cronjob_custom_frequency": true,
+            "configuration": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

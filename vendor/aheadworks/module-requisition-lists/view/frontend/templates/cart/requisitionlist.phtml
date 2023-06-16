@@ -1,0 +1,33 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Ui\Block\Wrapper */
+?>
+<?php
+    /** @var \Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider $viewModel */
+    $viewModel = $block->getListViewModel();
+    $isEnabled = $viewModel->getIsEnabled();
+    $isShowInCartPage = $viewModel->getIsShowInCartPage();
+?>
+<?php if ($isEnabled && $isShowInCartPage): ?>
+    <div class="aw-rl__list-wrapper default" data-role="aw-rl-listing" data-bind="scope: 'addToProductLink'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "addToProductLink": {
+                            "component": "Aheadworks_RequisitionLists/js/ui/components/requisition-list/cart-item-add-to",
+                            "urlToRequisitionList": "<?= /* @noEscape */ $viewModel->getUrlToRequisitionListPage() ?>",
+                            "addToRequisitionListUrl": "<?= /* @noEscape */ $viewModel->getAddToListFromCartUrl() ?>",
+                            "isLoggined": "<?= /* @noEscape */ $viewModel->isLoggedUserIn() ?>",
+                            "linkLabel": "<?= /* @noEscape */ __('Add Shopping Cart to Requisition List') ?>"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

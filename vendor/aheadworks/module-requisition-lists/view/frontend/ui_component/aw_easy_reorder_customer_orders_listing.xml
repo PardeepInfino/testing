@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\MassAction"
+                    name="listing_massaction"
+                    component="Aheadworks_RequisitionLists/js/grid/massactions-tree"
+                    template="Aheadworks_RequisitionLists/easy-reorder/ui/grid/massaction">
+            <action name="addtolist">
+                <settings>
+                    <actions class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction\Option\AddTo"/>
+                    <type>add_to_list</type>
+                    <label translate="true">Add to Requisition List</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+    <listingToolbar name="listing_bottom">
+        <massaction class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\MassAction"
+                    name="listing_massaction"
+                    component="Aheadworks_RequisitionLists/js/grid/massactions-tree"
+                    template="Aheadworks_RequisitionLists/easy-reorder/ui/grid/massaction">
+            <action name="addtolist">
+                <settings>
+                    <actions class="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Item\Listing\MassAction\Option\AddTo"/>
+                    <type>add_to_list</type>
+                    <label translate="true">Add to Requisition List</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

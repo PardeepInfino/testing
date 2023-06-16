@@ -1,0 +1,4 @@
+<!-- ko if: isEditAvailable($row()) -->
+    <a class="action edit" data-bind="attr: {href: '#'}, click: configureItem.bind($data, $row()), title: 'Edit Item'"></a>
+<!-- /ko -->
+<a class="action delete" data-bind="attr: {href: '#'}, click: removeItem.bind($data, $row())"></a>

@@ -1,0 +1,15 @@
+<!-- ko if: isEnabled($row()) -->
+<input type="text" name="qty"
+       data-bind="
+       event:{
+           change: onQtyChange.bind($data, $row())
+       },
+       attr: {
+           value: getProductQty($row()),
+           id: 'qty' + getItemId($row())
+       }" />
+<label class="field-error" data-bind="attr: {id: 'field-error' + getItemId($row())}" ></label>
+<!-- /ko -->
+<!-- ko if: isOutOfStock($row()) -->
+    <span class="qty out-of-stock" translate="'Out of stock'"></span>
+<!-- /ko -->

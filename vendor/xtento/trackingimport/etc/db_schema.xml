@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="xtento_trackingimport_source" resource="default" engine="innodb" comment="Xtento_TrackingImport Sources table">
+    <column xsi:type="int" name="source_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name"/>
+    <column xsi:type="varchar" name="type" nullable="false" length="255" comment="Type"/>
+    <column xsi:type="varchar" name="hostname" nullable="false" length="255" comment="Hostname"/>
+    <column xsi:type="smallint" name="port" padding="4" unsigned="true" nullable="true" identity="false" comment="Port" onCreate="migrateDataFrom(port)"/>
+    <column xsi:type="varchar" name="username" nullable="false" length="255" comment="Username"/>
+    <column xsi:type="varchar" name="password" nullable="false" length="255" comment="Password"/>
+    <column xsi:type="smallint" name="timeout" padding="6" unsigned="false" nullable="false" identity="false" default="15" comment="Timeout"/>
+    <column xsi:type="varchar" name="path" nullable="false" length="255" comment="Path"/>
+    <column xsi:type="varchar" name="filename_pattern" nullable="false" length="255" default="//" comment="Filename Pattern"/>
+    <column xsi:type="varchar" name="archive_path" nullable="false" length="255" comment="Archive Path"/>
+    <column xsi:type="boolean" name="delete_imported_files" nullable="false" comment="Delete imported files"/>
+    <column xsi:type="varchar" name="ftp_type" nullable="false" length="20" comment="FTP Server Type"/>
+    <column xsi:type="boolean" name="ftp_pasv" nullable="false" comment="FTP Use Passive Mode"/>
+    <column xsi:type="varchar" name="custom_class" nullable="false" length="255" comment="Custom Class"/>
+    <column xsi:type="varchar" name="custom_function" nullable="false" length="255" comment="Custom Function"/>
+    <column xsi:type="boolean" name="last_result" nullable="false" comment="Last Result"/>
+    <column xsi:type="text" name="last_result_message" nullable="false" comment="Last Result Message"/>
+    <column xsi:type="timestamp" name="last_modification" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Modification"/>
+    <column xsi:type="boolean" name="ftp_ignorepasvaddress" nullable="false" comment="FTP Ignore PASV Address"/>
+    <column xsi:type="boolean" name="skip_empty_files" nullable="false" comment="Skip Empty Files"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="source_id"/>
+    </constraint>
+  </table>
+  <table name="xtento_trackingimport_log" resource="default" engine="innodb" comment="Xtento_TrackingImport Log table">
+    <column xsi:type="int" name="log_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+    <column xsi:type="int" name="profile_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Profile ID"/>
+    <column xsi:type="mediumtext" name="files" nullable="false" comment="Imported Files"/>
+    <column xsi:type="text" name="source_ids" nullable="false" comment="Source IDs"/>
+    <column xsi:type="int" name="import_type" padding="11" unsigned="false" nullable="false" identity="false" comment="Import Type (ID)"/>
+    <column xsi:type="varchar" name="import_event" nullable="false" length="255" comment="Import Event"/>
+    <column xsi:type="int" name="records_imported" padding="11" unsigned="false" nullable="false" identity="false" comment="Records Imported"/>
+    <column xsi:type="smallint" name="result" padding="6" unsigned="false" nullable="false" identity="false" comment="Import Result"/>
+    <column xsi:type="mediumtext" name="result_message" nullable="false" comment="Import Result Message"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="log_id"/>
+    </constraint>
+    <index referenceId="XTENTO_TRACKINGIMPORT_LOG_PROFILE_ID_CREATED_AT" indexType="btree">
+      <column name="profile_id"/>
+      <column name="created_at"/>
+    </index>
+  </table>
+  <table name="xtento_trackingimport_profile" resource="default" engine="innodb" comment="Xtento_TrackingImport Profile table">
+    <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="varchar" name="entity" nullable="false" length="255" comment="Import Entity"/>
+    <column xsi:type="varchar" name="processor" nullable="false" length="255" comment="Import Processor"/>
+    <column xsi:type="boolean" name="enabled" nullable="false" comment="Profile Enabled"/>
+    <column xsi:type="text" name="name" nullable="false" comment="Profile Name"/>
+    <column xsi:type="text" name="source_ids" nullable="false" comment="Source IDs"/>
+    <column xsi:type="timestamp" name="last_execution" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Execution"/>
+    <column xsi:type="timestamp" name="last_modification" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Modification"/>
+    <column xsi:type="mediumtext" name="conditions_serialized" nullable="false" comment="Conditions / Filters"/>
+    <column xsi:type="boolean" name="cronjob_enabled" nullable="false" comment="Cronjob import enabled"/>
+    <column xsi:type="text" name="cronjob_frequency" nullable="false" comment="Cronjob frequency"/>
+    <column xsi:type="text" name="cronjob_custom_frequency" nullable="false" comment="Cronjob custom frequency expression"/>
+    <column xsi:type="mediumtext" name="configuration" nullable="false" comment="Configuration"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="profile_id"/>
+    </constraint>
+  </table>
+</schema>
+
+<!--
+/**
+ * Product:       Xtento_TrackingImport
+ * ID:            %!uniqueid!%
+ * Last Modified: 2022-06-23T21:44:26+00:00
+ * File:          etc/db_schema.xml
+ * Copyright:     Copyright (c) XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

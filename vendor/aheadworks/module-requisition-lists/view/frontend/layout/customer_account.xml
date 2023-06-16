@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Aheadworks\RequisitionLists\Block\Customer\MyAccountLink"
+                   name="customer.account.navigation.aw.requisition.lists">
+                <arguments>
+                    <argument name="path" xsi:type="const">Aheadworks\RequisitionLists\Model\Url::REQUISITION_LIST_ROUTE</argument>
+                    <argument name="label" xsi:type="string" translate="true">My Requisition Lists</argument>
+                    <argument name="sortOrder" xsi:type="number">216</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

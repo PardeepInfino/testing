@@ -1,0 +1,30 @@
+{
+    "amasty_cross_link": {
+        "column": {
+            "link_id": true,
+            "status": true,
+            "title": true,
+            "keywords": true,
+            "link_target": true,
+            "reference_type": true,
+            "reference_resource": true,
+            "replacement_limit": true,
+            "priority": true,
+            "is_nofollow": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "amasty_cross_link_store": {
+        "column": {
+            "link_id": true,
+            "store_id": true
+        },
+        "constraint": {
+            "AMASTY_CROSS_LINK_STORE_LINK_ID_AMASTY_CROSS_LINK_LINK_ID": true,
+            "AMASTY_CROSS_LINK_STORE_STORE_ID_STORE_STORE_ID": true,
+            "AMASTY_CROSS_LINK_STORE_LINK_ID_STORE_ID": true
+        }
+    }
+}

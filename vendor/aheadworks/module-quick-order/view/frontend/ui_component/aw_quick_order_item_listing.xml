@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_quick_order_item_listing.aw_quick_order_item_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>aw_quick_order_item_columns</spinner>
+        <deps>
+            <dep>aw_quick_order_item_listing.aw_quick_order_item_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="aw_quick_order_item_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">item_id</param>
+                <param name="cacheRequests" xsi:type="boolean">false</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+            <filterUrlParams>
+                <param name="list_id">*</param>
+            </filterUrlParams>
+        </settings>
+        <dataProvider class="Aheadworks\QuickOrder\Ui\Component\Listing\Item\DataProvider" name="aw_quick_order_item_listing_data_source">
+            <settings>
+                <requestFieldName>item_id</requestFieldName>
+                <primaryFieldName>item_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="aw_quick_order_item_columns">
+        <column name="product_image" sortOrder="5" component="Aheadworks_QuickOrder/js/ui/grid/column/image" class="Aheadworks\QuickOrder\Ui\Component\Listing\Item\Column\Image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="image_id" xsi:type="string">aw_qo_small_image</item>
+                </item>
+            </argument>
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Product Image</label>
+                <bodyTmpl>Aheadworks_QuickOrder/ui/grid/column/image</bodyTmpl>
+            </settings>
+        </column>
+        <column name="product_name" sortOrder="10" component="Aheadworks_QuickOrder/js/ui/grid/column/name" class="Aheadworks\QuickOrder\Ui\Component\Listing\Item\Column\Name">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Product Name</label>
+                <bodyTmpl>Aheadworks_QuickOrder/ui/grid/column/name</bodyTmpl>
+            </settings>
+        </column>
+        <column name="product_sku" sortOrder="20">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">SKU</label>
+            </settings>
+        </column>
+        <column name="price" sortOrder="30" class="Aheadworks\QuickOrder\Ui\Component\Listing\Item\Column\Price">
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Price</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <fieldClass>
+                    <class name="price">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="product_qty" sortOrder="30" component="Aheadworks_QuickOrder/js/ui/grid/column/qty" class="Aheadworks\QuickOrder\Ui\Component\Listing\Item\Column\Qty">
+            <settings>
+                <label translate="true">Quantity</label>
+                <bodyTmpl>Aheadworks_QuickOrder/ui/grid/column/qty</bodyTmpl>
+                <fieldClass>
+                    <class name="qty">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="remove" sortOrder="40" component="Aheadworks_QuickOrder/js/ui/grid/column/item-removal">
+            <settings>
+                <label translate="true">Action</label>
+                <bodyTmpl>Aheadworks_QuickOrder/ui/grid/column/item-removal</bodyTmpl>
+                <fieldClass>
+                    <class name="remove">true</class>
+                </fieldClass>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+    </columns>
+    <listingToolbar name="listing_bottom">
+        <paging name="listing_paging" template="Aheadworks_QuickOrder/ui/grid/paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="totalTmpl" xsi:type="string">Aheadworks_QuickOrder/ui/grid/paging/empty-total</item>
+                </item>
+            </argument>
+        </paging>
+        <massaction name="listing_massaction" component="Aheadworks_QuickOrder/js/ui/grid/massactions" template="Aheadworks_QuickOrder/ui/grid/massaction">
+            <action name="addToCart">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="string">primary add</item>
+                    </item>
+                </argument>
+                <settings>
+                    <url path="aw_quick_order/quickOrder/addToCart"/>
+                    <type>add_to_cart</type>
+                    <label translate="true">Add to Cart</label>
+                </settings>
+            </action>
+            <action name="Reset List">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="string">reset</item>
+                    </item>
+                </argument>
+                <settings>
+                    <url path="aw_quick_order/quickOrder/resetList"/>
+                    <type>reset_list</type>
+                    <label translate="true">Reset List</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

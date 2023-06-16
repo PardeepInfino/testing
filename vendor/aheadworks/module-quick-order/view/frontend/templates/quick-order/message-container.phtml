@@ -1,0 +1,14 @@
+<?php
+/* @var $block \Magento\Framework\View\Element\Template */
+?>
+<div data-role="aw-qo__messages"  data-bind="scope: 'aw_quick_order_messages'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=aw-qo__messages]": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        }
+    }
+</script>

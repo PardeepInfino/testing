@@ -1,0 +1,30 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Ui\Block\Wrapper*/
+?>
+<?php
+    /** @var \Aheadworks\RequisitionLists\ViewModel\Customer\RequisitionList\DataProvider $viewModel */
+    $viewModel = $block->getRequisitionListViewModel();
+?>
+<?php if ($viewModel): ?>
+    <div data-role="aw-requisitionlist-edit-list-wrapper" data-bind="scope: 'awRequisitionListParent'" class="aw-rl__edit-btn-wrapper">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+    <div class="header-list-delete">
+        <button type="button" class="action remove" title="<?= $block->escapeHtml(__('Delete Requisition List')) ?>" data-requisition-list-delete>
+            <span><?= $block->escapeHtml(__('Delete Requisition List')) ?></span>
+        </button>
+    </div>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+             "requisitionListManagement": <?= /* @noEscape */ $viewModel->getConfig() ?>
+        },
+
+        "[data-role=aw-requisitionlist-edit-list-wrapper]": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $viewModel->getPreparedJsLayout($block) ?>
+        }
+    }
+    </script>
+<?php endif; ?>

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ClassyLlama_AvaTax
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2016 Avalara, Inc.
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="tax">
+            <group id="avatax_configuration" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="0">
+                <label>AvaTax Configuration</label>
+                <comment><![CDATA[For complete and up-to-date documentation, please visit <a href="https://knowledge.avalara.com/bundle/usd1665121460439_usd1665121460439/page/dbj1665121622352.html" target="_blank">Connector for Magento 2 for Sales Tax</a>.</p>
+                            ]]></comment>
+                <frontend_model>ClassyLlama\AvaTax\Block\Adminhtml\System\Config\AvaTax</frontend_model>
+                <include path="ClassyLlama_AvaTax::system/extension_mode.xml"/>
+                <include path="ClassyLlama_AvaTax::system/sales_tax.xml"/>
+                <include path="ClassyLlama_AvaTax::system/address_validation.xml"/>
+                <include path="ClassyLlama_AvaTax::system/vat.xml"/>
+                <include path="ClassyLlama_AvaTax::system/cross_border.xml"/>
+                <include path="ClassyLlama_AvaTax::system/exemption_certcapture_management.xml"/>
+                <include path="ClassyLlama_AvaTax::system/error_logs_and_queue.xml"/>
+                <include path="ClassyLlama_AvaTax::system/advanced.xml"/>
+            </group>
+            <group id="classes">
+                <field id="shipping_tax_class">
+                    <comment>This setting will be ignored if AvaTax is enabled, as shipping Tax Code is hard-coded as FR020100 and AvaTax will determine whether tax applies to an order.</comment>
+                </field>
+                <field id="wrapping_tax_class">
+                    <comment>This setting applies only to gift wrapping options, not Gift Cards; if AvaTax is enabled, the Gift Card Tax Code is hard-coded as PG050000 and AvaTax will determine whether tax applies to an order for a Gift Card.</comment>
+                </field>
+            </group>
+            <group id="calculation">
+                <field id="algorithm">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax always calculates tax on a row level.</comment>
+                </field>
+                <field id="based_on">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax always uses the shipping address for estimation.</comment>
+                </field>
+                <field id="price_includes_tax">
+                    <comment>This setting will be ignored if AvaTax is enabled, as you must set your prices in Magento without taxes included so that AvaTax is the single system of record for tax estimation.</comment>
+                </field>
+                <field id="shipping_includes_tax">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax must be responsible for calculating shipping tax.</comment>
+                </field>
+                <field id="apply_after_discount">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax doesn't support line-level discounts.</comment>
+                </field>
+                <field id="discount_tax">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax doesn't support line-level discounts.</comment>
+                </field>
+                <field id="apply_tax_on">
+                    <comment>This setting will be ignored if AvaTax is enabled, as AvaTax should always calculate tax after discounts are applied in Magento.</comment>
+                </field>
+                <field id="cross_border_trade_enabled">
+                    <comment>This setting will be ignored if AvaTax is enabled.</comment>
+                </field>
+            </group>
+            <group id="defaults">
+                <field id="postcode">
+                    <comment>If AvaTax is enabled, it is highly recommended that you leave this field blank. Otherwise, the number of AvaTax API requests will increase significantly, as every time a guest adds a product to their cart, AvaTax will calculate tax for the postal code entered above.</comment>
+                </field>
+            </group>
+            <group id="weee">
+                <field id="enable">
+                    <comment>The AvaTax extension does not support the usage of Fixed Product Taxes, so do not enable this option.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

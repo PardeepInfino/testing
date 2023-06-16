@@ -1,0 +1,14 @@
+<?php
+/* @var $block \Magento\Framework\View\Element\Template */
+?>
+<div data-role="aw-qo__toolbar"  data-bind="scope: 'aw_quick_order_toolbar'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=aw-qo__toolbar]": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        }
+    }
+</script>

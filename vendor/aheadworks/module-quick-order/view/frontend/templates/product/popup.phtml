@@ -1,0 +1,44 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+    $product = $block->getProduct();
+    $required = '';
+    if ($block->hasRequiredOptions()) {
+        $required = ' data-hasrequired="' . __('* Required Fields') . '"';
+    }
+
+    $optionsHtml = '';
+    $optionBlockNames = $block->getOptionBlockNames() ?? [];
+    foreach ($optionBlockNames as $optionBlockName) {
+        $optionsHtml .= $block->getChildHtml($optionBlockName);
+    }
+
+    $isSmallImage = (bool)trim($optionsHtml);
+?>
+<div class="aw-qo-popup__main">
+    <div class="aw-qo-popup__columns product-item product-item-info">
+        <div class="aw-qo-popup__column  aw-qo-popup__column--media<?php if ($isSmallImage): ?> small<?php endif; ?>">
+            <?php echo $block->getChildHtml('product_image') ?>
+        </div>
+        <div class="aw-qo-popup__column">
+            <div class="aw-qo-popup__form">
+                <form id="aw-qo-configure-item-form" action="<?php /* @noEscape */ echo $block->escapeXssInUrl($block->getAddToCartUrl($product)) ?>"
+                    <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>
+                      data-mage-init='{"Magento_Catalog/product/view/validation": {"radioCheckboxClosest": ".nested"}}'>
+                    <input type="hidden" name="product" value="<?php /* @noEscape */ echo $product->getId() ?>" />
+                    <input type="hidden" name="selected_configurable_option" value="" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                    <?php echo $block->getBlockHtml('formkey') ?>
+                    <div class="aw-qo-popup__options-wrapper product-options-wrapper" id="product-options-wrapper"<?php /* @noEscape */ echo $required; ?>>
+                        <div class="fieldset">
+                            <?php /* @noEscape */ echo $optionsHtml ?>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

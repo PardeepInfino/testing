@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Catalog\Api\Data\ProductOptionInterface">
+        <attribute code="aw_qo_grouped_item_options" type="Aheadworks\QuickOrder\Api\Data\GroupedItemOptionValueInterface[]" />
+        <attribute code="aw_qo_custom_options" type="Aheadworks\QuickOrder\Api\Data\CustomOptionValueInterface[]" />
+    </extension_attributes>
+</config>

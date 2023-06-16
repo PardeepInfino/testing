@@ -1,0 +1,469 @@
+Xtento_StockImport
+
+-------------
+  CHANGELOG
+-------------
+
+===== 2.0.0 =====
+ * Initial stable M2 release
+
+===== 2.0.1 =====
+ * Established compatibility with other email transports such as Ebizmarts/Mandrill for debug message mailing.
+
+===== 2.0.2 =====
+ * CSV Processor: If a product exists in multiple rows of the import file, the qty is summed up.
+
+===== 2.0.3 =====
+ * Compatibility with Magento 2.1.0 established
+ * Fixed SFTP source type, Net_SFTP library using namespaced class names now
+ * Cronjobs for profiles which have been deleted are automatically deleted as well
+
+===== 2.0.4 =====
+ * SFTP source type is now working for Magento 2.0 and Magento 2.1
+
+===== 2.0.5 =====
+ * Updated composer.json to require XTENTO "XtCore" base module
+
+===== 2.0.6 =====
+ * Fix for change in Magento core tables introduced in Magento Enterprise Edition 2.1 for staging functionality ("entity_id => row_id")
+
+===== 2.0.7 =====
+ + Added event "xtento_stockimport_files_load_after" which is called after files have been loaded from sources, so third party developers can retrieve/modify files
+
+===== 2.0.8 =====
+ + If a new profile is created, "Set In Stock / Out of Stock" is automatically set to Yes by default now
+ + Set grid column type for various columns in "Execution Log" to "longtext" so long result messages are not truncated on the grid
+ * Fixed a bug for the "Additional Configuration" popup where &amp; was converted to & automatically upon saving the configuration
+
+===== 2.0.9 =====
+ + Added bin/magento "xtento:stockimport:import" CLI command
+ * Fixed "Tools > Import" functionality: Sometimes source assigned to an imported profile were not automatically assigned to the imported profile again.
+
+===== 2.1.0 =====
+ * Bug fix for stock update routine when inserting a new stock item; sometimes other fields such as price would be attempted to insert into stock_item table as well.
+
+===== 2.1.1 =====
+ * Fixed issues for manual imports where sometimes (especially in Internet Explorer, but also Chrome/Firefox) the profile drop down didn't work and no manual import was possible.
+
+===== 2.1.2 =====
+ * Fixed issue with profile configuration/profiles failing to load with error "... expects parameter 1 to be string, array"
+
+===== 2.1.3 =====
+ * Fixed bug for profiles imported using "Tools > Import" functionality: Cronjob import never started until the profile was saved for the first time; now cronjobs are updated directly after the import via "Tools"
+ * Fixed "Webservice.php.sample" sample source file that was broken
+
+===== 2.1.4 =====
+ + Added "xtento:stockimport:config:export" and "xtento:stockimport:config:import" commands that add "Stock Import > Tools" functionality for the Magento command line via php bin/magento.
+
+===== 2.1.5 =====
+ * Updated Xtento_XtCore to version 2.0.7 ("Added warning in module configuration at System > Configuration if module output is disabled via "Disable Module Output" at System > Configuration > Advanced > Advanced")
+
+===== 2.1.6 =====
+ * Important update that fixes a bug where, if multiple profiles are executed in the same execution (for example via the cronjob), sometimes stock (and especially price) updates were ignored
+
+===== 2.1.7 =====
+ * Fixed relative stock level import that sometimes failed to work for summed up negative/positive values
+
+===== 2.1.8 =====
+ * Updated Xtento_XtCore to version 2.0.8
+
+===== 2.1.9 =====
+ * Log entries with 0 records updated that have warnings/errors are now logged and not deleted like before
+ * Fixed issue about area code for CLI exports using the CLI export command
+
+===== 2.2.0 =====
+ + Added support for negate="true" attribute for "Additional Configuration" <use>, <map> and <skip> options. Match if preg_match does NOT match.
+ * Fixed "Additional Configuration" options for XML import profiles. Sometimes an error about an undefined config was shown.
+
+===== 2.2.1 =====
+ + Compatibility with Magento 2.2 established
+
+===== 2.2.2 =====
+ * Fixed error during setup:di:compile for Magento 2.0/2.1
+
+===== 2.2.3 =====
+ * Fixed bug in grid serializer: Source is not unchecked when editing profile if "Edit Source" link is clicked
+
+===== 2.2.4 =====
+ * Updated Xtento_XtCore to version 2.1
+
+===== 2.2.5 =====
+ * Fixed issue "Unable to unserialize" when updating to Magento 2.2+
+
+===== 2.2.6 =====
+ * Fixed email sending for email destinations/error notification on Magento 2.2+ (Error: "Call to undefined method Magento\Email\Model\Transport\Interceptor::send()")
+
+===== 2.2.7 =====
+ * Fixed error email notification: From email is now retrieved from system configuration ("ident_general/email")
+
+===== 2.2.8 =====
+ + Added support for M2ePro: Stock level updates are communicated to M2ePro now
+
+===== 2.2.9 =====
+ * Fixed bug when importing profiles from Magento 1 or Magento 2.0/2.1 via the "Tools" functionality of the module
+
+===== 2.3.0 =====
+ * Fixed "xtento_stockimport_mapping_get_fields" event, fields can be customized via the event now.
+
+===== 2.3.1 =====
+ * Fixed issue for relative stock update (not accumulating multiple SKUs in one file properly)
+ * Fixed issue for "Tools" import functionality that could lead to an error when importing profiles
+ * Updated Xtento_XtCore to version 2.2.0
+
+===== 2.3.2 =====
+ + In addition to the "price", you can now import "special_price", "cost" and product "status". (Makes the import slower. 1 sec per changed product)
+
+===== 2.3.3 =====
+ + Added (sample) code to adjust stock level by pending/processing orders in Entity/Stock.php - just uncomment it. (May require customizations)
+
+===== 2.3.4 =====
+ + Added additional safe-guard against unwanted cronjob imports in case the module is disabled
+ + Removed "is module properly installed" check, not required for Magento 2
+
+===== 2.3.5 =====
+ * Deleting a profile also deletes the profiles cronjobs now, to avoid "zombie" cronjobs that don't do anything.
+
+===== 2.3.6 =====
+ * [Improved Magento 2.2 Compatibility] Added a RecurringData setup script that checks if an upgrade to M2.2 was performed, if yes, data structure in the profile tables will be changed from serialized to JSON automatically
+
+===== 2.3.7 =====
+ * Updated Xtento_XtCore to version 2.3.0
+ * Confirmed compatibility with Magento CE 2.2.5 / EE 2.2.5
+
+===== 2.3.8 =====
+ + Added ability to update product attributes such as product name, weight, as well as custom product attributes. Makes the import slower.
+
+===== 2.3.9 =====
+ * Fixed issue in grids: After filtering/searching, mass actions didn't work anymore
+
+===== 2.4.0 =====
+ * Fixed a bug for "Tools > Settings Import": Importing settings exported from Magento >=2.2 into Magento <=2.1 failed
+ * Fixed error when trying to view a broken import profile: "Invalid argument supplied for foreach() in ... AbstractMapping.php"
+
+===== 2.4.1 =====
+ * Fixed sorting/filtering/searching within log/history grids when editing a profile
+
+===== 2.4.2 =====
+ + Added support for Webkul eBay connector to update stock level on eBay once stock level is imported
+
+===== 2.4.3 =====
+ + Added setting in profile to enable "Adjust stock level by pending/processing orders". If enabled, when the stock level is imported, the profile will check how often the imported SKU is "blocked" in currently pending/processing orders, and the imported stock level will be reduced by that amount. Beta feature, makes the import slower.
+
+===== 2.4.4 =====
+ + Added ability to invalidate products in FPC when stock/product attribute is updated
+ * Fixed error "A non well formed numeric value encountered ..."
+
+===== 2.4.5 =====
+ * Fixed issue when using "attribute update scope" feature: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[...]))'"
+
+===== 2.4.6 =====
+ * Fixed an issue for attribute update where attributes weren't updated if no value had been set for this attribute in the DB before
+
+===== 2.4.7 =====
+ * Fixed issue when updating custom product attributes while importing
+
+===== 2.4.8 =====
+ * Fix for updating certain product attributes such as visibility
+
+===== 2.4.9 =====
+ + Prepared module for Magento 2.3 MSI (Multi-Source Inventory) feature, will be finalized once 2.3 has been released
+ * Fixed a bug for relative stock level updates not summing up correctly
+ * Added note to relative stock update setting in backend to clarify how it works
+
+===== 2.5.0 =====
+ + Added ability to run arithmetic operations such as + - / * on imported values. Increase imported price by 20%, for example.
+
+===== 2.5.1 =====
+ + Added ability to import "min_qty" (Out-of-Stock Threshold)
+
+===== 2.5.2 =====
+ + Established compatibility with Magento 2.3
+ + Added support for Magento 2.3 MSI (Multi-Source Inventory) feature. Import stock levels per source!
+ * Fixed notice about "debug" being undefined when importing
+ * Fixed "cost" not being importable for products where cost is "empty" currently
+ * [2.3] Fixed source not saveable due to encryption error
+ * [2.3 MSI] Fixed: Exception: No linked stock found
+
+===== 2.5.3 =====
+ * Removed calls to deprecated function "create_function" and replaced code with compliant equivalent
+
+===== 2.5.4 =====
+ * Final fix for built-in editor (Ace.js) having issues with tabs/spaces/theme. Be sure to deploy static content after updating.
+
+===== 2.5.5 =====
+ + Added ability to update "Manage Stock (Use Config)" field using the extension
+ * Fix for file mapper that could cause JS errors
+
+===== 2.5.6 =====
+ + Added "graceful die": If export crashes for some reason, error message should be logged in execution log
+
+===== 2.5.7 =====
+ * Improved multi-source inventory (MSI) compatibility
+
+===== 2.5.8 =====
+ + [M2.2+] Added ability to update tier prices: https://support.xtento.com/wiki/Magento_2_Extensions:Stock_Import_Module#Updating_tier_prices
+ * Added sample code to set configurable products to in stock/out of stock based on child products (for Magento MSI stores)
+
+===== 2.5.9 =====
+ * Fix performance issue caused by tier price import routine
+
+===== 2.6.0 =====
+ * Updated graceful die and removed sigint/sigterm as these are not really that much required and could cause issues
+
+===== 2.6.1 =====
+ * If __EMPTY__ is imported for "cost" field, the cost is set to NULL
+
+===== 2.6.2 =====
+ * Improvements with regards to error logging and custom classes file archiving
+
+===== 2.6.3 =====
+ + Added ability to import NULL for product price (via __EMPTY__ as field value)
+ * Fixed issue with custom product attribute updates - sometimes changes in values weren't detected
+ * Fixed import sources; connection information such as port couldn't be saved under certain circumstances due to DB layout issues
+ * For attribute updates of attributes with dropdown (source), the "store" value of the in the configuration selected "Store View (Attribute Update)" is now used to identify values of the dropdown
+ * Updated Xtento_XtCore to version 2.5.0
+
+===== 2.6.4 =====
+ * Fixed issue for custom product attribute update: Warning: Illegal offset type in ... module-eav/Model/Entity/Attribute/Source/Table.php on line 81
+
+===== 2.6.5 =====
+ * [Performance Improvement] Improved handling of product attributes for fields with decimals - forced to 4 decimals just like in the database, leading to less "changed" products (that didn't actually change). Also applies to attributes with source tables, should make the import detect less false updates and thus faster.
+ * Improved graceful die: Previous log messages (from current execution) are retained
+ * Improved logging of update values to see which product values were updated from what to what exactly
+ * Improved logging of reindexing situations for price/attribute updates
+ * Fixed: "0 records" entries in execution log are not saved anymore
+
+===== 2.6.6 =====
+ * Improved import/parsing of large XML files, avoids crashes of libxml
+
+===== 2.6.7 =====
+ * Fixed issue when importing settings file, there was a reference to our order export extension that shouldn't be there
+
+===== 2.6.8 =====
+ * Fixed an issue where unnecessary entries where made in cataloginventory_stock_status table were made that could lead to issues with indexers
+ * Fixed an issue where stock status ("In Stock" / "Out of Stock") was updated based on qty even though stock status wasn't mapped and 'Set "In Stock" / "Out of Stock"' was disabled
+
+===== 2.6.9 =====
+ * For configurable products, the "stock status" (in stock/out of stock) can now be updated, as well as other supported fields
+
+===== 2.7.0 =====
+ * Fixed an issue where in the frontend cache of configurable products wasn't cleared and old variations/stock status was still shown
+ * Fixed an issue where SFTP connections failed (Error: "Could not connect to SFTP server [...]"). If SFTP connections still fail now, it's probably caused by an incompatible SFTP server or a firewall. This issue was most likely caused by Magento 2.3.x.
+
+===== 2.7.1 =====
+ * Module code updated to comply with Magento Coding Standard as of August 2019
+ * Removed silenced errors ("@function") entirely. Improved logging in such cases so those errors are logged/reported.
+ * Logging improvements
+
+===== 2.7.2 =====
+ + Added ability to import and process XLS/XLSX/ODS/Excel-XML files. Import stock levels & product information from Excel files directly!
+
+===== 2.7.3 =====
+ * Price imports check the price scope (global/website) now
+ * Tier prices can be set on a per-website level now (M2.2+)
+ * Fixed an issue for price imports: Price changes were not detected when only certain store views were to be updated
+ * Fixed an issue for cost import: Set store view wasn't used, was set for all stores views instead
+ * Fixed an issue for product updates; attribute changes were not detected when only certain store views were to be updated
+
+===== 2.7.4 =====
+ * Fixed an issue when updating non-global attributes with scope website/store view
+
+===== 2.7.5 =====
+ * Fixed issue "Invalid method ..:isScopeGlobal"
+
+===== 2.7.6 =====
+ * Fixed an issue where translations/attribute values could be wrong when using bin/magento CLI import command of our module
+
+===== 2.7.7 =====
+ * Important update if using bin/magento CLI exports: Correct area is set now, all filters should work again and URLs should be correct.
+
+===== 2.7.8 =====
+ + Added separate cron group for our cronjobs. Use group xtento_stockimport to set up a separate cron job for our tasks.
+ * Important update if using bin/magento CLI exports: The definite fix - now running in cron area
+ * Improved how error/result messages are shown in the execution log
+ * Updated Xtento_XtCore to version 2.7.0
+
+===== 2.7.9 =====
+ * Established compatibility with Magento 2.2.10 / 2.3.3
+ * Established compatibility with PHP 7.3
+ * Fixed an issue with cron groups not being used. Re-save profiles to move to separate cron group.
+ * Updated Xtento_XtCore to version 2.8.0
+
+===== 2.8.0 =====
+ * Performance improvement that better detects if field values really changed avoiding unnecessary updates
+
+===== 2.8.1 =====
+ * Improved compatibility with FTP servers behind firewalls & better FTP directory listing error messages are now displayed
+
+===== 2.8.2 =====
+ * Fixed an error when using the CLI commands xtento:stockimport:config:export and xtento:stockimport:config:import
+
+===== 2.8.3 =====
+ + Added further FTP compatibility feature: "Ignore IP returned by server in passive mode" - If enabled in the FTP source, the (local) IP address returned by the FTP server will be ignored (useful for servers behind NAT) and instead the servers public IP address will be used. Can help with "Operation now in progress" errors or other directory listing/transfer issues.
+
+===== 2.8.4 =====
+ * Fixed a potential security issue: Reflected XSS via GET parameters in backend/manual import area. If "Add secret keys to URLs" is enabled in the backend (which should hopefully always be the case!) this should have been nearly impossible to exploit though.
+
+===== 2.8.5 =====
+ * Fixed an issue importing the value of the "backorders" field. Sometimes the "use config" checkbox was not unchecked if a value was imported for the "backorders" setting.
+
+===== 2.8.6 =====
+ * Fixed an issue with tier price imports: Previously, all tier prices were removed. Now, only the tier prices of customer groups mapped in the import profile will be updated/added, and other customer group tier prices remain untouched
+
+===== 2.8.7 =====
+ + Improved "Adjust stock level by pending orders" feature: Ability to increase OR decrease stock level. Ability to select order statuses to take into consideration.
+ * Fixed an issue with ASCII/FLF/fixed-length-files: Multiple items were not recognized but instead only one item was recognized
+
+===== 2.8.8 =====
+ + Added ability to use the "calculate" feature via <configuration> ("Additional Configuration" popup) multiple times on a single field.
+ + Added ability to "round" numbers via calculate: <calculate operation="round" value="2"/> where 2 is the number of decimals
+
+===== 2.8.9 =====
+ * Fixed an issue for the "roundnearest" function
+
+===== 2.9.0 =====
+ * Important bugfix for spreadsheet file processor where 0 values weren't parsed correctly and defaulted to a default value instead
+
+===== 2.9.1 =====
+ + Added ability to update product attribute values of "multi select" attributes: Specify multiple values separated by a comma. Example: test1,test2,test3
+ + Added ability to sum up multiple fields (for example, qty field is in two fields - Warehouse 1 and Warehouse 2) to combine field values (sum up, calculation) into one field such as qty. Map your "Qty" value to field 1, then in the Additional Configuration popup add the following to "add" (calculate / sum up) the value of field "Warehouse ABC" in your import file to the qty field: <calculate_sum_from_fields add_from_field="Warehouse ABC"/>
+ * Fixed an issue where tier prices could not be added/updated for specific websites
+ * Updated Xtento_XtCore to version 2.9.0
+
+===== 2.9.2 =====
+ + Added ability to divide a field by another field. For example, map your "Qty" value to field 1, then in the Additional Configuration popup of the "Qty" field add the following to "divide" the "Qty" value in field 1 by the value in field "XYZ" (name from your import file header/XML node): <divide_by_field field="XYZ"/>
+
+===== 2.9.3 =====
+ * Fixed an issue for fixed-length-format files (ASCII etc.) where operations such as "calculate" or "replace" specified in "Additional Configuration" popup didn't work.
+
+===== 2.9.4 =====
+ * Fixed an issue for custom product attribute updates where fields didn't update that were empty/0 in the DB
+
+===== 2.9.5 =====
+ + Added ability to disable forced MSI reindexing in "Import Settings" tab of import profiles
+ * Fixed a bug for FTP imports where empty directories caused a warning message that shouldn't be shown
+
+===== 2.9.6 =====
+ + Added ability to update "min_sale_qty" and "max_sale_qty" (Minimum/Maximum Qty Allowed in Shopping Cart)
+
+===== 2.9.7 =====
+ + SFTP/FTP sources: Added ability to skip empty files and stop them from processing/archiving/deletion
+
+===== 2.9.8 =====
+ * Established compatibility with Magento 2.4.0 and 2.3.5-p2
+ * Established compatibility with PHP 7.4, dropped support for PHP 5.x
+ * Updated Xtento_XtCore to version 2.10.0
+ + Improved support for M2ePro: Price / product status changes are now communicated to M2ePro as well
+ + Added uninstall script so bin/magento module:uninstall removes database tables
+ * Fixed "Return value of Magento\Cron\Console\Command\CronCommand::execute() should always be of the type int since Symfony 4.4, NULL returned."
+ * Fixed an issue for CSV/XML processor not detecting "0" values and parsing them as NULL instead
+ * [M2.4] Fixed "Product Attribute Identifier" in profile settings not working
+ * [M2.4 / PHP 7.4] Fixed "Deprecated Functionality: implode(): Passing glue string after array is deprecated."
+
+===== 2.9.9 =====
+ + Added support for email notifications to be sent by "Mageants_OutofStockNotification" extension when product is in stock again
+
+===== 2.10.0 =====
+ * Fixed an issue where extension related images/JS cannot be loaded in the Magento backend
+ * Updated Xtento_XtCore to version 2.11.0 ("Added Content Security Policy (CSP) support. XTENTO resources are whitelisted.")#
+
+===== 2.10.1 =====
+ + Added ability to reset stock level to 0 for products not in import files. Enable in your import profile. Does not make sense if you have multiple import profiles, needs customizations then.
+
+===== 2.10.2 =====
+ + Improved error handler for crashes: A notification email is now sent if "debug emails" are enabled and an error has been logged
+
+===== 2.10.3 =====
+ + Added option: "Update stock status of parent items after import" - If enabled, after importing, the stock status (in stock/out of stock) of parent items (e.g. configurable products) will be set to in stock/out of stock based on the child products. If one of the child products is in stock, the parent item will be set to in stock as well.
+ * Fixed "Reset stock level to 0 for products not in file" functionality to only reset products where "Manage Stock" is enabled
+
+===== 2.10.4 =====
+ * Fixed error: "Trying to access array offset on value of type float in .../Model/Processor/Mapping/Fields.php"
+
+===== 2.10.5 =====
+ * Fixed an issue with "shutdown/crash" notices being logged about an unrelated Symfony error
+
+===== 2.10.6 =====
+ * Fixed an issue when trying to update value of country_of_manufacture product attribute
+
+===== 2.10.7 =====
+ * Fixed an issue when using "Store View (Attribute Update)" setting if multiple stores are selected (especially "All Store Views" + another one)
+
+===== 2.10.8 =====
+ * Fixed an issue for "Update stock status of parent items" not working
+
+===== 2.10.9 =====
+ * Improved XML import processor to better show information about broken/invalid XML files being imported. Shown in debug mode only.
+ * Disabled graceful die (to log fatal errors) as it also caused 3rd party errors to trigger false-positive warning emails
+
+===== 2.11.0 =====
+ + Added ability to list import profiles on CLI using "list" parameter
+
+===== 2.11.1 =====
+ * Fixed an issue where custom "price" product attributes could not be emptied to NULL using __EMPTY__ but were set to 0.00 instead
+
+===== 2.11.2 =====
+ * Compatibility improvement with older Magento versions
+
+===== 2.11.3 =====
+ * Blocked qty ("Adjust qty by pending orders") now stops counting in qty_shipped as well
+
+===== 2.11.4 =====
+ * Fixed an issue for "Set all products not in import files to out of stock" feature that caused an SQL error
+
+===== 2.11.5 =====
+ * Fixed an important issue with regards to dynamic cronjob creation that could lead to cronjobs of other import/export profiles being removed when saving an unrelated profile
+ * Updated Xtento_XtCore to version 2.12.0 ("Removed phpinfo from debug information section due to possibly sensitive information being disclosed")
+
+===== 2.11.6 =====
+ * Removed certain keywords in SFTP class that caused Git to think private keys were contained in this class
+
+===== 2.11.7 =====
+ * Confirmed compatibility with Magento 2.3.7-p1 / 2.4.2-p2 / 2.4.3
+
+===== 2.11.8 =====
+ * Fixed an issue for stock level updates related to Magento MSI and SKUs
+
+===== 2.11.9 =====
+ * Bugfix release (Magento MSI / SKU related)
+
+===== 2.12.0 =====
+ * Established compatibility with Magento 2.3.7-p3 / 2.4.3-p2 / 2.4.4
+ * Established compatibility with PHP 8.1
+ * Updated Xtento_XtCore to version 2.13.0 ("PHP 8.1 compatibility")
+
+===== 2.12.1 =====
+ * Fixed an issue with SFTP sources for Magento 2.4.4
+ * Updated Xtento_XtCore to version 2.14.0 ("Further PHP 8.1 fixes")
+
+===== 2.12.2 =====
+ * Converted database install scripts to db_schema.xml - please check this upgrade carefully and take a DB backup before upgrading
+ * Updated Xtento_XtCore to version 2.16.0
+ * Dropped support for Magento 2.2.x. Earliest supported version is 2.3.x now.
+
+===== 2.12.3 =====
+ * Further PHP 8.1 fixes
+
+===== 2.12.4 =====
+ * Established compatibility with Magento 2.4.5, 2.4.4-p1, 2.4.3-p3, 2.3.7-p4
+ * Updated Xtento_XtCore to version 2.17.0 ("Fixed error "Area code not set" during installation/upgrade")
+
+===== 2.12.5 =====
+ * Further PHP 8.1 fixes (strftime)
+
+===== 2.12.6 ==========
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.12.7 =====
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.12.8 =====
+ * Fixed issue with Magento Commerce/Enterprise Edition (cannot edit/create profile)
+
+===== 2.12.9 =====
+ * Established compatibility with Magento 2.4.6 / 2.4.5-p2 / 2.4.4-p3
+ * Established compatibility with PHP 8.2
+ * Updated Xtento_XtCore to version 2.18.0 ("Magento 2.4.6 and PHP 8.2 compatibility")
+
+===== 2.13.0 =====
+ * Fixed Tools > Import functionality

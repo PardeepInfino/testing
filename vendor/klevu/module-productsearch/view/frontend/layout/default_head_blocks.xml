@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="klevu_frontendjs.js_includes">
+            <arguments>
+                <argument name="js_includes" xsi:type="array">
+                    <item name="klevu_themev2_quicksearch" xsi:type="array">
+                        <item name="if_config" xsi:type="array">
+                            <item name="frontend_enabled" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_EXTENSION_ENABLED</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="string">1</item>
+                                </item>
+                            </item>
+                            <item name="has_api_key" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_JS_API_KEY</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="neq" xsi:type="null"/>
+                                </item>
+                            </item>
+                            <item name="themev2" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_THEME_VERSION</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="const">Klevu\Search\Model\Source\ThemeVersion::V2</item>
+                                </item>
+                            </item>
+                            <item name="quick_search_lazy_load_disabled" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_LAZYLOAD_QUICK_SEARCH</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="string">0</item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="after" xsi:type="string">lib</item>
+                        <item name="url" xsi:type="string"><![CDATA[https://{{ klevu_search/general/js_url }}/theme/default/v2/quick-search-theme.js]]></item>
+                    </item>
+
+                    <item name="klevu_themev2_quicksearch_lazyload" xsi:type="array">
+                        <item name="if_config" xsi:type="array">
+                            <item name="frontend_enabled" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_EXTENSION_ENABLED</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="string">1</item>
+                                </item>
+                            </item>
+                            <item name="has_api_key" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_JS_API_KEY</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="neq" xsi:type="null"/>
+                                </item>
+                            </item>
+                            <item name="themev2" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_THEME_VERSION</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="const">Klevu\Search\Model\Source\ThemeVersion::V2</item>
+                                </item>
+                            </item>
+                            <item name="quick_search_lazy_load_enabled" xsi:type="array">
+                                <item name="path" xsi:type="const">Klevu\Search\Helper\Config::XML_PATH_LAZYLOAD_QUICK_SEARCH</item>
+                                <item name="conditions" xsi:type="array">
+                                    <item name="eq" xsi:type="string">1</item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="after" xsi:type="string">lib</item>
+                        <item name="url" xsi:type="string"><![CDATA[https://{{ klevu_search/general/js_url }}/theme/default/v2/quick-search-theme.lazyload.js]]></item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="klevu_frontendjs.js_modules">
+            <arguments>
+                <argument name="is_enabled_conditions_fqcn" xsi:type="array">
+                    <item name="_klevu_themev2_search" xsi:type="string">Klevu\Search\Service\ThemeV2\IsEnabledCondition</item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="head.additional">
+            <block class="Klevu\Search\Block\Html\Head\ThemeV2\JsVariables"
+                   before="klevu_frontendjs.js_includes.core"
+                   template="Klevu_Search::html/head/themev2/js_variables.phtml"
+                   name="klevu_search.html_head.themev2.js_variables"/>
+            <block class="Klevu\Search\Block\Html\Head\ThemeV2\InlineCurrencyTranslation"
+                   after="klevu_frontendjs.js_modules"
+                   template="Klevu_Search::html/head/themev2/inline_currency_translation.phtml"
+                   name="klevu_search.html_head.themev2.inline_currency_translation">
+                <arguments>
+                    <argument name="output_quick_script" xsi:type="boolean">true</argument>
+                    <argument name="output_landing_script" xsi:type="boolean">false</argument>
+                    <argument name="is_enabled_conditions_fqcn" xsi:type="array">
+                        <item name="_klevu_themev2_search" xsi:type="string">Klevu\Search\Service\ThemeV2\IsEnabledCondition</item>
+                    </argument>
+                </arguments>
+            </block>
+            <block class="Klevu\Search\Block\Html\Head\ThemeV2\AddPriceSuffixToQuery"
+                   after="klevu_frontendjs.js_init"
+                   template="Klevu_Search::html/head/themev2/add_price_suffix_to_query.phtml"
+                   name="klevu_search.html_head.themev2.additional_after.add_price_suffix_to_query">
+                <arguments>
+                    <argument name="output_quick_script" xsi:type="boolean">true</argument>
+                    <argument name="output_landing_script" xsi:type="boolean">false</argument>
+                    <argument name="is_enabled_conditions_fqcn" xsi:type="array">
+                        <item name="_klevu_themev2_add_price_suffix_to_query" xsi:type="string">Klevu\Search\Service\ThemeV2\IsEnabledCondition\AddPriceSuffixToQueryEnabledCondition</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

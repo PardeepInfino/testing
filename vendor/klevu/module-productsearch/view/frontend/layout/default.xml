@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Klevu_Search::js/klevu/ieUrlPolyfill.js" ie_condition="IE 11"/>
+    </head>
+
+    <body>
+        <referenceBlock name="before.body.end">
+            <block class="Klevu\Search\Block\Search\Index" template="Klevu_Search::klevu/search/form_js.phtml"
+                   name="klevu.search.form_js"/>
+            <block class="Klevu\FrontendJs\Block\Html\Head\InitSessionData"
+                   name="personal_data"
+                   before="-"
+                   template="Klevu_Search::personal.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="channel_amazon_sync">
+        <job name="channel_amazon_account_update" instance="Magento\Amazon\Cron\UpdateAccountFromSaaS" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="channel_amazon_sync" instance="Magento\Amazon\Cron\SyncCron" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="channel_amazon_clean_sync_statuses" instance="Magento\Amazon\Cron\CleanupSyncStatuses" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="channel_amazon_clean_logs" instance="Magento\Amazon\Cron\CleanupLogs" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="channel_amazon_clean_log_processing" instance="Magento\Amazon\Cron\CleanLogProcessingRecords" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+    </group>
+    <group id="channel_amazon_indexers">
+        <job name="channel_amazon_invalidate_attribute_indexer" instance="Magento\Amazon\Cron\AttributeIndexerInvalidateAction" method="execute">
+            <schedule>0 */12 * * *</schedule>
+        </job>
+        <job name="channel_amazon_invalidate_pricing_indexer" instance="Magento\Amazon\Cron\PricingIndexerInvalidateAction" method="execute">
+            <schedule>0 * * * *</schedule>
+        </job>
+        <job name="channel_amazon_invalidate_stock_indexer" instance="Magento\Amazon\Cron\StockIndexerInvalidateAction" method="execute">
+            <schedule>0 * * * *</schedule>
+        </job>
+    </group>
+</config>

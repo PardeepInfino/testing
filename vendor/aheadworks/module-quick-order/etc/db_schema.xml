@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="aw_qo_product_list" resource="default" engine="innodb" comment="Quick Order Product List Table">
+        <column xsi:type="int" name="list_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="List ID"/>
+        <column xsi:type="int" name="customer_id" padding="11" unsigned="false" nullable="true" identity="false"
+                comment="Customer ID"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="list_id"/>
+        </constraint>
+    </table>
+    <table name="aw_qo_product_list_item" resource="default" engine="innodb"
+           comment="Quick Order Product List Item Table">
+        <column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Item ID"/>
+        <column xsi:type="varchar" name="item_key" nullable="false" length="50" comment="Item Key"/>
+        <column xsi:type="int" name="list_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="List ID"/>
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Product ID"/>
+        <column xsi:type="varchar" name="product_name" nullable="false" length="255" comment="Product Name"/>
+        <column xsi:type="varchar" name="product_type" nullable="false" length="100" comment="Product Type"/>
+        <column xsi:type="varchar" name="product_sku" nullable="false" length="64" comment="Product Sku"/>
+        <column xsi:type="decimal" name="product_qty" scale="4" precision="12" unsigned="false" nullable="false"
+                default="0" comment="Product Quantity"/>
+        <column xsi:type="text" name="product_option" nullable="true" comment="Product Option"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="item_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="AW_QO_PRODUCT_LIST_ITEM_LIST_ID_AW_QO_PRODUCT_LIST_LIST_ID"
+                    table="aw_qo_product_list_item" column="list_id" referenceTable="aw_qo_product_list"
+                    referenceColumn="list_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="AW_QO_PRD_LIST_ITEM_PRD_ID_CAT_PRD_ENTT_ENTT_ID"
+                    table="aw_qo_product_list_item" column="product_id" referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="AW_QO_PRODUCT_LIST_ITEM_LIST_ID" indexType="btree">
+            <column name="list_id"/>
+        </index>
+    </table>
+</schema>

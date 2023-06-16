@@ -1,0 +1,6 @@
+query {
+    magentoSettings {
+        adminSessionLifetime
+        readOnlyMode
+    }
+}

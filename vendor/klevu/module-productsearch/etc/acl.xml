@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <!-- this resource id we can use in system.xml for section -->
+                            <resource id="Klevu_Search::klevu" title="Klevu" translate="title" sortOrder="80">
+                                <resource id="Klevu_Search::integration" title="Klevu Integration" translate="title" sortOrder="10" />
+                                <resource id="Klevu_Search::config_search" title="Klevu Search" translate="title" sortOrder="20" />
+                                <resource id="Klevu_Search::sync" title="Klevu Sync" translate="title" sortOrder="30">
+                                    <resource id="Klevu_Search::sync_product_grid" title="Klevu Sync Products" translate="title" sortOrder="10" />
+                                </resource>
+                            </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

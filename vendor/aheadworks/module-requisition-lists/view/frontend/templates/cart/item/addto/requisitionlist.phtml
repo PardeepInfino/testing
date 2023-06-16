@@ -1,0 +1,34 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Ui\Block\Wrapper */
+?>
+<?php
+    /** @var \Aheadworks\RequisitionLists\ViewModel\Catalog\Product\View\RequisitionListProvider $viewModel */
+    $viewModel = $block->getListViewModel();
+    $isEnabled = $block->isEnabled();
+    $isShowInCartPage = $block->isShowInCartPage();
+    $product = $block->getItem();
+?>
+<?php if ($isEnabled && $isShowInCartPage): ?>
+    <div class="aw-rl__list-wrapper default" data-role="aw-rl-listing" data-bind="scope: 'addToProductLink_<?= /* @noEscape */ $product->getSku() ?>'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "addToProductLink_<?= /* @noEscape */ $product->getSku() ?>": {
+                            "component": "Aheadworks_RequisitionLists/js/ui/components/requisition-list/cart-item-add-to",
+                            "urlToRequisitionList": "<?= /* @noEscape */ $viewModel->getUrlToRequisitionListPage() ?>",
+                            "addToRequisitionListUrl": "<?= /* @noEscape */ $viewModel->getAddToListFromCartUrl() ?>",
+                            "isLoggined": "<?= /* @noEscape */ $viewModel->isLoggedUserIn() ?>",
+                            "productId": "<?= /* @noEscape */ $product->getId() ?>"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

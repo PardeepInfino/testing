@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Listing\Column\Actions" type="Aheadworks\RequisitionLists\Ui\Component\RequisitionList\Listing\Column\AbstractActions"/>
+    <type name="Aheadworks\RequisitionLists\Block\Customer\RequisitionList\Listing\Header">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="config" xsi:type="object">Aheadworks\RequisitionLists\Model\Layout\Processor\Config</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="addRequisitionListSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Aheadworks_RequisitionLists::messages/addRequisitionListSuccessMessage.phtml</item>
+                    </item>
+                </item>
+                <item name="addItemsToListSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Aheadworks_RequisitionLists::messages/addItemsToListSuccessMessage.phtml</item>
+                    </item>
+                </item>
+                <item name="moveItemsToListSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Aheadworks_RequisitionLists::messages/moveItemsToListSuccessMessage.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="requisitionlist" xsi:type="string">Aheadworks\RequisitionLists\CustomerData\RequisitionList</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

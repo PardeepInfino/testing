@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2023 Amasty (https://www.amasty.com)
+ * @package Mage 2.4.5 fix by Amasty for Magento 2 (System)
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Amasty_Shopby:etc/config.xsd">
+    <preference for="Magento\Elasticsearch\Model\ResourceModel\Fulltext\Collection\SearchResultApplier"
+                type="Amasty\Mage245Fix\Model\ResourceModel\Fulltext\Collection\SearchResultApplier\Mage245Fix" />
+
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="update_toolbar_count" disabled="true"/>
+    </type>
+</config>

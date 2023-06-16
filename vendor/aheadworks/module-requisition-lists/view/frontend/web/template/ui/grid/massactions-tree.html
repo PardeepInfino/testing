@@ -1,0 +1,11 @@
+<ul if="visible" class="action-menu" each="data: actions, as: 'action'" css="_active: opened">
+    <span class="action action-tree"
+          css="_visible: $data.visible, _parent: $data.actions"
+          data-bind="outerClick: $parent.hideSubmenus.bind($parent, [action])">
+        <span class="action-menu-item"
+              tabindex="0"
+              translate="label"
+              click="$parent.applyAction.bind($parent, type)"></span>
+        <render args="name: $parent.submenuTemplate, data: $parent" if="$data.actions"></render>
+    </span>
+</ul>

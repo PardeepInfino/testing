@@ -1,0 +1,22 @@
+diff --git a/vendor/magento/module-import-export/Model/Export/Entity/AbstractEav.php b/vendor/magento/module-import-export/Model/Export/Entity/AbstractEav.php
+index 0ac4d5dd9..b7f0e7c74 100755
+--- a/vendor/magento/module-import-export/Model/Export/Entity/AbstractEav.php
++++ b/vendor/magento/module-import-export/Model/Export/Entity/AbstractEav.php
+@@ -288,11 +288,13 @@ abstract class AbstractEav extends \Magento\ImportExport\Model\Export\AbstractEn
+ 
+             if ($this->isMultiselect($attributeCode)) {
+                 $values = [];
+-                $attributeValue = explode(Import::DEFAULT_GLOBAL_MULTI_VALUE_SEPARATOR, $attributeValue);
+-                foreach ($attributeValue as $value) {
+-                    $values[] = $this->getAttributeValueById($attributeCode, $value);
++                if(!empty($attributeValue)){
++                    $attributeValue = explode(Import::DEFAULT_GLOBAL_MULTI_VALUE_SEPARATOR, $attributeValue);
++                    foreach ($attributeValue as $value) {
++                        $values[] = $this->getAttributeValueById($attributeCode, $value);
++                    }
++                    $row[$attributeCode] = implode(Import::DEFAULT_GLOBAL_MULTI_VALUE_SEPARATOR, $values);
+                 }
+-                $row[$attributeCode] = implode(Import::DEFAULT_GLOBAL_MULTI_VALUE_SEPARATOR, $values);
+             } else {
+                 $row[$attributeCode] = $this->getAttributeValueById($attributeCode, $attributeValue);
+             }
